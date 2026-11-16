@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Replikation und Code – Vertiefung und Hilfen</title>
+<!-- Biologie Klasse 10 · Genetik · AB 26 und AB 27. Ohne Lösungen (Repo öffentlich). URL steht in den QR-Codes der Arbeitsblätter: nicht umbenennen. -->
+<!-- Quelle: quellen/web/vorlage.html, Stil aus Genetik/DNA übernommen; erzeugt mit quellen/web/bauen.py -->
+<style>
+:root{
+  --gruen:#2e7d4f; --gruen-d:#1f5e3a; --gruen-hell:#e6f3eb; --blau:#2a7ab8; --tblau:#156e9d; --blau-hell:#e6f0f8;
+  --orange:#d9822b; --orange-hell:#fdf1e4; --violett:#6c2a8c; --violett-hell:#f1e8f6; --rot:#b03a2e; --rot-hell:#f8e5e3;
+  --grau:#6f7a85; --linie:#d5dde5; --bg:#f6f8fa; --karte:#fff; --text:#222; --dunkel:#0f4c6e;
+  --bA:#fbe3c8; --bT:#d6e8f6; --bG:#d5ecdc; --bC:#eadcf2;
+  --sans:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5}
+a{color:var(--tblau)}
+button,select,input{font:inherit}
+button,select{cursor:pointer}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#0f4c6e 0%,#156e9d 55%,#2a7ab8 100%);color:#fff;padding:28px 0 22px}
+header .kurs{font-size:13px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+header h1{margin:4px 0 6px;font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.2}
+header p{margin:0;opacity:.92;max-width:680px}
+nav{position:sticky;top:0;z-index:10;background:rgba(246,248,250,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--linie)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav a{flex:none;text-decoration:none;color:var(--dunkel);border:1px solid var(--linie);background:#fff;border-radius:16px;padding:3px 12px;font-size:14px;font-weight:600}
+nav a.v{color:var(--orange)}
+h2{font-size:21px;color:var(--dunkel);margin:32px 0 4px;scroll-margin-top:56px}
+h3.teil{font-size:16px;color:var(--grau);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 8px}
+.hinweis{color:var(--grau);font-size:14px;margin:0 0 14px}
+.hilfen{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hk{background:var(--karte);border:1.5px dashed #b9c4cf;border-radius:10px;padding:14px 16px}
+.hk h4{margin:0 0 2px;font-size:16px;color:var(--tblau)}
+.hk .zu{font-size:13px;color:var(--grau);margin-bottom:8px}
+.stufe{display:none;margin:8px 0 0;padding:8px 10px;background:var(--blau-hell);border-radius:6px;font-size:15px}
+.stufe.offen{display:block;animation:auf .25s ease}
+@keyframes auf{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.hk button{margin-top:10px;border:1px solid var(--tblau);background:#fff;color:var(--tblau);border-radius:6px;padding:4px 12px;font-size:14px}
+.hk button:hover{background:var(--blau-hell)}
+.hk button[disabled]{opacity:.4;cursor:default}
+.hk .zaehler{font-size:12px;color:var(--grau);margin-left:8px}
+.v-karte{background:var(--karte);border:1px solid var(--linie);border-radius:12px;margin:14px 0;overflow:hidden;scroll-margin-top:56px}
+.v-kopf{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--linie);background:#fbfcfd}
+.v-nr{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center}
+.v-kopf h3{margin:0;font-size:18px}
+.v-inhalt{padding:14px 16px 16px}
+.knopf{border:1px solid var(--linie);background:#fff;border-radius:6px;padding:4px 12px;font-size:14px}
+.knopf.haupt{border-color:var(--tblau);color:var(--tblau);font-weight:600}
+.knopf.an{background:var(--tblau);border-color:var(--tblau);color:#fff}
+.knoepfe{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.rueck{font-size:14px;border-radius:6px;padding:8px 10px;margin-top:8px;display:none}
+.rueck.gut{display:block;background:#e3f4ea;border-left:3px solid var(--gruen)}
+.rueck.nein{display:block;background:#fbe6e3;border-left:3px solid #d0574a}
+.punkte{font-size:14px;color:var(--grau);margin-left:auto}
+.klein{font-size:13px;color:var(--grau)}
+.sicher{background:var(--rot-hell);border-left:3px solid var(--rot);border-radius:6px;padding:8px 12px;font-size:14px;margin:8px 0}
+/* Gegenstrang */
+.strang{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.base{width:38px;height:38px;border-radius:6px;display:grid;place-items:center;font-weight:700;font-size:18px;border:1px solid #9aa5b0}
+.base.A{background:var(--bA)}.base.T{background:var(--bT)}.base.G{background:var(--bG)}.base.C{background:var(--bC)}
+.strang input{width:38px;height:38px;border:1px solid #9aa5b0;border-radius:6px;text-align:center;font-weight:700;font-size:18px;text-transform:uppercase;padding:0}
+.strang input.ok{background:#e3f4ea;border-color:var(--gruen)}
+.strang input.falsch{background:#fbe6e3;border-color:#d0574a}
+.zeile-lab{font-size:13px;color:var(--grau);margin-top:6px}
+/* Chargaff */
+.felder{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.felder label{display:flex;align-items:center;gap:6px;font-weight:600}
+.felder input{width:70px;border:1px solid #9aa5b0;border-radius:6px;padding:4px 6px;text-align:right}
+/* Zeitstrahl */
+.ereignisse{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.ereignisse button{text-align:left;border:1px solid var(--linie);background:#fff;border-radius:8px;padding:8px 12px;font-size:15px}
+.ereignisse button.gewaehlt{background:var(--blau-hell);border-color:var(--tblau)}
+.ereignisse button .nr{display:inline-block;min-width:26px;font-weight:700;color:var(--tblau)}
+/* Maßstab */
+.ausgabe{font-variant-numeric:tabular-nums;font-size:15px;background:#f2f5f8;border-radius:6px;padding:8px 12px;margin-top:6px}
+.regler{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0}
+.regler input[type=range]{flex:1;min-width:200px}
+footer{margin:36px 0 0;border-top:1px solid var(--linie);padding:16px 0 28px;font-size:12.5px;color:var(--grau)}
+sup{font-size:.7em}
+.base.U{background:#f6e7b0}
+select{border:1px solid #9aa5b0;border-radius:6px;padding:3px 6px;background:#fff}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kurs">Biologie · Klasse 10 · Genetik · AB 26 und AB 27</div>
+    <h1>Replikation und genetischer Code: Vertiefung und Hilfen</h1>
+    <p>Hilfen zu allen Teilaufgaben, nur bei Bedarf und stufenweise aufdecken. Für Schnelle: neue Stränge ergänzen, das Meselson-Stahl-Experiment weiterdenken, mRNA übersetzen und ein berühmtes Experiment zum genetischen Code nachvollziehen.</p>
+  </div>
+</header>
+<nav><div class="wrap">
+  <a href="#ab26">Hilfen AB 26</a><a href="#ab27">Hilfen AB 27</a><a class="v" href="#v1">V1 Replikation</a><a class="v" href="#v2">V2 Generation 3</a><a class="v" href="#v3">V3 Übersetzen</a><a class="v" href="#v4">V4 Nirenberg</a>
+</div></nav>
+
+<main class="wrap">
+
+<h2 id="ab26">Hilfen zu AB 26: Replikation</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten Stufen entsprechen den Papierkarten am Pult.</p>
+<h3 class="teil">Aufgabe 1 · So wird DNA kopiert</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">Ablauf beschreiben</div>
+    <div class="stufe">Gehe in Abb. 1 von links nach rechts. Was passiert an der Gabel, was rechts davon?</div>
+    <div class="stufe">Für jeden Schritt: Welches Enzym arbeitet hier, und was tut es?</div>
+    <div class="stufe">Benutze die Wörter: trennen, Vorlage, anlagern, verknüpfen.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Neue Stränge ergänzen</div>
+    <div class="stufe">Jeder neue Strang ist komplementär zu dem alten Strang direkt darüber.</div>
+    <div class="stufe">Regeln: A – T, G – C. Vergleiche am Ende beide Doppelstränge mit der Ausgangs-DNA. Üben: Vertiefung V1.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1c</h4><div class="zu">semikonservativ</div>
+    <div class="stufe">Zerlege das Wort in zwei Teile und lies die Wörterbucheinträge.</div>
+    <div class="stufe">Schau auf die Farben in Abb. 1: Was ist in jeder neuen Doppelhelix alt, was neu?</div>
+    <div class="stufe">Verbinde: „halb“ + „bewahrend“ → Was wird bei der Replikation zur Hälfte bewahrt?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Meselson und Stahl</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Erwartungen ableiten</div>
+    <div class="stufe">Am Anfang sind beide Stränge schwer (¹⁵N). Alle neuen Stränge sind leicht (¹⁴N).</div>
+    <div class="stufe">Zeichne für jede Hypothese aus Abb. 2 die zwei Tochter-DNAs und färbe schwere und leichte Teile unterschiedlich.</div>
+    <div class="stufe">Ordne zu: zwei schwere Stränge → Bande „schwer“; zwei leichte → „leicht“; einer von jedem → „mittel“. Wie ist es, wenn alte und neue Stücke gemischt sind?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Auswerten</div>
+    <div class="stufe">Vergleiche deine Tabelle aus 2a mit dem Röhrchen „nach 1 Teilung“. Welche Erwartung trifft nicht ein?</div>
+    <div class="stufe">Eine Hypothese, deren Vorhersage nicht eintritt, ist widerlegt.</div>
+    <div class="stufe">Für zwei Teilungen: Nimm jede mittlere Doppelhelix, trenne sie und gib jedem Strang einen neuen leichten Partner. Zähle die Ergebnisse.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c ★</h4><div class="zu">dispersiv</div>
+    <div class="stufe">Bei der dispersiven Hypothese ist jedes Molekül gleich gemischt. Was bedeutet das für die Zahl der Banden?</div>
+    <div class="stufe">Nach zwei Teilungen ist in jedem Molekül noch weniger schweres Material. Wo läge die Bande?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 · Kopierfehler</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Fehler berechnen</div>
+    <div class="stufe">„Jedes 100 000. Nukleotid ist falsch“ heißt: Anzahl der Fehler = Anzahl der Nukleotide : 100 000.</div>
+    <div class="stufe">13 Milliarden = 13 000 000 000. Kürze Nullen, bevor du teilst.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Lynch-Syndrom</div>
+    <div class="stufe">Was passiert mit einem Kopierfehler, wenn kein Enzym ihn repariert?</div>
+    <div class="stufe">Was passiert mit diesem Fehler bei der nächsten Zellteilung, und bei der übernächsten?</div>
+    <div class="stufe">Welche Gene wären besonders gefährlich zu treffen? Denke daran, was Krebszellen tun.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3c ★</h4><div class="zu">Dauer der Replikation</div>
+    <div class="stufe">Zeit = Anzahl Basenpaare : Geschwindigkeit. Rechne das Ergebnis von Sekunden in Tage um (1 Tag = 86 400 s).</div>
+    <div class="stufe">Wie schafft man eine riesige Arbeit schneller? Denke an viele Helfende gleichzeitig.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2 id="ab27">Hilfen zu AB 27: Gen und genetischer Code</h2>
+<h3 class="teil">Aufgabe 1 · Vom Gen zum Protein</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">Begriffe erklären</div>
+    <div class="stufe">Suche jeden Begriff in M1 und schreibe auf: Wo passiert es? Was entsteht?</div>
+    <div class="stufe">Merkhilfe: Transkription = Abschrift (wie Abschreiben), Translation = Übersetzung (in eine andere „Sprache“: Aminosäuren).</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Wozu die mRNA?</div>
+    <div class="stufe">Wo liegt die DNA, wo werden Proteine gebaut? Schau in Abb. 1.</div>
+    <div class="stufe">Vergleich: Ein wertvolles Buch bleibt in der Bibliothek. Was nimmt man mit nach Hause?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Abschreiben und übersetzen</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Transkription</div>
+    <div class="stufe">Gehe Base für Base vor und schreibe den Partner darunter.</div>
+    <div class="stufe">In der mRNA gibt es kein T. Wo du sonst T schreiben würdest, steht U.</div>
+    <div class="stufe">Kontrolle: Die mRNA beginnt mit dem Startsignal.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Codesonne</div>
+    <div class="stufe">Teile die mRNA in Dreiergruppen: nach jeder dritten Base einen Strich.</div>
+    <div class="stufe">Erste Base innen, zweite im mittleren Ring, dritte im äußeren Ring. Ganz außen steht die Aminosäure.</div>
+    <div class="stufe">Üben mit anderen Tripletts: Vertiefung V3.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c</h4><div class="zu">Universeller Code</div>
+    <div class="stufe">Lies den letzten Satz von M2. Was bedeutet „universell“?</div>
+    <div class="stufe">Wenn ein Bakterium ein Triplett genauso übersetzt wie eine menschliche Zelle: Was entsteht dann aus einem menschlichen Gen?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 · Albinismus</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Zwei Allele übersetzen</div>
+    <div class="stufe">Teile beide Zeilen in Tripletts. Vergleiche Triplett für Triplett: Wo unterscheiden sie sich?</div>
+    <div class="stufe">Was steht in der Codesonne bei dem veränderten Triplett? Was passiert danach mit der Kette?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Folgekette</div>
+    <div class="stufe">Eine Folgekette hat Glieder, die jeweils aus dem vorherigen folgen: Gen → mRNA → Protein → Merkmal.</div>
+    <div class="stufe">Kann ein viel zu kurzes Protein seine Form und Aufgabe behalten?</div>
+    <div class="stufe">Was stellt die Tyrosinase her, und wofür braucht man diesen Stoff?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3c ★</h4><div class="zu">Warum rezessiv?</div>
+    <div class="stufe">Wie viele Allele des Gens TYR hat jeder Mensch? Was liefert jedes davon?</div>
+    <div class="stufe">Erinnere dich an AB 21 (G6PD): Reicht die Enzymmenge von einem funktionierenden Allel?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2>Vertiefungen für Schnelle</h2>
+
+<section class="v-karte" id="v1">
+  <div class="v-kopf"><div class="v-nr">V1</div><h3>Replikationstrainer</h3><span class="punkte" id="v1-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Die Helicase hat die Doppelhelix getrennt. Ergänze zu beiden alten Strängen die neuen Stränge (A, T, G oder C eintippen), dann „Prüfen“.</p>
+    <div class="zeile-lab">alter Strang 1</div><div class="strang" id="v1-a1"></div>
+    <div class="zeile-lab">neuer Strang</div><div class="strang" id="v1-n1"></div>
+    <div class="zeile-lab" style="margin-top:14px">alter Strang 2</div><div class="strang" id="v1-a2"></div>
+    <div class="zeile-lab">neuer Strang</div><div class="strang" id="v1-n2"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v1-pruefen">Prüfen</button><button class="knopf" id="v1-neu">Neue DNA →</button></div>
+    <div class="rueck" id="v1-rueck"></div>
+  </div>
+</section>
+
+<section class="v-karte" id="v2">
+  <div class="v-kopf"><div class="v-nr">V2</div><h3>Meselson und Stahl: die dritte Teilung</h3><span class="punkte" id="v2-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Das Arbeitsblatt endet nach zwei Teilungen. Was würdest du nach <b>drei</b> Teilungen in leichtem Stickstoff erwarten? Wähle für jede Hypothese die passende Vorhersage.</p>
+    <div id="v2-fragen"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v2-pruefen">Prüfen</button></div>
+    <div class="rueck" id="v2-rueck"></div>
+  </div>
+</section>
+
+<section class="v-karte" id="v3">
+  <div class="v-kopf"><div class="v-nr">V3</div><h3>Übersetzungstrainer</h3><span class="punkte" id="v3-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Übersetze die mRNA mit der Codesonne von AB 27. Wähle zu jedem Triplett die Aminosäure.</p>
+    <div class="strang" id="v3-mrna"></div>
+    <div class="felder" id="v3-wahl"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v3-pruefen">Prüfen</button><button class="knopf" id="v3-neu">Neue mRNA →</button></div>
+    <div class="rueck" id="v3-rueck"></div>
+  </div>
+</section>
+
+<section class="v-karte" id="v4">
+  <div class="v-kopf"><div class="v-nr">V4</div><h3>Wie wurde der Code geknackt? Das Experiment von Nirenberg (1961)</h3></div>
+  <div class="v-inhalt">
+    <p>Marshall Nirenberg und Heinrich Matthaei gaben in ein Reagenzglas alles, was für die Translation nötig ist: Ribosomen, tRNA, alle 20 Aminosäuren. Dazu gaben sie eine <b>künstliche mRNA, die nur aus Uracil bestand</b>: UUUUUUUUU… Heraus kam eine Kette, die nur aus der Aminosäure <b>Phenylalanin (Phe)</b> bestand.</p>
+    <div id="v4-fragen"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v4-pruefen">Prüfen</button></div>
+    <div class="rueck" id="v4-rueck"></div>
+    <p class="klein">Für die Entschlüsselung des genetischen Codes erhielt Nirenberg 1968 zusammen mit Har Gobind Khorana und Robert Holley den Nobelpreis.</p>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Biologie · Klasse 10 · Genetik · Hilfen zu den Arbeitsblättern AB 26 (Replikation) und AB 27 (Gen und genetischer Code) · Noto La Diega · Hilfen ohne Lösungen</div></footer>
+
+<script>
+// Gestufte Hilfekarten
+(function(){
+  document.querySelectorAll('.hk').forEach(function(k){
+    var st = k.querySelectorAll('.stufe'), btn = k.querySelector('button'), z = k.querySelector('.zaehler'), n = 0;
+    z.textContent = '0 / ' + st.length;
+    btn.addEventListener('click', function(){
+      if (n < st.length) { st[n].classList.add('offen'); n++; }
+      z.textContent = n + ' / ' + st.length;
+      if (n >= st.length) { btn.textContent = 'alle Stufen offen'; btn.disabled = true; } else btn.textContent = 'Stufe ' + (n + 1) + ' aufdecken';
+    });
+  });
+})();
+var $ = function(id){ return document.getElementById(id); };
+var PARTNER = {A: 'T', T: 'A', G: 'C', C: 'G'};
+var CODE = 'FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG';
+var AS3 = {F:'Phe',L:'Leu',S:'Ser',Y:'Tyr',C:'Cys',W:'Trp',P:'Pro',H:'His',Q:'Gln',R:'Arg',I:'Ile',M:'Met',T:'Thr',N:'Asn',K:'Lys',V:'Val',A:'Ala',D:'Asp',E:'Glu',G:'Gly','*':'Stopp'};
+function uebersetze(tri){ var b = 'UCAG'; return AS3[CODE[b.indexOf(tri[0]) * 16 + b.indexOf(tri[1]) * 4 + b.indexOf(tri[2])]]; }
+function zufall(n, alphabet){ var s = ''; for (var i = 0; i < n; i++) s += alphabet[Math.floor(Math.random() * alphabet.length)]; return s; }
+function eingabefelder(ziel, n){
+  ziel.innerHTML = Array.from({length: n}, function(_, i){ return '<input maxlength="1" aria-label="Base ' + (i + 1) + '">'; }).join('');
+  var f = ziel.querySelectorAll('input');
+  f.forEach(function(x, i){ x.addEventListener('input', function(){ x.value = x.value.toUpperCase().replace(/[^ATGC]/g, ''); x.className = ''; if (x.value && i + 1 < f.length) f[i + 1].focus(); }); });
+  return f;
+}
+function basen(ziel, s){ ziel.innerHTML = s.split('').map(function(b){ return '<div class="base ' + b + '">' + b + '</div>'; }).join(''); }
+
+// V1 Replikationstrainer
+(function(){
+  var a1 = '', a2 = '', gut = 0, runden = 0, geprueft = false;
+  function neu(){
+    a1 = zufall(8, 'ATGC'); a2 = a1.split('').map(function(b){ return PARTNER[b]; }).join('');
+    basen($('v1-a1'), a1); basen($('v1-a2'), a2);
+    eingabefelder($('v1-n1'), 8); eingabefelder($('v1-n2'), 8);
+    $('v1-rueck').className = 'rueck'; geprueft = false;
+  }
+  $('v1-pruefen').addEventListener('click', function(){
+    var fehler = 0, leer = 0;
+    [['v1-n1', a1], ['v1-n2', a2]].forEach(function(p){
+      $(p[0]).querySelectorAll('input').forEach(function(f, i){
+        if (!f.value) { leer++; return; }
+        var ok = f.value === PARTNER[p[1][i]]; if (!ok) fehler++;
+        f.className = ok ? 'ok' : 'falsch';
+      });
+    });
+    var r = $('v1-rueck');
+    if (leer) { r.className = 'rueck nein'; r.textContent = 'Es fehlen noch ' + leer + ' Basen.'; return; }
+    if (!geprueft) { runden++; if (!fehler) gut++; geprueft = true; }
+    if (!fehler) { r.className = 'rueck gut'; r.textContent = 'Richtig! Vergleiche: Beide Doppelstränge bestehen aus einem alten und einem neuen Strang und sind gleich.'; }
+    else { r.className = 'rueck nein'; r.textContent = fehler + ' Basen passen nicht. Jeder neue Strang ist komplementär zu dem alten Strang darüber.'; }
+    $('v1-punkte').textContent = gut + ' von ' + runden + ' fehlerfrei';
+  });
+  $('v1-neu').addEventListener('click', neu);
+  neu();
+})();
+
+// V2 Meselson und Stahl, dritte Teilung
+(function(){
+  var F = [
+    {h: 'konservativ', a: ['eine schwere und eine leichte Bande', 'eine mittlere und eine leichte Bande', 'eine einzige Bande nahe bei „leicht“'], r: 0,
+     e: 'Konservativ bliebe die ursprüngliche schwere DNA immer erhalten; alle Kopien wären ganz leicht. Also eine kleine schwere und eine große leichte Bande.'},
+    {h: 'semikonservativ', a: ['eine schwere und eine leichte Bande', 'eine mittlere und eine leichte Bande', 'nur eine mittlere Bande'], r: 1,
+     e: 'Die beiden ursprünglichen schweren Stränge bleiben in je einem mittleren Molekül erhalten. Alle übrigen Moleküle sind ganz leicht: 2 mittlere zu 6 leichten Molekülen.'},
+    {h: 'dispersiv', a: ['eine mittlere und eine leichte Bande', 'eine einzige Bande, noch näher bei „leicht“ als nach zwei Teilungen', 'eine schwere und eine leichte Bande'], r: 1,
+     e: 'Dispersiv wäre jedes Molekül gleich gemischt, mit nur noch einem Achtel schwerem Material: eine einzige Bande kurz über „leicht“.'}
+  ];
+  $('v2-fragen').innerHTML = F.map(function(f, i){
+    return '<p style="margin:10px 0 4px"><b>Hypothese ' + (i + 1) + ': ' + f.h + '</b></p><div class="ereignisse">' +
+      f.a.map(function(t, j){ return '<button type="button" data-f="' + i + '" data-j="' + j + '">' + t + '</button>'; }).join('') + '</div>';
+  }).join('');
+  var wahl = {};
+  $('v2-fragen').querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var f = b.dataset.f; wahl[f] = +b.dataset.j;
+      $('v2-fragen').querySelectorAll('button[data-f="' + f + '"]').forEach(function(x){ x.classList.toggle('gewaehlt', x === b); });
+    });
+  });
+  $('v2-pruefen').addEventListener('click', function(){
+    var r = $('v2-rueck');
+    if (Object.keys(wahl).length < F.length) { r.className = 'rueck nein'; r.textContent = 'Wähle für jede Hypothese eine Vorhersage.'; return; }
+    var richtig = F.filter(function(f, i){ return wahl[i] === f.r; }).length;
+    r.className = 'rueck ' + (richtig === F.length ? 'gut' : 'nein');
+    r.innerHTML = richtig + ' von 3 richtig.<br>' + F.map(function(f, i){ return (wahl[i] === f.r ? '✓ ' : '✗ ') + f.e; }).join('<br>');
+    $('v2-punkte').textContent = richtig + ' / 3';
+  });
+})();
+
+// V3 Übersetzungstrainer
+(function(){
+  var tripletts = [], gut = 0, runden = 0, geprueft = false;
+  var alleAS = ['Ala','Arg','Asn','Asp','Cys','Gln','Glu','Gly','His','Ile','Leu','Lys','Met','Phe','Pro','Ser','Thr','Trp','Tyr','Val','Stopp'];
+  function neu(){
+    tripletts = ['AUG'];
+    while (tripletts.length < 5) { var t = zufall(3, 'UCAG'); if (uebersetze(t) !== 'Stopp') tripletts.push(t); }
+    tripletts.push(['UAA', 'UAG', 'UGA'][Math.floor(Math.random() * 3)]);
+    $('v3-mrna').innerHTML = tripletts.map(function(t){ return t.split('').map(function(b){ return '<div class="base ' + b + '">' + b + '</div>'; }).join('') + '<div style="width:10px"></div>'; }).join('');
+    $('v3-wahl').innerHTML = tripletts.map(function(t, i){
+      return '<label>' + (i + 1) + '. <select data-i="' + i + '"><option value="">?</option>' + alleAS.map(function(a){ return '<option>' + a + '</option>'; }).join('') + '</select></label>';
+    }).join('');
+    $('v3-rueck').className = 'rueck'; geprueft = false;
+  }
+  $('v3-pruefen').addEventListener('click', function(){
+    var sel = $('v3-wahl').querySelectorAll('select'), fehler = [], leer = 0;
+    sel.forEach(function(s, i){ if (!s.value) leer++; else if (s.value !== uebersetze(tripletts[i])) fehler.push(i + 1); });
+    var r = $('v3-rueck');
+    if (leer) { r.className = 'rueck nein'; r.textContent = 'Wähle für jedes Triplett eine Aminosäure.'; return; }
+    if (!geprueft) { runden++; if (!fehler.length) gut++; geprueft = true; }
+    if (!fehler.length) { r.className = 'rueck gut'; r.textContent = 'Alles richtig übersetzt!'; }
+    else { r.className = 'rueck nein'; r.textContent = 'Prüfe noch einmal Triplett ' + fehler.join(', ') + '. Erste Base innen, zweite Mitte, dritte außen.'; }
+    $('v3-punkte').textContent = gut + ' von ' + runden + ' fehlerfrei';
+  });
+  $('v3-neu').addEventListener('click', neu);
+  neu();
+})();
+
+// V4 Nirenberg
+(function(){
+  var F = [
+    {f: 'Was folgt aus dem Ergebnis mit UUUUUU…?', a: ['UUU codiert Phenylalanin.', 'U codiert Phenylalanin.', 'Phenylalanin besteht aus Uracil.'], r: 0,
+     e: 'Die mRNA wird in Tripletts gelesen; eine Kette aus lauter U enthält nur das Triplett UUU. Also: UUU → Phe.'},
+    {f: 'Danach nahmen sie eine mRNA nur aus Cytosin (CCCCCC…). Welche Kette erwartest du? (Codesonne)', a: ['nur Prolin (Pro)', 'nur Cystein (Cys)', 'nur Leucin (Leu)'], r: 0,
+     e: 'CCC steht in der Codesonne für Prolin.'},
+    {f: 'Und mit einer mRNA nur aus Adenin (AAAAAA…)?', a: ['nur Asparagin (Asn)', 'nur Lysin (Lys)', 'gar keine Kette, weil AAA ein Stoppsignal ist'], r: 1,
+     e: 'AAA steht für Lysin.'}
+  ];
+  $('v4-fragen').innerHTML = F.map(function(f, i){
+    return '<p style="margin:10px 0 4px"><b>' + (i + 1) + '. ' + f.f + '</b></p><div class="ereignisse">' +
+      f.a.map(function(t, j){ return '<button type="button" data-f="' + i + '" data-j="' + j + '">' + t + '</button>'; }).join('') + '</div>';
+  }).join('');
+  var wahl = {};
+  $('v4-fragen').querySelectorAll('button').forEach(function(b){
+    b.addEventListener('click', function(){
+      var f = b.dataset.f; wahl[f] = +b.dataset.j;
+      $('v4-fragen').querySelectorAll('button[data-f="' + f + '"]').forEach(function(x){ x.classList.toggle('gewaehlt', x === b); });
+    });
+  });
+  $('v4-pruefen').addEventListener('click', function(){
+    var r = $('v4-rueck');
+    if (Object.keys(wahl).length < F.length) { r.className = 'rueck nein'; r.textContent = 'Beantworte alle drei Fragen.'; return; }
+    var richtig = F.filter(function(f, i){ return wahl[i] === f.r; }).length;
+    r.className = 'rueck ' + (richtig === F.length ? 'gut' : 'nein');
+    r.innerHTML = richtig + ' von 3 richtig.<br>' + F.map(function(f, i){ return (wahl[i] === f.r ? '✓ ' : '✗ ') + f.e; }).join('<br>');
+  });
+})();
+</script>
+</body>
+</html>

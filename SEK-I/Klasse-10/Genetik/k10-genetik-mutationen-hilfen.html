@@ -1,0 +1,425 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mutationen – Vertiefung und Hilfen</title>
+<!-- Biologie Klasse 10 · Genetik · AB 28 und AB 29. Ohne Lösungen (Repo öffentlich). URL steht in den QR-Codes der Arbeitsblätter: nicht umbenennen. -->
+<!-- Quelle: quellen/web/vorlage.html, Stil aus Genetik/DNA übernommen; erzeugt mit quellen/web/bauen.py -->
+<style>
+:root{
+  --gruen:#2e7d4f; --gruen-d:#1f5e3a; --gruen-hell:#e6f3eb; --blau:#2a7ab8; --tblau:#156e9d; --blau-hell:#e6f0f8;
+  --orange:#d9822b; --orange-hell:#fdf1e4; --violett:#6c2a8c; --violett-hell:#f1e8f6; --rot:#b03a2e; --rot-hell:#f8e5e3;
+  --grau:#6f7a85; --linie:#d5dde5; --bg:#f6f8fa; --karte:#fff; --text:#222; --dunkel:#0f4c6e;
+  --bA:#fbe3c8; --bT:#d6e8f6; --bG:#d5ecdc; --bC:#eadcf2;
+  --sans:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5}
+a{color:var(--tblau)}
+button,select,input{font:inherit}
+button,select{cursor:pointer}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#0f4c6e 0%,#156e9d 55%,#2a7ab8 100%);color:#fff;padding:28px 0 22px}
+header .kurs{font-size:13px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+header h1{margin:4px 0 6px;font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.2}
+header p{margin:0;opacity:.92;max-width:680px}
+nav{position:sticky;top:0;z-index:10;background:rgba(246,248,250,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--linie)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav a{flex:none;text-decoration:none;color:var(--dunkel);border:1px solid var(--linie);background:#fff;border-radius:16px;padding:3px 12px;font-size:14px;font-weight:600}
+nav a.v{color:var(--orange)}
+h2{font-size:21px;color:var(--dunkel);margin:32px 0 4px;scroll-margin-top:56px}
+h3.teil{font-size:16px;color:var(--grau);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 8px}
+.hinweis{color:var(--grau);font-size:14px;margin:0 0 14px}
+.hilfen{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hk{background:var(--karte);border:1.5px dashed #b9c4cf;border-radius:10px;padding:14px 16px}
+.hk h4{margin:0 0 2px;font-size:16px;color:var(--tblau)}
+.hk .zu{font-size:13px;color:var(--grau);margin-bottom:8px}
+.stufe{display:none;margin:8px 0 0;padding:8px 10px;background:var(--blau-hell);border-radius:6px;font-size:15px}
+.stufe.offen{display:block;animation:auf .25s ease}
+@keyframes auf{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.hk button{margin-top:10px;border:1px solid var(--tblau);background:#fff;color:var(--tblau);border-radius:6px;padding:4px 12px;font-size:14px}
+.hk button:hover{background:var(--blau-hell)}
+.hk button[disabled]{opacity:.4;cursor:default}
+.hk .zaehler{font-size:12px;color:var(--grau);margin-left:8px}
+.v-karte{background:var(--karte);border:1px solid var(--linie);border-radius:12px;margin:14px 0;overflow:hidden;scroll-margin-top:56px}
+.v-kopf{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--linie);background:#fbfcfd}
+.v-nr{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center}
+.v-kopf h3{margin:0;font-size:18px}
+.v-inhalt{padding:14px 16px 16px}
+.knopf{border:1px solid var(--linie);background:#fff;border-radius:6px;padding:4px 12px;font-size:14px}
+.knopf.haupt{border-color:var(--tblau);color:var(--tblau);font-weight:600}
+.knopf.an{background:var(--tblau);border-color:var(--tblau);color:#fff}
+.knoepfe{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.rueck{font-size:14px;border-radius:6px;padding:8px 10px;margin-top:8px;display:none}
+.rueck.gut{display:block;background:#e3f4ea;border-left:3px solid var(--gruen)}
+.rueck.nein{display:block;background:#fbe6e3;border-left:3px solid #d0574a}
+.punkte{font-size:14px;color:var(--grau);margin-left:auto}
+.klein{font-size:13px;color:var(--grau)}
+.sicher{background:var(--rot-hell);border-left:3px solid var(--rot);border-radius:6px;padding:8px 12px;font-size:14px;margin:8px 0}
+/* Gegenstrang */
+.strang{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.base{width:38px;height:38px;border-radius:6px;display:grid;place-items:center;font-weight:700;font-size:18px;border:1px solid #9aa5b0}
+.base.A{background:var(--bA)}.base.T{background:var(--bT)}.base.G{background:var(--bG)}.base.C{background:var(--bC)}
+.strang input{width:38px;height:38px;border:1px solid #9aa5b0;border-radius:6px;text-align:center;font-weight:700;font-size:18px;text-transform:uppercase;padding:0}
+.strang input.ok{background:#e3f4ea;border-color:var(--gruen)}
+.strang input.falsch{background:#fbe6e3;border-color:#d0574a}
+.zeile-lab{font-size:13px;color:var(--grau);margin-top:6px}
+/* Chargaff */
+.felder{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.felder label{display:flex;align-items:center;gap:6px;font-weight:600}
+.felder input{width:70px;border:1px solid #9aa5b0;border-radius:6px;padding:4px 6px;text-align:right}
+/* Zeitstrahl */
+.ereignisse{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.ereignisse button{text-align:left;border:1px solid var(--linie);background:#fff;border-radius:8px;padding:8px 12px;font-size:15px}
+.ereignisse button.gewaehlt{background:var(--blau-hell);border-color:var(--tblau)}
+.ereignisse button .nr{display:inline-block;min-width:26px;font-weight:700;color:var(--tblau)}
+/* Maßstab */
+.ausgabe{font-variant-numeric:tabular-nums;font-size:15px;background:#f2f5f8;border-radius:6px;padding:8px 12px;margin-top:6px}
+.regler{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0}
+.regler input[type=range]{flex:1;min-width:200px}
+footer{margin:36px 0 0;border-top:1px solid var(--linie);padding:16px 0 28px;font-size:12.5px;color:var(--grau)}
+sup{font-size:.7em}
+.base.U{background:#f6e7b0}
+select{border:1px solid #9aa5b0;border-radius:6px;padding:3px 6px;background:#fff}
+</style>
+<style>
+.sim-base{width:34px;height:38px;border-radius:6px;display:grid;place-items:center;font-weight:700;font-size:17px;border:1px solid #9aa5b0;cursor:pointer}
+.sim-base.A{background:var(--bA)}.sim-base.U{background:#f6e7b0}.sim-base.G{background:var(--bG)}.sim-base.C{background:var(--bC)}
+.sim-base.aktiv{outline:3px solid var(--orange);outline-offset:1px}
+.sim-base.neu{box-shadow:inset 0 -4px 0 var(--orange)}
+.lücke{width:8px}
+.kette{display:flex;flex-wrap:wrap;gap:4px;margin:4px 0 10px}
+.as{padding:4px 8px;border-radius:14px;background:#e9edf1;font-size:14px;font-weight:600}
+.as.anders{background:var(--orange-hell);color:var(--orange);outline:1.5px solid var(--orange)}
+.as.stopp{background:#fbe6e3;color:#b03a2e}
+.karyo{background:#fff;border:1px solid var(--linie);border-radius:8px;padding:6px}
+.saeulen{display:flex;align-items:flex-end;gap:4px;height:160px;border-bottom:1px solid #9aa5b0;padding:0 4px;margin-top:8px}
+.saeule{flex:1;background:var(--blau);border-radius:3px 3px 0 0;position:relative;transition:height .4s ease}
+.saeule span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:11px;color:var(--grau)}
+.achse{display:flex;gap:4px;padding:0 4px;font-size:11px;color:var(--grau)}
+.achse div{flex:1;text-align:center}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kurs">Biologie · Klasse 10 · Genetik · AB 28 und AB 29</div>
+    <h1>Mutationen und Modifikation: Vertiefung und Hilfen</h1>
+    <p>Hilfen zu allen Teilaufgaben, nur bei Bedarf und stufenweise aufdecken. Für Schnelle: selbst Mutationen erzeugen, Karyogramme auswerten und herausfinden, was die Umwelt an Bohnen verändert und was nicht.</p>
+  </div>
+</header>
+<nav><div class="wrap">
+  <a href="#ab28">Hilfen AB 28</a><a href="#ab29">Hilfen AB 29</a><a class="v" href="#v1">V1 Mutations-Simulator</a><a class="v" href="#v2">V2 Karyogramm-Puzzle</a><a class="v" href="#v3">V3 Modifikation</a>
+</div></nav>
+
+<main class="wrap">
+
+<h2 id="ab28">Hilfen zu AB 28: Genmutationen</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten Stufen entsprechen den Papierkarten am Pult. Für alle Übersetzungen brauchst du die Codesonne von AB 27.</p>
+<h3 class="teil">Aufgabe 1 · Mutationen im Vergleich</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">Übersetzen und zuordnen</div>
+    <div class="stufe">Übersetze zuerst nur die Ausgangs-mRNA. Sie ist dein Vergleichsmaßstab.</div>
+    <div class="stufe">Vergleiche jede veränderte mRNA Triplett für Triplett mit dem Ausgang. Wo ist der Unterschied?</div>
+    <div class="stufe">Prüffragen: gleiche Aminosäure? andere Aminosäure? Stopp mitten in der Kette? Ab einer Stelle ist alles anders?</div>
+    <div class="stufe">Bei Nr. 4 ist keine Base hervorgehoben: Zähle die Basen. Sind es noch gleich viele wie im Ausgang?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Schwere der Folgen</div>
+    <div class="stufe">Frage für jede Mutation: Wie viel vom Protein bleibt richtig?</div>
+    <div class="stufe">Ein Protein funktioniert nur mit der richtigen Form. Was passiert mit der Form, wenn die Kette viel zu kurz ist oder ab einer Stelle ganz anders?</div>
+    <div class="stufe">Ein Urteil braucht eine Begründung: „Am schwersten wiegt …, weil … .“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Sichelzellanämie</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">HBB übersetzen</div>
+    <div class="stufe">Die mRNA ist schon in Tripletts geteilt. Übersetze beide Zeilen und schreibe sie untereinander.</div>
+    <div class="stufe">Welches Triplett ist anders? Welche Base hat sich geändert? Welche Art aus M1 passt?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Folgekette</div>
+    <div class="stufe">Beginne beim Gen und ende bei Amaras Beschwerden. Jeder Schritt folgt aus dem vorherigen.</div>
+    <div class="stufe">Lies M2 und markiere alle Stellen, an denen etwas „dadurch“ oder „deshalb“ passiert.</div>
+    <div class="stufe">Gerüst: Base → mRNA → Aminosäure → Hämoglobin → rote Blutkörperchen → Blutgefäße → Beschwerden.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c ★</h4><div class="zu">Malaria</div>
+    <div class="stufe">Wer hat in einem Malariagebiet die besten Überlebenschancen: Menschen ohne, mit einem oder mit zwei Sichelzell-Allelen?</div>
+    <div class="stufe">Wer länger lebt, bekommt im Durchschnitt mehr Kinder. Was passiert dann mit der Häufigkeit des Allels?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 · Mutagene</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Körperzelle und Keimzelle</div>
+    <div class="stufe">Welche Zellen erhalten die Mutation, wenn sich eine mutierte Hautzelle teilt?</div>
+    <div class="stufe">Aus welcher Zelle entsteht ein Kind? Welche Zellen geben also Erbinformation an Kinder weiter?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Solarium-Verbot</div>
+    <div class="stufe">Lege zwei Spalten an: Was spricht für das Verbot, was dagegen?</div>
+    <div class="stufe">Denke an: Mutagen, Hautkrebs, empfindliche junge Haut, Selbstbestimmung, Sonne im Freien.</div>
+    <div class="stufe">Gewichte am Ende: Welches Argument ist dir am wichtigsten, und warum?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2 id="ab29">Hilfen zu AB 29: Karyogramm und Modifikation</h2>
+<h3 class="teil">Aufgabe 1 · Karyogramm</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">Karyogramm auswerten</div>
+    <div class="stufe">Zähle die Chromosomen Paar für Paar. Wo sind es nicht genau zwei?</div>
+    <div class="stufe">Schau auf das letzte Paar: Zwei gleich große X-Chromosomen oder ein großes X und ein kleines Y?</div>
+    <div class="stufe">Üben mit anderen Karyogrammen: Vertiefung V2.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Fehlverteilung</div>
+    <div class="stufe">Vergleiche in Abb. 2 die linke und die rechte Seite. Was ist bei der Fehlverteilung anders?</div>
+    <div class="stufe">Bei der Befruchtung verschmelzen zwei Keimzellen. Wie viele Chromosomen 21 bringt jede mit?</div>
+    <div class="stufe">Aus der Zygote entstehen durch Mitose alle Körperzellen. Was bedeutet das für jede Zelle des Kindes?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Pränataldiagnostik</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Tabelle beschreiben</div>
+    <div class="stufe">„1 von 1 500“ bedeutet: Unter 1 500 Geburten ist im Durchschnitt ein Kind mit Trisomie 21. Ist „1 von 30“ wahrscheinlicher oder unwahrscheinlicher?</div>
+    <div class="stufe">Ab welchem Alter steigt die Wahrscheinlichkeit besonders stark?</div>
+    <div class="stufe">Lies in M3: Was untersucht der Bluttest, und was muss danach noch passieren?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Beurteilen</div>
+    <div class="stufe">Wer ist von der Entscheidung betroffen? Schreibe mindestens vier Beteiligte auf.</div>
+    <div class="stufe">Was spricht aus der Sicht jeder Gruppe dafür, was dagegen? Denke auch an Menschen, die mit Trisomie 21 leben.</div>
+    <div class="stufe">Unterscheide: Es geht um eine Regel für die Krankenkasse, nicht um den Wert eines Menschen.</div>
+    <div class="stufe">Formuliere dein Urteil: „Ich halte … für richtig, weil … . Dabei ist mir besonders wichtig, dass … .“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 · Mutation oder Modifikation?</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Zwillinge</div>
+    <div class="stufe">Gleiche DNA heißt gleiche Gene. Was beeinflusst Körpergewicht oder Bräune außer den Genen?</div>
+    <div class="stufe">Satzanfang: „Ich vermute, dass … , weil … .“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Säulendiagramm</div>
+    <div class="stufe">x-Achse: Länge in mm (9 bis 16). y-Achse: Anzahl (0 bis 30).</div>
+    <div class="stufe">Achsen beschriften, gleich breite Säulen, Höhe genau nach der Tabelle.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3c</h4><div class="zu">Bohnen</div>
+    <div class="stufe">Alle Bohnen haben dasselbe Erbgut. Was kann trotzdem verschieden sein, während eine Bohne an der Pflanze wächst?</div>
+    <div class="stufe">Wenn große Bohnen ihre Größe vererben würden: Was müsste dann bei der Aussaat der größten Bohnen herauskommen?</div>
+    <div class="stufe">Probiere es aus: Vertiefung V3.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3d</h4><div class="zu">Vergleichstabelle</div>
+    <div class="stufe">Frage für jede Zeile: Was ist die Ursache? Wird die DNA verändert?</div>
+    <div class="stufe">Nur Veränderungen der DNA in Keimzellen können an Kinder weitergegeben werden. Was folgt daraus für die Modifikation?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2>Vertiefungen für Schnelle</h2>
+
+<section class="v-karte" id="v1">
+  <div class="v-kopf"><div class="v-nr">V1</div><h3>Mutations-Simulator</h3></div>
+  <div class="v-inhalt">
+    <p>Klicke eine Base an und verändere sie: austauschen, löschen oder davor eine neue Base einfügen. Darunter siehst du sofort, was aus dem Protein wird. Versuche, alle vier Arten von Genmutationen zu erzeugen.</p>
+    <div class="strang" id="v1-mrna"></div>
+    <div class="knoepfe" id="v1-knoepfe">
+      <span class="klein" style="align-self:center">Austauschen durch:</span>
+      <button class="knopf" data-tausch="A">A</button><button class="knopf" data-tausch="U">U</button><button class="knopf" data-tausch="G">G</button><button class="knopf" data-tausch="C">C</button>
+      <span class="klein" style="align-self:center;margin-left:8px">davor einfügen:</span>
+      <button class="knopf" data-ein="A">+A</button><button class="knopf" data-ein="U">+U</button><button class="knopf" data-ein="G">+G</button><button class="knopf" data-ein="C">+C</button>
+      <button class="knopf" id="v1-loeschen" style="margin-left:8px">Base löschen</button>
+      <button class="knopf haupt" id="v1-reset" style="margin-left:8px">Zurücksetzen</button>
+    </div>
+    <div class="zeile-lab">Protein ohne Mutation</div><div class="kette" id="v1-alt"></div>
+    <div class="zeile-lab">Protein mit deiner Mutation</div><div class="kette" id="v1-neu"></div>
+    <div class="rueck" id="v1-rueck"></div>
+    <p class="klein" id="v1-gefunden"></p>
+  </div>
+</section>
+
+<section class="v-karte" id="v2">
+  <div class="v-kopf"><div class="v-nr">V2</div><h3>Karyogramm-Puzzle</h3><span class="punkte" id="v2-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Werte das Karyogramm aus (Schema). Wähle die Zahl der Chromosomen, das Geschlecht und den Befund.</p>
+    <div class="karyo" id="v2-bild"></div>
+    <div class="felder">
+      <label>Zahl <select id="v2-zahl"><option value="">?</option><option>45</option><option>46</option><option>47</option></select></label>
+      <label>Geschlecht <select id="v2-geschlecht"><option value="">?</option><option>weiblich</option><option>männlich</option></select></label>
+      <label>Befund <select id="v2-befund"><option value="">?</option><option>unauffällig</option><option>Trisomie 13</option><option>Trisomie 18</option><option>Trisomie 21</option><option>ein X-Chromosom zu viel (XXY)</option><option>nur ein X-Chromosom (X0)</option></select></label>
+    </div>
+    <div class="knoepfe"><button class="knopf haupt" id="v2-pruefen">Prüfen</button><button class="knopf" id="v2-neu">Neues Karyogramm →</button></div>
+    <div class="rueck" id="v2-rueck"></div>
+  </div>
+</section>
+
+<section class="v-karte" id="v3">
+  <div class="v-kopf"><div class="v-nr">V3</div><h3>Modifikation: Bohnen mit gleichen Genen</h3></div>
+  <div class="v-inhalt">
+    <p>Alle Bohnenpflanzen haben dasselbe Erbgut. Wähle die Umweltbedingungen und ernte 100 Bohnen. Säe danach nur die größten oder nur die kleinsten Bohnen aus und vergleiche die nächste Generation.</p>
+    <div class="knoepfe">
+      <span class="klein" style="align-self:center">Umwelt:</span>
+      <button class="knopf" data-umwelt="10.5">wenig Licht und Wasser</button><button class="knopf an" data-umwelt="12.6">normal</button><button class="knopf" data-umwelt="14.6">viel Licht, Wasser und Dünger</button>
+    </div>
+    <div class="saeulen" id="v3-saeulen"></div><div class="achse" id="v3-achse"></div>
+    <p class="klein" style="text-align:center;margin:2px 0 8px">Länge in mm</p>
+    <div class="knoepfe"><button class="knopf haupt" id="v3-ernte">Ernten (100 Bohnen)</button><button class="knopf" id="v3-gross">Nur die 10 größten aussäen</button><button class="knopf" id="v3-klein">Nur die 10 kleinsten aussäen</button></div>
+    <div class="ausgabe" id="v3-ausgabe"></div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Biologie · Klasse 10 · Genetik · Hilfen zu den Arbeitsblättern AB 28 (Genmutationen) und AB 29 (Karyogramm und Modifikation) · Noto La Diega · Hilfen ohne Lösungen</div></footer>
+
+<script>
+// Gestufte Hilfekarten
+(function(){
+  document.querySelectorAll('.hk').forEach(function(k){
+    var st = k.querySelectorAll('.stufe'), btn = k.querySelector('button'), z = k.querySelector('.zaehler'), n = 0;
+    z.textContent = '0 / ' + st.length;
+    btn.addEventListener('click', function(){
+      if (n < st.length) { st[n].classList.add('offen'); n++; }
+      z.textContent = n + ' / ' + st.length;
+      if (n >= st.length) { btn.textContent = 'alle Stufen offen'; btn.disabled = true; } else btn.textContent = 'Stufe ' + (n + 1) + ' aufdecken';
+    });
+  });
+})();
+var $ = function(id){ return document.getElementById(id); };
+var CODE = 'FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG';
+var AS3 = {F:'Phe',L:'Leu',S:'Ser',Y:'Tyr',C:'Cys',W:'Trp',P:'Pro',H:'His',Q:'Gln',R:'Arg',I:'Ile',M:'Met',T:'Thr',N:'Asn',K:'Lys',V:'Val',A:'Ala',D:'Asp',E:'Glu',G:'Gly','*':'Stopp'};
+function uebersetze(tri){ var b = 'UCAG'; return AS3[CODE[b.indexOf(tri[0]) * 16 + b.indexOf(tri[1]) * 4 + b.indexOf(tri[2])]]; }
+function translation(s){
+  var k = [];
+  for (var i = 0; i + 3 <= s.length; i += 3) { var a = uebersetze(s.substr(i, 3)); k.push(a); if (a === 'Stopp') break; }
+  return k;
+}
+
+// V1 Mutations-Simulator
+(function(){
+  var START = 'AUGGCUAAAGGCUGGUUUCAUUAA';
+  var seq = START.split(''), neu = START.split('').map(function(){ return false; }), aktiv = 6, arten = {};
+  function zeichne(){
+    var h = '';
+    seq.forEach(function(b, i){
+      h += '<div class="sim-base ' + b + (i === aktiv ? ' aktiv' : '') + (neu[i] ? ' neu' : '') + '" data-i="' + i + '">' + b + '</div>';
+      if (i % 3 === 2) h += '<div class="lücke"></div>';
+    });
+    $('v1-mrna').innerHTML = h;
+    $('v1-mrna').querySelectorAll('.sim-base').forEach(function(d){ d.addEventListener('click', function(){ aktiv = +d.dataset.i; zeichne(); }); });
+    var alt = translation(START), jetzt = translation(seq.join(''));
+    $('v1-alt').innerHTML = alt.map(function(a){ return '<span class="as' + (a === 'Stopp' ? ' stopp' : '') + '">' + a + '</span>'; }).join('');
+    $('v1-neu').innerHTML = jetzt.map(function(a, i){ return '<span class="as' + (a === 'Stopp' ? ' stopp' : (a !== alt[i] ? ' anders' : '')) + '">' + a + '</span>'; }).join('') + (jetzt[jetzt.length - 1] !== 'Stopp' ? '<span class="as">… (kein Stopp mehr im Leseraster)</span>' : '');
+    bewerte(alt, jetzt);
+  }
+  function bewerte(alt, jetzt){
+    var r = $('v1-rueck'), txt = '', art = '';
+    if (seq.join('') === START) { r.className = 'rueck'; return; }
+    if (seq.length !== START.length) {
+      art = 'Leserasterverschiebung';
+      txt = (seq.length - START.length) % 3 === 0 ? 'Es wurden drei Basen (oder ein Vielfaches) verändert: Das Leseraster stimmt danach wieder, aber Aminosäuren fehlen oder kommen hinzu.' :
+        'Leserasterverschiebung: Ab der veränderten Stelle werden alle Tripletts verschoben gelesen. Die Aminosäuren danach sind fast alle anders, oft entsteht bald ein Stopp.';
+    } else {
+      var unterschiede = jetzt.filter(function(a, i){ return a !== alt[i]; }).length + Math.abs(jetzt.length - alt.length);
+      if (jetzt.length < alt.length && jetzt[jetzt.length - 1] === 'Stopp') { art = 'Austausch, Stopp'; txt = 'Ein Stopp-Triplett ist entstanden: Die Kette bricht zu früh ab.'; }
+      else if (unterschiede === 0) { art = 'Austausch, stumm'; txt = 'Stumme Mutation: Das neue Triplett codiert dieselbe Aminosäure. Das Protein bleibt gleich.'; }
+      else { art = 'Austausch, andere Aminosäure'; txt = 'Eine Aminosäure ist anders. Wie stark das Protein betroffen ist, hängt von der Stelle und der neuen Aminosäure ab.'; }
+    }
+    r.className = 'rueck gut'; r.textContent = txt;
+    arten[art] = true;
+    $('v1-gefunden').textContent = 'Schon erzeugt: ' + Object.keys(arten).join(' · ') + (Object.keys(arten).length >= 4 ? ' – alle vier Arten gefunden!' : '');
+  }
+  $('v1-knoepfe').querySelectorAll('[data-tausch]').forEach(function(b){ b.addEventListener('click', function(){ if (aktiv < seq.length) { seq[aktiv] = b.dataset.tausch; neu[aktiv] = true; zeichne(); } }); });
+  $('v1-knoepfe').querySelectorAll('[data-ein]').forEach(function(b){ b.addEventListener('click', function(){ seq.splice(aktiv, 0, b.dataset.ein); neu.splice(aktiv, 0, true); zeichne(); }); });
+  $('v1-loeschen').addEventListener('click', function(){ if (seq.length > 3) { seq.splice(aktiv, 1); neu.splice(aktiv, 1); if (aktiv >= seq.length) aktiv = seq.length - 1; zeichne(); } });
+  $('v1-reset').addEventListener('click', function(){ seq = START.split(''); neu = seq.map(function(){ return false; }); aktiv = 6; zeichne(); });
+  zeichne();
+})();
+
+// V2 Karyogramm-Puzzle
+(function(){
+  var L = [0, 25, 24, 20, 19, 18, 17, 16, 14.5, 14, 13.5, 13.5, 13.3, 11, 10.5, 10, 9.2, 8.5, 8, 6.5, 6.3, 4.8, 5.2];
+  var FAELLE = [
+    {zahl: '46', g: 'weiblich', b: 'unauffällig', extra: {}, gon: ['X', 'X']},
+    {zahl: '46', g: 'männlich', b: 'unauffällig', extra: {}, gon: ['X', 'Y']},
+    {zahl: '47', g: 'männlich', b: 'Trisomie 21', extra: {21: 3}, gon: ['X', 'Y']},
+    {zahl: '47', g: 'weiblich', b: 'Trisomie 21', extra: {21: 3}, gon: ['X', 'X']},
+    {zahl: '47', g: 'weiblich', b: 'Trisomie 18', extra: {18: 3}, gon: ['X', 'X']},
+    {zahl: '47', g: 'männlich', b: 'Trisomie 13', extra: {13: 3}, gon: ['X', 'Y']},
+    {zahl: '47', g: 'männlich', b: 'ein X-Chromosom zu viel (XXY)', extra: {}, gon: ['X', 'X', 'Y']},
+    {zahl: '45', g: 'weiblich', b: 'nur ein X-Chromosom (X0)', extra: {}, gon: ['X']}
+  ];
+  var fall, gut = 0, runden = 0, geprueft = false;
+  function chrom(x, y, l, s){
+    var h = l * 4, w = 9;
+    return '<rect x="' + (x - w / 2) + '" y="' + (y - h) + '" width="' + w + '" height="' + h + '" rx="4" fill="#fff" stroke="#2b2b2b" stroke-width="1.2"/>' +
+           '<line x1="' + (x - w / 2) + '" y1="' + (y - h * 0.62) + '" x2="' + (x + w / 2) + '" y2="' + (y - h * 0.62) + '" stroke="#2b2b2b" stroke-width="2.4"/>' +
+           (s ? '<text x="' + x + '" y="' + (y + 13) + '" font-size="10" text-anchor="middle" fill="#6f7a85">' + s + '</text>' : '');
+  }
+  function zeichne(){
+    var reihen = [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10, 11, 12], [13, 14, 15, 16, 17, 18], [19, 20, 21, 22, 'G']];
+    var yb = [110, 200, 270, 330], W = 640, svg = '';
+    reihen.forEach(function(r, ri){
+      var br = W / r.length;
+      r.forEach(function(nr, i){
+        var xc = br * (i + 0.5);
+        if (nr === 'G') {
+          fall.gon.forEach(function(g, k){ svg += chrom(xc + (k - (fall.gon.length - 1) / 2) * 14, yb[ri], g === 'X' ? 15.5 : 5.5, ''); });
+          svg += '<text x="' + xc + '" y="' + (yb[ri] + 13) + '" font-size="10" text-anchor="middle" fill="#6f7a85">' + fall.gon.join(' ') + '</text>';
+          return;
+        }
+        var n = fall.extra[nr] || 2;
+        for (var k = 0; k < n; k++) svg += chrom(xc + (k - (n - 1) / 2) * 13, yb[ri], L[nr], '');
+        svg += '<text x="' + xc + '" y="' + (yb[ri] + 13) + '" font-size="10" text-anchor="middle" fill="#6f7a85">' + nr + '</text>';
+      });
+    });
+    $('v2-bild').innerHTML = '<svg viewBox="0 0 640 350" role="img" aria-label="Karyogramm (Schema)">' + svg + '</svg>';
+  }
+  function neu(){
+    var alt = fall; do { fall = FAELLE[Math.floor(Math.random() * FAELLE.length)]; } while (fall === alt);
+    ['v2-zahl', 'v2-geschlecht', 'v2-befund'].forEach(function(id){ $(id).value = ''; });
+    $('v2-rueck').className = 'rueck'; geprueft = false; zeichne();
+  }
+  $('v2-pruefen').addEventListener('click', function(){
+    var z = $('v2-zahl').value, g = $('v2-geschlecht').value, b = $('v2-befund').value, r = $('v2-rueck');
+    if (!z || !g || !b) { r.className = 'rueck nein'; r.textContent = 'Bitte alle drei Felder auswählen.'; return; }
+    var fehler = [];
+    if (z !== fall.zahl) fehler.push('Zähle die Chromosomen noch einmal Paar für Paar.');
+    if (g !== fall.g) fehler.push('Geschlecht: Entscheidend ist, ob ein Y-Chromosom vorhanden ist.');
+    if (b !== fall.b) fehler.push('Befund: Suche die Stelle, an der nicht genau zwei Chromosomen (bzw. XX oder XY) stehen.');
+    if (!geprueft) { runden++; if (!fehler.length) gut++; geprueft = true; }
+    r.className = 'rueck ' + (fehler.length ? 'nein' : 'gut');
+    r.textContent = fehler.length ? fehler.join(' ') : 'Richtig ausgewertet!' + (fall.b.indexOf('XXY') >= 0 ? ' (Klinefelter-Syndrom: Das Y-Chromosom bestimmt das männliche Geschlecht.)' : fall.b.indexOf('X0') >= 0 ? ' (Turner-Syndrom: ohne Y-Chromosom weiblich.)' : '');
+    $('v2-punkte').textContent = gut + ' von ' + runden + ' richtig';
+  });
+  $('v2-neu').addEventListener('click', neu);
+  neu();
+})();
+
+// V3 Modifikation
+(function(){
+  var umwelt = 12.6, bohnen = [], KL = [8, 9, 10, 11, 12, 13, 14, 15, 16, 17];
+  function normal(){ var u = 1 - Math.random(), v = Math.random(); return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v); }
+  function ernte(){ var b = []; for (var i = 0; i < 100; i++) b.push(Math.min(17, Math.max(8, Math.round(umwelt + 1.3 * normal())))); return b; }
+  function mittel(b){ return b.reduce(function(s, x){ return s + x; }, 0) / b.length; }
+  function zeichne(text){
+    var n = KL.map(function(k){ return bohnen.filter(function(x){ return x === k; }).length; });
+    var max = Math.max.apply(null, n.concat([1]));
+    $('v3-saeulen').innerHTML = n.map(function(z){ return '<div class="saeule" style="height:' + (z / Math.max(max, 30) * 100) + '%"><span>' + (z || '') + '</span></div>'; }).join('');
+    $('v3-achse').innerHTML = KL.map(function(k){ return '<div>' + k + '</div>'; }).join('');
+    $('v3-ausgabe').innerHTML = text;
+  }
+  document.querySelectorAll('[data-umwelt]').forEach(function(b){
+    b.addEventListener('click', function(){
+      umwelt = +b.dataset.umwelt;
+      document.querySelectorAll('[data-umwelt]').forEach(function(x){ x.classList.toggle('an', x === b); });
+      bohnen = ernte(); zeichne('Neue Umwelt, gleiche Gene: Mittelwert <b>' + mittel(bohnen).toFixed(1).replace('.', ',') + ' mm</b>.');
+    });
+  });
+  $('v3-ernte').addEventListener('click', function(){ bohnen = ernte(); zeichne('Ernte: Mittelwert <b>' + mittel(bohnen).toFixed(1).replace('.', ',') + ' mm</b>.'); });
+  function auslese(gross){
+    var sortiert = bohnen.slice().sort(function(a, b){ return a - b; });
+    var auswahl = gross ? sortiert.slice(-10) : sortiert.slice(0, 10);
+    var m0 = mittel(auswahl);
+    bohnen = ernte();
+    zeichne('Ausgesät: die 10 ' + (gross ? 'größten' : 'kleinsten') + ' Bohnen (Mittelwert ' + m0.toFixed(1).replace('.', ',') + ' mm). Ihre Nachkommen: Mittelwert <b>' + mittel(bohnen).toFixed(1).replace('.', ',') + ' mm</b>. Was fällt dir auf?');
+  }
+  $('v3-gross').addEventListener('click', function(){ auslese(true); });
+  $('v3-klein').addEventListener('click', function(){ auslese(false); });
+  bohnen = ernte(); zeichne('Ernte: Mittelwert <b>' + mittel(bohnen).toFixed(1).replace('.', ',') + ' mm</b>.');
+})();
+</script>
+</body>
+</html>
