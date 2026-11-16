@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DNA – Vertiefung und Hilfen</title>
+<!-- Biologie Klasse 10 · Genetik · DNA · AB 22 bis AB 25. Ohne Lösungen (Repo öffentlich). URL steht in den QR-Codes der Arbeitsblätter: nicht umbenennen. -->
+<style>
+:root{
+  --gruen:#2e7d4f; --gruen-d:#1f5e3a; --gruen-hell:#e6f3eb; --blau:#2a7ab8; --tblau:#156e9d; --blau-hell:#e6f0f8;
+  --orange:#d9822b; --orange-hell:#fdf1e4; --violett:#6c2a8c; --violett-hell:#f1e8f6; --rot:#b03a2e; --rot-hell:#f8e5e3;
+  --grau:#6f7a85; --linie:#d5dde5; --bg:#f6f8fa; --karte:#fff; --text:#222; --dunkel:#0f4c6e;
+  --bA:#fbe3c8; --bT:#d6e8f6; --bG:#d5ecdc; --bC:#eadcf2;
+  --sans:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5}
+a{color:var(--tblau)}
+button,select,input{font:inherit}
+button,select{cursor:pointer}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#0f4c6e 0%,#156e9d 55%,#2a7ab8 100%);color:#fff;padding:28px 0 22px}
+header .kurs{font-size:13px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+header h1{margin:4px 0 6px;font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.2}
+header p{margin:0;opacity:.92;max-width:680px}
+nav{position:sticky;top:0;z-index:10;background:rgba(246,248,250,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--linie)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav a{flex:none;text-decoration:none;color:var(--dunkel);border:1px solid var(--linie);background:#fff;border-radius:16px;padding:3px 12px;font-size:14px;font-weight:600}
+nav a.v{color:var(--orange)}
+h2{font-size:21px;color:var(--dunkel);margin:32px 0 4px;scroll-margin-top:56px}
+h3.teil{font-size:16px;color:var(--grau);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 8px}
+.hinweis{color:var(--grau);font-size:14px;margin:0 0 14px}
+.hilfen{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hk{background:var(--karte);border:1.5px dashed #b9c4cf;border-radius:10px;padding:14px 16px}
+.hk h4{margin:0 0 2px;font-size:16px;color:var(--tblau)}
+.hk .zu{font-size:13px;color:var(--grau);margin-bottom:8px}
+.stufe{display:none;margin:8px 0 0;padding:8px 10px;background:var(--blau-hell);border-radius:6px;font-size:15px}
+.stufe.offen{display:block;animation:auf .25s ease}
+@keyframes auf{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.hk button{margin-top:10px;border:1px solid var(--tblau);background:#fff;color:var(--tblau);border-radius:6px;padding:4px 12px;font-size:14px}
+.hk button:hover{background:var(--blau-hell)}
+.hk button[disabled]{opacity:.4;cursor:default}
+.hk .zaehler{font-size:12px;color:var(--grau);margin-left:8px}
+.v-karte{background:var(--karte);border:1px solid var(--linie);border-radius:12px;margin:14px 0;overflow:hidden;scroll-margin-top:56px}
+.v-kopf{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--linie);background:#fbfcfd}
+.v-nr{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center}
+.v-kopf h3{margin:0;font-size:18px}
+.v-inhalt{padding:14px 16px 16px}
+.knopf{border:1px solid var(--linie);background:#fff;border-radius:6px;padding:4px 12px;font-size:14px}
+.knopf.haupt{border-color:var(--tblau);color:var(--tblau);font-weight:600}
+.knopf.an{background:var(--tblau);border-color:var(--tblau);color:#fff}
+.knoepfe{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.rueck{font-size:14px;border-radius:6px;padding:8px 10px;margin-top:8px;display:none}
+.rueck.gut{display:block;background:#e3f4ea;border-left:3px solid var(--gruen)}
+.rueck.nein{display:block;background:#fbe6e3;border-left:3px solid #d0574a}
+.punkte{font-size:14px;color:var(--grau);margin-left:auto}
+.klein{font-size:13px;color:var(--grau)}
+.sicher{background:var(--rot-hell);border-left:3px solid var(--rot);border-radius:6px;padding:8px 12px;font-size:14px;margin:8px 0}
+/* Gegenstrang */
+.strang{display:flex;flex-wrap:wrap;gap:4px;margin:6px 0}
+.base{width:38px;height:38px;border-radius:6px;display:grid;place-items:center;font-weight:700;font-size:18px;border:1px solid #9aa5b0}
+.base.A{background:var(--bA)}.base.T{background:var(--bT)}.base.G{background:var(--bG)}.base.C{background:var(--bC)}
+.strang input{width:38px;height:38px;border:1px solid #9aa5b0;border-radius:6px;text-align:center;font-weight:700;font-size:18px;text-transform:uppercase;padding:0}
+.strang input.ok{background:#e3f4ea;border-color:var(--gruen)}
+.strang input.falsch{background:#fbe6e3;border-color:#d0574a}
+.zeile-lab{font-size:13px;color:var(--grau);margin-top:6px}
+/* Chargaff */
+.felder{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0}
+.felder label{display:flex;align-items:center;gap:6px;font-weight:600}
+.felder input{width:70px;border:1px solid #9aa5b0;border-radius:6px;padding:4px 6px;text-align:right}
+/* Zeitstrahl */
+.ereignisse{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.ereignisse button{text-align:left;border:1px solid var(--linie);background:#fff;border-radius:8px;padding:8px 12px;font-size:15px}
+.ereignisse button.gewaehlt{background:var(--blau-hell);border-color:var(--tblau)}
+.ereignisse button .nr{display:inline-block;min-width:26px;font-weight:700;color:var(--tblau)}
+/* Maßstab */
+.ausgabe{font-variant-numeric:tabular-nums;font-size:15px;background:#f2f5f8;border-radius:6px;padding:8px 12px;margin-top:6px}
+.regler{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:8px 0}
+.regler input[type=range]{flex:1;min-width:200px}
+footer{margin:36px 0 0;border-top:1px solid var(--linie);padding:16px 0 28px;font-size:12.5px;color:var(--grau)}
+sup{font-size:.7em}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kurs">Biologie · Klasse 10 · Genetik · AB 22 bis AB 25</div>
+    <h1>DNA: Vertiefung und Hilfen</h1>
+    <p>Hilfen zu allen Teilaufgaben, nur bei Bedarf und stufenweise aufdecken. Für Schnelle: Gegenstränge üben, Basenanteile berechnen, die Geschichte der Doppelhelix ordnen, den DNA-Versuch durchdenken und mit Maßstäben rechnen.</p>
+  </div>
+</header>
+<nav><div class="wrap">
+  <a href="#ab22">Hilfen AB 22</a><a href="#ab23">Hilfen AB 23</a><a href="#ab24">Hilfen AB 24</a><a href="#ab25">Hilfen AB 25</a><a class="v" href="#v1">V1 Gegenstrang</a><a class="v" href="#v2">V2 Chargaff</a><a class="v" href="#v3">V3 Zeitstrahl</a><a class="v" href="#v4">V4 Was wäre, wenn …?</a><a class="v" href="#v5">V5 Maßstab</a>
+</div></nav>
+
+<main class="wrap">
+
+<!-- ======================================================== AB 22 -->
+<h2 id="ab22">Hilfen zu AB 22: Bau der DNA</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten Stufen entsprechen den Papierkarten am Pult.</p>
+<h3 class="teil">Aufgabe 1 · Vom Organismus zum Molekül</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">Bilder zuordnen</div>
+    <div class="stufe">Die Bilder werden von links nach rechts immer stärker vergrößert. Beginne beim größten Objekt.</div>
+    <div class="stufe">Achte auf die Größenangaben über den Bildern: Was ist etwa 20 µm groß, was nur 1 nm?</div>
+    <div class="stufe">Lies M1 noch einmal: Welches Gebilde sieht man nur während der Zellteilung X-förmig? Woraus ist die DNA aufgebaut?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Chromosom, DNA, Gen</div>
+    <div class="stufe">Überlege: Was ist das Größte, was das Kleinste? Was steckt worin?</div>
+    <div class="stufe">Vergleich mit einem Buch: Das Chromosom ist der Band, die DNA der Text darin. Was wäre dann ein Gen?</div>
+    <div class="stufe">Verwende in deiner Erklärung die Wörter „besteht aus“, „ist ein Abschnitt“ und „viele“.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Die Bausteine der DNA</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Teile benennen</div>
+    <div class="stufe">In Abb. 2 stehen Buchstaben in den Formen: Z und P. Wofür stehen sie?</div>
+    <div class="stufe">Zwischen den Basen siehst du gestrichelte Linien. Lies in M2 nach, wie diese Kräfte heißen.</div>
+    <div class="stufe">Der gestrichelte Rahmen umfasst drei Teile. Wie heißt ein Baustein aus diesen drei Teilen?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Gegenstrang ergänzen</div>
+    <div class="stufe">Es gibt genau zwei Paarungsregeln. Schreibe sie dir an den Rand.</div>
+    <div class="stufe">Gehe Spalte für Spalte vor. Unter jedes A gehört dieselbe Base, unter jedes G auch.</div>
+    <div class="stufe">Kontrolle: Der Gegenstrang ist nicht die Abschrift von Strang 1. Wenn beide gleich aussehen, ist etwas falsch.</div>
+    <div class="stufe">Üben mit anderen Strängen: Vertiefung V1 weiter unten.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c</h4><div class="zu">Gleich breit</div>
+    <div class="stufe">Schau dir in Abb. 2 die Länge der farbigen Balken an. Sind alle Basen gleich lang?</div>
+    <div class="stufe">In M2 steht, welche Basen größer sind. Welche Basen stehen sich in jedem Paar gegenüber?</div>
+    <div class="stufe">Was würde passieren, wenn zwei große Basen ein Paar bilden würden? Was, wenn zwei kleine?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 · Rechnen mit der Doppelhelix</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Basenanteile</div>
+    <div class="stufe">Die Regel von Chargaff steht im Kasten in M3. Welcher Anteil ist genauso groß wie der von Adenin?</div>
+    <div class="stufe">Alle vier Anteile zusammen ergeben 100 %. Wie viel bleibt für G und C zusammen?</div>
+    <div class="stufe">G und C sind gleich groß: Teile den Rest durch 2. Üben mit anderen Zahlen: Vertiefung V2.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b ★</h4><div class="zu">Länge der DNA</div>
+    <div class="stufe">Jedes Basenpaar nimmt 0,34 nm Länge ein. Was musst du also mit 6,4 Milliarden rechnen?</div>
+    <div class="stufe">Umrechnung: 1 m = 1 000 000 000 nm (eine Milliarde nm).</div>
+    <div class="stufe">Für die Verpackung: Lies in M1 nach, worum die DNA gewickelt ist, und stell dir ein Garnknäuel vor.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<!-- ======================================================== AB 23 -->
+<h2 id="ab23">Hilfen zu AB 23: Die Entdeckung der Doppelhelix</h2>
+<h3 class="teil">Aufgabe 1 · Averys Versuch</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">Welcher Stoff?</div>
+    <div class="stufe">In jedem Ansatz fehlt ein Stoff, weil ein Enzym ihn abgebaut hat. Schreibe für jeden Ansatz auf: Was fehlt? Gibt es Transformation?</div>
+    <div class="stufe">Denkregel: Wenn ein Stoff fehlt und die Wirkung trotzdem auftritt, dann wird dieser Stoff nicht gebraucht.</div>
+    <div class="stufe">In welchem Ansatz bleibt die Wirkung aus? Welcher Stoff fehlt genau dort?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Ansatz 1</div>
+    <div class="stufe">Was ist in Ansatz 1 anders als in allen anderen?</div>
+    <div class="stufe">Stell dir vor, es gäbe Ansatz 1 nicht und in Ansatz 4 fände keine Transformation statt. Woher wüsstest du, dass der Extrakt überhaupt wirkt?</div>
+    <div class="stufe">Fachbegriff für einen solchen Vergleichsansatz: Kontrollansatz.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Der Phagen-Versuch</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Schwefel und Phosphor</div>
+    <div class="stufe">Lies in M3: Welches Element kommt nur im Protein vor, welches nur in der DNA?</div>
+    <div class="stufe">Was wäre, wenn man ein Element markiert, das in beiden Stoffen vorkommt? Könnte man dann sagen, wo welcher Stoff geblieben ist?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Tabelle auswerten</div>
+    <div class="stufe">Lies die Tabelle Spalte für Spalte: Wo ist der größte Teil der Radioaktivität in Ansatz 1, wo in Ansatz 2?</div>
+    <div class="stufe">Im Überstand sind die leeren Hüllen, im Sediment die Bakterien. Welcher markierte Stoff ist also in die Bakterien gelangt?</div>
+    <div class="stufe">Achte auch auf die letzte Zeile: Welcher Stoff findet sich in den neuen Phagen wieder? Nur das, was die Erbinformation trägt, wird weitergegeben.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c ★</h4><div class="zu">20 % im Sediment</div>
+    <div class="stufe">Der Mixer schüttelt die Hüllen ab. Schafft er das vollständig?</div>
+    <div class="stufe">Gelangt eine Hülle, die außen am Bakterium hängt, beim Zentrifugieren ins Sediment?</div>
+    <div class="stufe">Welche Zeile der Tabelle hilft, zwischen „hängt außen dran“ und „ist hineingelangt“ zu unterscheiden?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 und 4 · Chargaff, Franklin, Watson und Crick</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Regelmäßigkeiten</div>
+    <div class="stufe">Vergleiche innerhalb einer Zeile: Welche zwei Zahlen sind fast gleich? Und welche zwei anderen?</div>
+    <div class="stufe">Vergleiche dann zwischen den Zeilen: Hat jedes Lebewesen gleich viel Adenin?</div>
+    <div class="stufe">Erklärung: Erinnere dich an AB 22. Welche Base steht im zweiten Strang jedem A gegenüber? Warum ist die Basensequenz bei Mensch und Weizen nicht dieselbe?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 4a</h4><div class="zu">Wer hat die Doppelhelix entdeckt?</div>
+    <div class="stufe">Unterscheide: Wer hat die DNA entdeckt? Wer hat Daten über ihren Bau gesammelt? Wer hat das Modell gebaut?</div>
+    <div class="stufe">Lege zwei Spalten an: „Leistung von Watson und Crick“ und „Beiträge anderer“. Nutze den Zeitstrahl in M1 (oder Vertiefung V3).</div>
+    <div class="stufe">Ein Urteil hat drei Teile: Was an der Aussage stimmt, was fehlt oder schief ist, und wie du sie besser formulieren würdest.</div>
+    <div class="stufe">Denke auch daran, wie Watson an Franklins Röntgenbild gekommen ist. Ist das für dein Urteil wichtig?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<!-- ======================================================== AB 24 -->
+<h2 id="ab24">Hilfen zu AB 24: DNA aus Erdbeeren</h2>
+<div class="sicher"><b>Sicherheit:</b> Schutzbrille tragen. Brennspiritus ist leicht entzündbar und reizt die Augen: keine offenen Flammen. Nichts probieren. Den Versuch nur in der Schule und nach Anweisung der Lehrkraft durchführen.</div>
+<h3 class="teil">Aufgaben 1 und 2 · Vermutung und Beobachtung</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">Vermutung</div>
+    <div class="stufe">Eine Vermutung darf falsch sein. Wichtig ist, dass du sie begründest.</div>
+    <div class="stufe">Denke an die Größe: Die Doppelhelix ist 2 nm breit. Was kannst du mit bloßem Auge gerade noch erkennen?</div>
+    <div class="stufe">Satzbaustein: „Ich vermute, dass … , weil … .“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Beobachten</div>
+    <div class="stufe">Beschreibe nur, was du siehst: Farbe, Schichten, Form, Bewegung. Noch keine Erklärung!</div>
+    <div class="stufe">Fragen für Schritt 3: Wie viele Schichten gibt es? Welche Farbe haben sie, klar oder trüb?</div>
+    <div class="stufe">Fragen für Schritt 4: Was entsteht an der Grenze zwischen den Schichten? Wie fühlt es sich am Stäbchen an?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 · Auswertung</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Aufgabe der Schritte</div>
+    <div class="stufe">Auf dem Weg aus der Zelle muss die DNA mehrere „Hindernisse“ überwinden. Welche Hüllen umgeben die DNA in einer Pflanzenzelle?</div>
+    <div class="stufe">Lies M2: Woraus bestehen Membranen? Was löst Fett?</div>
+    <div class="stufe">Woran ist die DNA im Zellkern gebunden, und was trennt sie davon?</div>
+    <div class="stufe">Worin löst sich DNA nicht? Was passiert deshalb an der Grenzschicht?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Sichtbar oder nicht?</div>
+    <div class="stufe">Das Auge erkennt Dinge ab etwa 0,1 mm. Rechne in nm um (1 mm = 1 000 000 nm).</div>
+    <div class="stufe">Vergleiche: Wie viel dünner als 0,1 mm ist ein DNA-Molekül?</div>
+    <div class="stufe">Ein einzelnes Haar siehst du kaum, einen dicken Zopf aus Tausenden Haaren sehr gut. Übertrage das auf die DNA-Fäden.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3c ★</h4><div class="zu">Kontrollversuch planen</div>
+    <div class="stufe">Ein Kontrollversuch unterscheidet sich vom Hauptversuch nur in einer einzigen Sache.</div>
+    <div class="stufe">Liste alles auf, was gleich bleiben muss (Menge, Zeit, Temperatur …).</div>
+    <div class="stufe">Formuliere die Erwartung als „Wenn …, dann …“-Satz.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3d</h4><div class="zu">Reine DNA?</div>
+    <div class="stufe">Welche anderen großen Moleküle gibt es in einer Erdbeerzelle?</div>
+    <div class="stufe">Weißt du, dass sich nur DNA in Alkohol nicht löst? Oder könnten auch andere Stoffe ausfallen?</div>
+    <div class="stufe">Was müsste man zusätzlich tun, um sicher zu sein, dass die Fäden DNA enthalten?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<!-- ======================================================== AB 25 -->
+<h2 id="ab25">Hilfen zu AB 25: DNA-Modell</h2>
+<h3 class="teil">Aufgabe 1 · Modell bauen</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a und 1b</h4><div class="zu">Gegenstrang und Bau</div>
+    <div class="stufe">Für den Gegenstrang gelten dieselben Paarungsregeln wie in AB 22.</div>
+    <div class="stufe">Beim Bauen: Die Teile von Strang 2 werden um 180° gedreht, sodass ihre Base nach links zeigt. Erst dann passen Spitze und Kerbe.</div>
+    <div class="stufe">Passt ein Paar nicht genau ineinander? Dann prüfe, ob du die richtigen Partner gewählt hast.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1c</h4><div class="zu">Chargaff am Modell</div>
+    <div class="stufe">Zähle in beiden Strängen zusammen, wie viele A, T, G und C es gibt.</div>
+    <div class="stufe">Vergleiche: Ist die Zahl von A gleich der von T? Die von G gleich der von C?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Modell und Wirklichkeit</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Wie das Modell paart</div>
+    <div class="stufe">Versuche, ein A-Teil an ein C-Teil zu legen. Was passiert?</div>
+    <div class="stufe">Welche Formen haben die Enden der vier Basen?</div>
+    <div class="stufe">Was steht in M2 der echten DNA zur Paarung? Welche zwei Dinge müssen bei echten Basen „passen“?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Vergleich mit der echten DNA</div>
+    <div class="stufe">Gehe den Steckbrief M2 Punkt für Punkt durch: Zeigt dein Modell das auch?</div>
+    <div class="stufe">Denke außerdem an Material, Größe, Anzahl der Basenpaare und Farben.</div>
+    <div class="stufe">Unterschiede sind keine Fehler: Jedes Modell vereinfacht. Es kommt darauf an, sie zu kennen.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c</h4><div class="zu">Vergrößerung</div>
+    <div class="stufe">Vergrößerung = Größe im Modell : Größe in Wirklichkeit.</div>
+    <div class="stufe">Beide Größen in dieselbe Einheit umrechnen: 1 cm = 10 000 000 nm.</div>
+    <div class="stufe">Mit dem Maßstabsrechner (Vertiefung V5) kannst du dein Ergebnis überprüfen.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2d</h4><div class="zu">Wie wird DNA verdoppelt?</div>
+    <div class="stufe">Ziehe die beiden Stränge deines Modells auseinander. Was hast du dann in der Hand?</div>
+    <div class="stufe">Kannst du zu einem einzelnen Strang den fehlenden Partner eindeutig ergänzen? Warum?</div>
+    <div class="stufe">Nimm die Reserveteile und probiere es aus. Wie viele Doppelstränge hast du am Ende, und woraus bestehen sie?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2e ★</h4><div class="zu">Auf dem Kopf</div>
+    <div class="stufe">Schau auf die kleinen Zahlen 5′ und 3′ im Zucker deines Modells. Wo stehen sie bei Strang 1, wo bei Strang 2?</div>
+    <div class="stufe">Lies in M2 den Punkt zu „gegenläufig“.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<!-- ======================================================== Vertiefungen -->
+<h2>Vertiefungen für Schnelle</h2>
+
+<section class="v-karte" id="v1">
+  <div class="v-kopf"><div class="v-nr">V1</div><h3>Gegenstrang-Trainer</h3><span class="punkte" id="v1-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Ergänze zu jedem Strang die komplementären Basen. Tippe die Buchstaben ein (A, T, G oder C), dann „Prüfen“.</p>
+    <div class="zeile-lab">Strang 1</div>
+    <div class="strang" id="v1-oben"></div>
+    <div class="zeile-lab">Strang 2 (deine Eingabe)</div>
+    <div class="strang" id="v1-unten"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v1-pruefen">Prüfen</button><button class="knopf" id="v1-neu">Neuer Strang →</button></div>
+    <div class="rueck" id="v1-rueck"></div>
+  </div>
+</section>
+
+<section class="v-karte" id="v2">
+  <div class="v-kopf"><div class="v-nr">V2</div><h3>Chargaff-Rechner</h3><span class="punkte" id="v2-punkte"></span></div>
+  <div class="v-inhalt">
+    <p id="v2-frage"></p>
+    <div class="felder">
+      <label>T <input id="v2-T" inputmode="decimal"> %</label>
+      <label>G <input id="v2-G" inputmode="decimal"> %</label>
+      <label>C <input id="v2-C" inputmode="decimal"> %</label>
+    </div>
+    <div class="knoepfe"><button class="knopf haupt" id="v2-pruefen">Prüfen</button><button class="knopf" id="v2-neu">Neue Aufgabe →</button></div>
+    <div class="rueck" id="v2-rueck"></div>
+    <p class="klein">Die Lebewesen und Werte sind andere als auf dem Arbeitsblatt (gerundete Literaturwerte bzw. Übungswerte).</p>
+  </div>
+</section>
+
+<section class="v-karte" id="v3">
+  <div class="v-kopf"><div class="v-nr">V3</div><h3>Zeitstrahl ordnen</h3></div>
+  <div class="v-inhalt">
+    <p>Klicke die Ereignisse in der richtigen zeitlichen Reihenfolge an, das früheste zuerst.</p>
+    <div class="ereignisse" id="v3-liste"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v3-pruefen">Prüfen</button><button class="knopf" id="v3-neu">Neu mischen</button></div>
+    <div class="rueck" id="v3-rueck"></div>
+  </div>
+</section>
+
+<section class="v-karte" id="v4">
+  <div class="v-kopf"><div class="v-nr">V4</div><h3>Was wäre, wenn …? Der DNA-Versuch</h3><span class="punkte" id="v4-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Was passiert, wenn man den Versuch aus AB 24 verändert? Wähle die Antwort, die am besten passt.</p>
+    <p id="v4-frage" style="font-weight:600"></p>
+    <div class="ereignisse" id="v4-antworten"></div>
+    <div class="rueck" id="v4-rueck"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v4-weiter">Nächste Frage →</button></div>
+  </div>
+</section>
+
+<section class="v-karte" id="v5">
+  <div class="v-kopf"><div class="v-nr">V5</div><h3>Maßstabsrechner</h3></div>
+  <div class="v-inhalt">
+    <p>Stelle ein, wie breit dein Papiermodell ist. Der Rechner zeigt die Vergrößerung und wie lang die gesamte DNA einer Körperzelle in diesem Maßstab wäre.</p>
+    <div class="regler"><label for="v5-breite">Breite deines Modells:</label><input type="range" id="v5-breite" min="2" max="15" step="0.5" value="8"><b id="v5-wert"></b></div>
+    <div class="ausgabe" id="v5-ausgabe"></div>
+    <p class="klein">Annahmen: DNA-Durchmesser 2 nm; Länge der DNA einer menschlichen Körperzelle etwa 2 m. Erdumfang etwa 40 000 km.</p>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Biologie · Klasse 10 · Genetik · Hilfen zu den Arbeitsblättern AB 22 (Bau der DNA), AB 23 (Entdeckung der Doppelhelix), AB 24 (DNA aus Erdbeeren) und AB 25 (DNA-Modell) · Noto La Diega · Hilfen ohne Lösungen</div></footer>
+
+<script>
+// Gestufte Hilfekarten
+(function(){
+  document.querySelectorAll('.hk').forEach(function(k){
+    var st = k.querySelectorAll('.stufe'), btn = k.querySelector('button'), z = k.querySelector('.zaehler'), n = 0;
+    z.textContent = '0 / ' + st.length;
+    btn.addEventListener('click', function(){
+      if (n < st.length) { st[n].classList.add('offen'); n++; }
+      z.textContent = n + ' / ' + st.length;
+      if (n >= st.length) { btn.textContent = 'alle Stufen offen'; btn.disabled = true; } else btn.textContent = 'Stufe ' + (n + 1) + ' aufdecken';
+    });
+  });
+})();
+var $ = function(id){ return document.getElementById(id); };
+var PARTNER = {A: 'T', T: 'A', G: 'C', C: 'G'};
+
+// V1 Gegenstrang-Trainer
+(function(){
+  var folge = [], gut = 0, runden = 0, geprueft = false;
+  function neu(){
+    var n = 8 + Math.floor(Math.random() * 5);
+    folge = []; for (var i = 0; i < n; i++) folge.push('ATGC'[Math.floor(Math.random() * 4)]);
+    $('v1-oben').innerHTML = folge.map(function(b){ return '<div class="base ' + b + '">' + b + '</div>'; }).join('');
+    $('v1-unten').innerHTML = folge.map(function(_, i){ return '<input maxlength="1" aria-label="Base ' + (i + 1) + ' von Strang 2">'; }).join('');
+    $('v1-rueck').className = 'rueck'; geprueft = false;
+    var felder = $('v1-unten').querySelectorAll('input');
+    felder.forEach(function(f, i){
+      f.addEventListener('input', function(){
+        f.value = f.value.toUpperCase().replace(/[^ATGC]/g, '');
+        f.className = '';
+        if (f.value && i + 1 < felder.length) felder[i + 1].focus();
+      });
+    });
+  }
+  $('v1-pruefen').addEventListener('click', function(){
+    var felder = $('v1-unten').querySelectorAll('input'), richtig = 0, leer = 0;
+    felder.forEach(function(f, i){
+      if (!f.value) { leer++; f.className = ''; return; }
+      var ok = f.value === PARTNER[folge[i]]; if (ok) richtig++;
+      f.className = ok ? 'ok' : 'falsch';
+    });
+    var r = $('v1-rueck');
+    if (leer) { r.className = 'rueck nein'; r.textContent = 'Es fehlen noch ' + leer + ' Basen.'; return; }
+    if (!geprueft) { runden++; if (richtig === folge.length) gut++; geprueft = true; }
+    if (richtig === folge.length) { r.className = 'rueck gut'; r.textContent = 'Alles richtig! Jede Spalte ist ein A-T- oder G-C-Paar.'; }
+    else { r.className = 'rueck nein'; r.textContent = (folge.length - richtig) + ' Basen passen nicht (rot markiert). Denk an die Regeln: A mit T, G mit C.'; }
+    $('v1-punkte').textContent = gut + ' von ' + runden + ' Strängen fehlerfrei';
+  });
+  $('v1-neu').addEventListener('click', neu);
+  neu();
+})();
+
+// V2 Chargaff-Rechner
+(function(){
+  var F = [['Rind', 29], ['Huhn', 28], ['Maus', 29], ['Mais', 26], ['ein Bakterium', 18], ['ein Virus (doppelsträngige DNA)', 22], ['Schwein', 30], ['Seestern', 31]];
+  var a = 0, name = '', gut = 0, runden = 0, geprueft = false;
+  function neu(){
+    var f = F[Math.floor(Math.random() * F.length)]; name = f[0]; a = f[1];
+    $('v2-frage').innerHTML = 'In der doppelsträngigen DNA von <b>' + name + '</b> sind <b>' + a + ' %</b> aller Basen Adenin. Berechne die Anteile der anderen Basen.';
+    ['T', 'G', 'C'].forEach(function(b){ $('v2-' + b).value = ''; });
+    $('v2-rueck').className = 'rueck'; geprueft = false;
+  }
+  function zahl(id){ return parseFloat(($(id).value || '').replace(',', '.')); }
+  $('v2-pruefen').addEventListener('click', function(){
+    var t = zahl('v2-T'), g = zahl('v2-G'), c = zahl('v2-C'), r = $('v2-rueck');
+    if ([t, g, c].some(isNaN)) { r.className = 'rueck nein'; r.textContent = 'Bitte alle drei Felder ausfüllen.'; return; }
+    var soll = (100 - 2 * a) / 2, msg = [];
+    if (Math.abs(t - a) > 0.05) msg.push('Thymin: Welche Base paart mit Adenin? Ihr Anteil ist genauso groß.');
+    if (Math.abs(g - c) > 0.05) msg.push('Guanin und Cytosin müssen gleich groß sein.');
+    else if (Math.abs(g - soll) > 0.05) msg.push('Guanin und Cytosin: Was bleibt von 100 % übrig, wenn du A und T abziehst? Teile den Rest durch 2.');
+    if (!geprueft) { runden++; if (!msg.length) gut++; geprueft = true; }
+    if (!msg.length) { r.className = 'rueck gut'; r.textContent = 'Richtig! A = T und G = C, zusammen 100 %.'; }
+    else { r.className = 'rueck nein'; r.textContent = msg.join(' '); }
+    $('v2-punkte').textContent = gut + ' von ' + runden + ' richtig';
+  });
+  $('v2-neu').addEventListener('click', neu);
+  neu();
+})();
+
+// V3 Zeitstrahl ordnen (andere Formulierungen als auf dem Arbeitsblatt, mit Jahreszahl erst nach dem Prüfen)
+(function(){
+  var E = [
+    [1869, 'Ein junger Arzt gewinnt aus Zellkernen einen unbekannten Stoff, den er „Nuklein“ nennt.'],
+    [1928, 'Tote Bakterien verwandeln harmlose Bakterien in krankmachende.'],
+    [1944, 'Enzymversuche zeigen: Ohne DNA keine Transformation.'],
+    [1950, 'Messungen ergeben: In jeder DNA ist A so häufig wie T und G so häufig wie C.'],
+    [1952, 'Radioaktiv markierte Phagen zeigen: Nur ihre DNA gelangt in die Bakterien.'],
+    [1953, 'Ein Modell der Doppelhelix wird veröffentlicht.'],
+    [1962, 'Drei Forscher erhalten für die DNA-Struktur den Nobelpreis.']
+  ];
+  var reihe = [], wahl = [];
+  function neu(){
+    reihe = E.map(function(_, i){ return i; }).sort(function(){ return Math.random() - .5; }); wahl = [];
+    zeichne(); $('v3-rueck').className = 'rueck';
+  }
+  function zeichne(zeigeJahr){
+    $('v3-liste').innerHTML = reihe.map(function(i){
+      var p = wahl.indexOf(i);
+      return '<button type="button" data-i="' + i + '" class="' + (p >= 0 ? 'gewaehlt' : '') + '"><span class="nr">' + (p >= 0 ? (p + 1) + '.' : '') + '</span>' + E[i][1] + (zeigeJahr ? ' <b>(' + E[i][0] + ')</b>' : '') + '</button>';
+    }).join('');
+    $('v3-liste').querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        var i = +b.dataset.i, p = wahl.indexOf(i);
+        if (p >= 0) wahl.splice(p, 1); else wahl.push(i);
+        zeichne();
+      });
+    });
+  }
+  $('v3-pruefen').addEventListener('click', function(){
+    var r = $('v3-rueck');
+    if (wahl.length < E.length) { r.className = 'rueck nein'; r.textContent = 'Wähle alle ' + E.length + ' Ereignisse nacheinander aus.'; return; }
+    var richtig = wahl.filter(function(i, k){ return i === k; }).length;
+    zeichne(true);
+    if (richtig === E.length) { r.className = 'rueck gut'; r.textContent = 'Perfekt! Erst wurde geklärt, welcher Stoff die Erbinformation trägt, dann, wie er gebaut ist.'; }
+    else { r.className = 'rueck nein'; r.textContent = richtig + ' von ' + E.length + ' an der richtigen Stelle. Die Jahreszahlen stehen jetzt dabei: Vergleiche und versuche es mit „Neu mischen“ noch einmal.'; }
+  });
+  $('v3-neu').addEventListener('click', neu);
+  neu();
+})();
+
+// V4 Was wäre, wenn …?
+(function(){
+  var Q = [
+    {f: 'Statt eiskaltem Brennspiritus wird warmer Brennspiritus verwendet.', a: ['Es bilden sich weniger oder dünnere Fäden.', 'Es bilden sich deutlich mehr Fäden.', 'Die DNA löst sich im Alkohol auf und wird unsichtbar, dafür färbt sich die obere Schicht rot.'], r: 0, e: 'Kälte begünstigt das Ausfallen der DNA. Warmer Alkohol funktioniert grundsätzlich auch, aber die Ausbeute ist meist geringer.'},
+    {f: 'Nach dem Überschichten wird das Reagenzglas kräftig geschüttelt.', a: ['Die Fäden werden länger und dicker.', 'Die Schichten vermischen sich, es bilden sich kaum zusammenhängende Fäden an einer Grenzschicht.', 'Nichts ändert sich.'], r: 1, e: 'Die DNA fällt an der Grenzschicht aus, wo sie zum ersten Mal mit viel Alkohol in Kontakt kommt. Schütteln zerstört die Grenzschicht und zerreißt lange DNA-Fäden.'},
+    {f: 'Man lässt das Kochsalz im Extraktionspuffer weg.', a: ['Die Ausbeute wird meist geringer.', 'Es entsteht keinerlei Schaum mehr.', 'Die Zellwände bleiben ganz.'], r: 0, e: 'Salz schirmt die negativen Ladungen der DNA ab und hilft, sie von den Proteinen zu lösen. Ohne Salz klappt das schlechter.'},
+    {f: 'Statt Erdbeeren werden gekochte Erdbeeren (Marmelade ohne Zucker) verwendet.', a: ['Man erhält mehr DNA, weil die Zellen schon offen sind.', 'Man erhält weniger und eher kurze Bruchstücke, weil Hitze die langen DNA-Moleküle beschädigen kann.', 'Gekochte Früchte enthalten keine DNA mehr, sie verdampft beim Kochen.'], r: 1, e: 'DNA verschwindet beim Kochen nicht, aber lange Hitze zerbricht die Moleküle in kleinere Stücke. Diese lassen sich schlechter als Fäden aufwickeln.'},
+    {f: 'Eine Gruppe nimmt eine Banane statt Erdbeeren.', a: ['Es funktioniert auch, meist mit geringerer Ausbeute.', 'Es funktioniert nicht, weil Bananen keine Zellkerne haben.', 'Es funktioniert nur, wenn man die Schale mitverwendet.'], r: 0, e: 'Alle Pflanzenzellen mit Zellkern enthalten DNA. Erdbeeren haben besonders viele Chromosomensätze und sind weich, deshalb gelingt es mit ihnen besonders gut.'},
+    {f: 'Jemand behauptet: „Wenn man lange genug wartet, kann man im Reagenzglas mit einer Lupe die Doppelhelix sehen.“', a: ['Stimmt, eine starke Lupe vergrößert genug.', 'Stimmt nicht: Eine Doppelhelix ist mit 2 nm selbst für ein Lichtmikroskop viel zu klein.', 'Stimmt, aber nur bei Erdbeer-DNA.'], r: 1, e: 'Lichtmikroskope zeigen Dinge bis etwa 0,0002 mm (200 nm). Die Form einzelner DNA-Moleküle lässt sich nur mit Röntgenstrahlen oder speziellen Mikroskopen untersuchen.'}
+  ];
+  var reihe = Q.map(function(_, i){ return i; }).sort(function(){ return Math.random() - .5; }), k = 0, gut = 0, beantwortet = false;
+  function zeige(){
+    var q = Q[reihe[k % Q.length]];
+    $('v4-frage').textContent = (k % Q.length + 1) + '/' + Q.length + ': ' + q.f;
+    $('v4-antworten').innerHTML = q.a.map(function(t, i){ return '<button type="button" data-i="' + i + '">' + t + '</button>'; }).join('');
+    $('v4-rueck').className = 'rueck'; beantwortet = false;
+    $('v4-antworten').querySelectorAll('button').forEach(function(b){
+      b.addEventListener('click', function(){
+        if (beantwortet) return; beantwortet = true;
+        var ok = +b.dataset.i === q.r; if (ok) gut++;
+        b.classList.add('gewaehlt');
+        var r = $('v4-rueck'); r.className = 'rueck ' + (ok ? 'gut' : 'nein');
+        r.textContent = (ok ? 'Richtig. ' : 'Nicht ganz. ') + q.e;
+        $('v4-punkte').textContent = gut + ' von ' + (k + 1) + ' richtig';
+      });
+    });
+  }
+  $('v4-weiter').addEventListener('click', function(){ k++; zeige(); });
+  zeige();
+})();
+
+// V5 Maßstabsrechner
+(function(){
+  function fmt(x){ return x.toLocaleString('de-DE', {maximumFractionDigits: 0}); }
+  function rechne(){
+    var b = parseFloat($('v5-breite').value);
+    $('v5-wert').textContent = b.toLocaleString('de-DE') + ' cm';
+    var faktor = b * 1e7 / 2;                 // cm → nm, geteilt durch 2 nm
+    var laengeKm = 2 * faktor / 1000;         // 2 m DNA, vergrößert, in km
+    $('v5-ausgabe').innerHTML = 'Vergrößerung: etwa <b>' + fmt(faktor) + '-fach</b><br>' +
+      'Die DNA einer einzigen Körperzelle wäre in diesem Maßstab etwa <b>' + fmt(laengeKm) + ' km</b> lang, ' +
+      'also rund <b>' + (laengeKm / 40000).toLocaleString('de-DE', {maximumFractionDigits: 1}) + '-mal</b> um die Erde.';
+  }
+  $('v5-breite').addEventListener('input', rechne);
+  rechne();
+})();
+</script>
+</body>
+</html>
