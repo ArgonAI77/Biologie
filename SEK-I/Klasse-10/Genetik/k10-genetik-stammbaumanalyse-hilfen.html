@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stammbaumanalyse – Vertiefung und Hilfen</title>
+<!-- Biologie Klasse 10 · Genetik · AB 18 bis AB 21. Ohne Lösungen (Repo öffentlich). URL steht in den QR-Codes der Arbeitsblätter: nicht umbenennen. -->
+<style>
+:root{
+  --gruen:#2e7d4f; --gruen-d:#1f5e3a; --gruen-hell:#e6f3eb; --blau:#2a7ab8; --tblau:#156e9d; --blau-hell:#e6f0f8;
+  --orange:#d9822b; --orange-hell:#fdf1e4; --violett:#6c2a8c; --violett-hell:#f1e8f6;
+  --grau:#6f7a85; --linie:#d5dde5; --bg:#f6f8fa; --karte:#fff; --text:#222; --betroffen:#0f4c6e;
+  --sans:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5}
+a{color:var(--tblau)}
+button,select{font:inherit;cursor:pointer}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#1f5e3a 0%,#2e7d4f 55%,#3f9a63 100%);color:#fff;padding:28px 0 22px}
+header .kurs{font-size:13px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+header h1{margin:4px 0 6px;font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.2}
+header p{margin:0;opacity:.92;max-width:680px}
+nav{position:sticky;top:0;z-index:10;background:rgba(246,248,250,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--linie)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav a{flex:none;text-decoration:none;color:var(--gruen-d);border:1px solid var(--linie);background:#fff;border-radius:16px;padding:3px 12px;font-size:14px;font-weight:600}
+nav a.v{color:var(--orange)}
+h2{font-size:21px;color:var(--gruen-d);margin:32px 0 4px;scroll-margin-top:56px}
+h3.teil{font-size:16px;color:var(--grau);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 8px}
+.hinweis{color:var(--grau);font-size:14px;margin:0 0 14px}
+.hilfen{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hk{background:var(--karte);border:1.5px dashed #b9c4cf;border-radius:10px;padding:14px 16px}
+.hk h4{margin:0 0 2px;font-size:16px;color:var(--gruen)}
+.hk .zu{font-size:13px;color:var(--grau);margin-bottom:8px}
+.stufe{display:none;margin:8px 0 0;padding:8px 10px;background:var(--gruen-hell);border-radius:6px;font-size:15px}
+.stufe.offen{display:block;animation:auf .25s ease}
+@keyframes auf{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.hk button{margin-top:10px;border:1px solid var(--gruen);background:#fff;color:var(--gruen);border-radius:6px;padding:4px 12px;font-size:14px}
+.hk button:hover{background:var(--gruen-hell)}
+.hk button[disabled]{opacity:.4;cursor:default}
+.hk .zaehler{font-size:12px;color:var(--grau);margin-left:8px}
+.v-karte{background:var(--karte);border:1px solid var(--linie);border-radius:12px;margin:14px 0;overflow:hidden;scroll-margin-top:56px}
+.v-kopf{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--linie);background:#fbfcfd}
+.v-nr{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center}
+.v-kopf h3{margin:0;font-size:18px}
+.v-inhalt{padding:14px 16px 16px}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media (max-width:720px){.zwei{grid-template-columns:1fr}}
+svg{max-width:100%;height:auto;display:block}
+.knopf{border:1px solid var(--linie);background:#fff;border-radius:6px;padding:4px 12px;font-size:14px}
+.knopf.haupt{border-color:var(--gruen);color:var(--gruen);font-weight:600}
+.knopf.an{background:var(--gruen);border-color:var(--gruen);color:#fff}
+.knoepfe{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.rueck{font-size:14px;border-radius:6px;padding:8px 10px;margin-top:8px;display:none}
+.rueck.gut{display:block;background:#e3f4ea;border-left:3px solid var(--gruen)}
+.rueck.nein{display:block;background:#fbe6e3;border-left:3px solid #d0574a}
+.fall{font-size:13px;color:var(--grau)}
+.punkte{font-size:14px;color:var(--grau);margin-left:auto}
+.pedi{background:#fff;border:1px solid var(--linie);border-radius:8px;padding:8px}
+.wahl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:15px;margin:6px 0 10px}
+.wahl select{border:1px solid var(--linie);border-radius:6px;padding:3px 8px;background:#fff}
+table.ps{border-collapse:collapse;margin:8px 0}
+table.ps td,table.ps th{border:1px solid var(--linie);width:76px;height:52px;text-align:center;font-size:18px}
+table.ps th{background:var(--blau-hell);color:var(--betroffen)}
+table.ps td.betr{background:var(--orange-hell);color:var(--orange);font-weight:700}
+table.ps .ecke{background:#f4f6f8;font-size:12px;color:var(--grau);font-weight:400}
+.ausgabe{font-variant-numeric:tabular-nums;font-size:15px;background:#f2f5f8;border-radius:6px;padding:8px 12px;margin-top:6px}
+.leiste{display:grid;grid-template-columns:120px 1fr 56px;gap:6px 10px;align-items:center;font-size:14px;margin-top:4px}
+.leiste .spur{background:#eef2f6;border-radius:4px;height:16px;overflow:hidden}
+.leiste .fuell{height:100%;background:var(--orange);width:0;transition:width .5s ease}
+canvas{max-width:100%;height:auto;border-radius:50%;display:block;margin:0 auto}
+.sim{filter:url(#deutan)}
+.klein{font-size:13px;color:var(--grau)}
+footer{margin:36px 0 0;border-top:1px solid var(--linie);padding:16px 0 28px;font-size:12.5px;color:var(--grau)}
+sup{font-size:.7em}
+.schritte{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+.schritte li{counter-increment:s;position:relative;padding:6px 0 6px 40px}
+.schritte li::before{content:counter(s);position:absolute;left:0;top:4px;width:28px;height:28px;border-radius:50%;background:var(--gruen);color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="deutan"><feColorMatrix type="matrix" values="0.367 0.861 -0.228 0 0  0.280 0.673 0.047 0 0  -0.012 0.043 0.969 0 0  0 0 0 1 0"/></filter>
+</svg>
+<header>
+  <div class="wrap">
+    <div class="kurs">Biologie · Klasse 10 · Genetik · AB 18 bis AB 21</div>
+    <h1>Stammbaumanalyse: Vertiefung und Hilfen</h1>
+    <p>Hilfen zu allen Teilaufgaben, nur bei Bedarf und stufenweise aufdecken. Für Schnelle: Erbgänge erkennen üben, Kreuzungsschemata prüfen sehen, wie Menschen mit Rot-Grün-Sehschwäche Farben wahrnehmen, und die X-Inaktivierung simulieren.</p>
+  </div>
+</header>
+<nav><div class="wrap">
+  <a href="#ab18">Hilfen AB 18</a><a href="#ab19">Hilfen AB 19</a><a href="#ab20">Hilfen AB 20</a><a href="#ab21">Hilfen AB 21</a><a href="#methode">4 Schritte</a><a class="v" href="#v1">V1 Erbgang-Detektiv</a><a class="v" href="#v2">V2 Kreuzungsschema</a><a class="v" href="#v3">V3 Farbsehen</a><a class="v" href="#v4">V4 X-Inaktivierung</a>
+</div></nav>
+
+<main class="wrap">
+
+<h2 id="methode">Stammbaumanalyse in vier Schritten</h2>
+<ol class="schritte">
+  <li><b>Schlüsselkonstellation suchen:</b> Eltern, die sich im Merkmal von einem ihrer Kinder unterscheiden.</li>
+  <li><b>Erbgang begründen</b>, immer mit den Nummern der Personen.</li>
+  <li><b>Genotypen eintragen:</b> mit den sicheren Fällen beginnen, dann über Eltern und Kinder schließen.</li>
+  <li><b>Wahrscheinlichkeit berechnen:</b> Keimzellen an den Rand eines Kreuzungsschemas, Felder ausfüllen, Anteil bestimmen.</li>
+</ol>
+
+<h2 id="ab18">Hilfen zu AB 18: Autosomale Erbgänge</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten Stufen entsprechen den Papierkarten am Pult.</p>
+<h3 class="teil">Aufgabe 1 · Schlüsselkonstellationen</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">Dominant oder rezessiv?</div>
+    <div class="stufe">Schau dir in jedem Stammbaum das Kind an, das anders aussieht als seine Eltern.</div>
+    <div class="stufe">Jedes Kind hat ein Allel von der Mutter und eines vom Vater. Welches Allel muss das „andere“ Kind von jedem Elternteil bekommen haben?</div>
+    <div class="stufe">Die Eltern tragen dieses Allel also, zeigen aber sein Merkmal nicht. Ein Allel, das man trägt, ohne dass es sichtbar wird, ist …?</div>
+    <div class="stufe">Formuliere für A und B je einen Satz mit „Da … und …, aber …, muss …“.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Genotypen in A und B</div>
+    <div class="stufe">Beginne mit den Personen, deren Genotyp nur reinerbig rezessiv sein kann: Wer zeigt das rezessive Merkmal?</div>
+    <div class="stufe">Gehe dann zu den Eltern dieser Personen: Was müssen sie weitergegeben haben?</div>
+    <div class="stufe">Für Personen ohne weiteren Hinweis gilt: Nenne beide möglichen Genotypen.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1c</h4><div class="zu">Genotyp nicht ablesbar</div>
+    <div class="stufe">Was sieht man im Stammbaum: den Genotyp oder den Phänotyp?</div>
+    <div class="stufe">Welche Genotypen führen bei einem rezessiven Erbgang zum Phänotyp „nicht betroffen“?</div>
+    <div class="stufe">Welche Verwandten könnten trotzdem verraten, welcher Genotyp vorliegt?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Albinismus</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Erbgang ableiten</div>
+    <div class="stufe">Suche ein Elternpaar, das sich im Merkmal von einem seiner Kinder unterscheidet.</div>
+    <div class="stufe">Welche der beiden Konstellationen aus Aufgabe 1 liegt bei diesem Paar vor?</div>
+    <div class="stufe">Begründe zusätzlich, warum ein dominanter Erbgang hier nicht möglich ist: Was müsste dann für mindestens einen Elternteil gelten?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Genotypen 1 bis 10</div>
+    <div class="stufe">Jede betroffene Person hat den Genotyp aa. Trage diese zuerst ein.</div>
+    <div class="stufe">Nicht betroffene Personen mit einem betroffenen Elternteil haben von ihm sicher ein a bekommen.</div>
+    <div class="stufe">Nicht betroffene Personen mit einem betroffenen Kind haben ihm sicher ein a gegeben.</div>
+    <div class="stufe">Bleibt eine Person ohne solchen Hinweis, sind zwei Genotypen möglich.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c</h4><div class="zu">Kreuzungsschema</div>
+    <div class="stufe">Welche Genotypen haben die Eltern 5 und 6? Du hast sie in 2b bestimmt.</div>
+    <div class="stufe">Jede Keimzelle enthält ein Allel. Welche zwei Keimzellen bildet jeder Elternteil?</div>
+    <div class="stufe">Trage die Keimzellen an den Rand eines Schemas mit 2 × 2 Feldern ein und fülle die Felder aus.</div>
+    <div class="stufe">Zähle die Felder mit dem Genotyp für „betroffen“. Anteil an allen vier Feldern = Wahrscheinlichkeit. Prüfen kannst du mit V2.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2d ★</h4><div class="zu">Anlageträgerin oder nicht?</div>
+    <div class="stufe">Zeichne das Kreuzungsschema der Eltern von Person 10.</div>
+    <div class="stufe">Person 10 ist nicht betroffen. Welche Felder kommen für sie also gar nicht in Frage? Streiche sie.</div>
+    <div class="stufe">Zähle nur noch die übrigen Felder: Wie viele davon sind mischerbig?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 · Chorea Huntington</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Erbgang ableiten</div>
+    <div class="stufe">Suche ein Elternpaar, bei dem beide betroffen sind. Haben sie nur betroffene Kinder?</div>
+    <div class="stufe">Gedankenexperiment: Nimm an, die Krankheit wäre rezessiv. Welchen Genotyp hätten dann zwei betroffene Eltern?</div>
+    <div class="stufe">Welche Kinder könnten diese Eltern dann nur bekommen? Passt das zum Stammbaum?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Allelbezeichnung und Genotypen</div>
+    <div class="stufe">Der Großbuchstabe steht für das dominante Allel. Welches Allel ist hier dominant: das für die Krankheit oder das ohne?</div>
+    <div class="stufe">Nicht betroffene Personen sind bei einem dominanten Erbgang immer reinerbig. Trage sie zuerst ein.</div>
+    <div class="stufe">Betroffene können reinerbig oder mischerbig sein. Hat eine betroffene Person einen nicht betroffenen Elternteil oder ein nicht betroffenes Kind, ist sie mischerbig.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3c</h4><div class="zu">Kreuzungsschema</div>
+    <div class="stufe">Bestimme zuerst die Genotypen von 8 und 9 (Aufgabe 3b).</div>
+    <div class="stufe">Ein reinerbiger Elternteil bildet zwei gleiche Keimzellen. Trage trotzdem beide ein.</div>
+    <div class="stufe">Zähle die Felder, in denen mindestens ein dominantes Allel steht.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3d</h4><div class="zu">Gentest beurteilen</div>
+    <div class="stufe">Lege zwei Spalten an: Was spricht für den Test, was dagegen?</div>
+    <div class="stufe">Denke an: Gewissheit, Familienplanung, Heilbarkeit, seelische Belastung, wer vom Ergebnis erfahren könnte.</div>
+    <div class="stufe">Recht auf Nichtwissen: Niemand darf gezwungen werden, sein genetisches Risiko zu erfahren. Wie wichtig ist dir dieses Recht im Vergleich zu den Vorteilen?</div>
+    <div class="stufe">Satzbausteine: „Einerseits …, weil … . Andererseits … . Ich halte … für wichtiger, weil … .“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2 id="ab19">Hilfen zu AB 19: X-chromosomale Vererbung</h2>
+<p class="hinweis">Schreibweise: X<sup>N</sup> normales Farbsehen (dominant), X<sup>n</sup> Rot-Grün-Sehschwäche (rezessiv), Y trägt das Gen nicht.</p>
+<h3 class="teil">Aufgabe 1 · Geschlechtschromosomen</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">autosomal und gonosomal</div>
+    <div class="stufe">Wie viele Chromosomenpaare hat der Mensch, und welches Paar ist bei Frauen und Männern verschieden?</div>
+    <div class="stufe">Autosomen sind die Chromosomenpaare 1 bis 22. Wie heißt das 23. Paar?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Weitergabe des väterlichen X</div>
+    <div class="stufe">Schau in Abb. 1: Welches Gonosom gibt der Vater einem Kind, das ein Sohn wird?</div>
+    <div class="stufe">Ein Sohn hat XY. Von wem kann er das Y haben? Woher stammt dann sein X?</div>
+    <div class="stufe">Eine Tochter hat XX. Die Mutter gibt nur ein X. Woher kommt das zweite?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1c</h4><div class="zu">alle Genotypen</div>
+    <div class="stufe">Frauen haben zwei X-Chromosomen: Welche Kombinationen aus X<sup>N</sup> und X<sup>n</sup> sind möglich? Es sind drei.</div>
+    <div class="stufe">Männer haben ein X und ein Y: Welche zwei Möglichkeiten gibt es?</div>
+    <div class="stufe">Ordne jedem Genotyp „sieht normal“ oder „betroffen“ zu. Bei welchem Genotyp spricht man von Überträgerin?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Familienstammbaum</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Genotypen der Familie</div>
+    <div class="stufe">Beginne mit den Männern: Ein Mann hat nur ein X. Betroffen oder nicht betroffen legt den Genotyp sofort fest.</div>
+    <div class="stufe">Alle Frauen sehen normal, haben also mindestens ein X<sup>N</sup>.</div>
+    <div class="stufe">Frage bei jeder Frau: Hat sie einen betroffenen Sohn oder einen betroffenen Vater? Dann besitzt sie sicher ein X<sup>n</sup>.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Überträgerinnen begründen</div>
+    <div class="stufe">Renata und Cinzia: Von wem haben ihre betroffenen Söhne das X-Chromosom?</div>
+    <div class="stufe">Luisa und Edda: Welches X-Chromosom haben sie von ihrem Vater Guido bekommen?</div>
+    <div class="stufe">Verbinde beides: Ein X<sup>n</sup> ist sicher vorhanden, und trotzdem sehen sie normal. Was folgt daraus für das zweite X?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c</h4><div class="zu">Aussage beurteilen</div>
+    <div class="stufe">Welches Gonosom hat Sandro von seinem Vater Guido bekommen?</div>
+    <div class="stufe">Trägt dieses Chromosom das Gen für die Sehfarbstoffe?</div>
+    <div class="stufe">Von wem muss Sandros X<sup>n</sup> dann stammen? An wen gibt Guido sein X<sup>n</sup> weiter?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgaben 3 und 4 · Wahrscheinlichkeiten und Transfer</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Kreuzungsschema X-chromosomal</div>
+    <div class="stufe">Sandro bildet Spermien mit X<sup>n</sup> oder mit Y. Welche Eizellen bildet Cinzia?</div>
+    <div class="stufe">Trage die Keimzellen an den Rand eines Schemas mit 2 × 2 Feldern ein und fülle die Felder aus.</div>
+    <div class="stufe">Felder mit Y sind Söhne, Felder ohne Y sind Töchter. Zähle für (1) und (2) nur in der jeweiligen Gruppe.</div>
+    <div class="stufe">Bei (3) zählen alle vier Felder. Prüfen kannst du mit V2 (Modus X-chromosomal).</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Warum öfter Männer?</div>
+    <div class="stufe">Wie viele Allele des Gens hat eine Frau, wie viele ein Mann?</div>
+    <div class="stufe">Was bedeutet „rezessiv“, wenn nur ein einziges Allel vorhanden ist?</div>
+    <div class="stufe">Rechenidee: 8 von 100 X-Chromosomen tragen X<sup>n</sup>. Ein Mann ist betroffen, wenn sein eines X es trägt. Eine Frau nur, wenn beide X es tragen: 0,08 · 0,08 = ?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3c ★</h4><div class="zu">Luisas Kinder</div>
+    <div class="stufe">Welchen Genotyp hat Luisa (Aufgabe 2), welchen ein normal sehender Mann?</div>
+    <div class="stufe">Kreuzungsschema wie in 3a. Werte Söhne und Töchter getrennt aus.</div>
+    <div class="stufe">Achte bei den Töchtern auf den Unterschied zwischen „betroffen“ und „Überträgerin“.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 4 ★</h4><div class="zu">X-chromosomal-rezessiv möglich?</div>
+    <div class="stufe">Welchen Genotyp müsste die betroffene Tochter bei einem X-chromosomal-rezessiven Erbgang haben?</div>
+    <div class="stufe">Eines ihrer beiden X-Chromosomen stammt sicher vom Vater. Welches Allel trägt es dann?</div>
+    <div class="stufe">Welchen Phänotyp hätte der Vater mit diesem X? Vergleiche mit der Familie.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2 id="ab20">Hilfen zu AB 20: Hämophilie im Königshaus</h2>
+<p class="hinweis">Schreibweise: X<sup>H</sup> normale Blutgerinnung (dominant), X<sup>h</sup> Hämophilie (rezessiv). Nenne Personen immer mit ihrer Nummer aus Abb. 1.</p>
+<h3 class="teil">Aufgabe 1 · Erbgang bestimmen</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">rezessiv begründen</div>
+    <div class="stufe">Suche ein Elternpaar, bei dem beide nicht betroffen sind, das aber einen betroffenen Sohn hat.</div>
+    <div class="stufe">Das Kind hat das Allel von seinen Eltern bekommen. Die Eltern zeigen das Merkmal aber nicht. Wie nennt man ein solches Allel?</div>
+    <div class="stufe">Satzbaustein: „Da … und … nicht betroffen sind, ihr Sohn … aber Bluter ist, …“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Hinweise auf das X-Chromosom</div>
+    <div class="stufe">Zähle: Wie viele Männer und wie viele Frauen sind betroffen?</div>
+    <div class="stufe">Von wem haben die betroffenen Söhne ihr X-Chromosom: vom Vater oder von der Mutter?</div>
+    <div class="stufe">Verfolge Leopold (7): Wem gibt er sein X weiter? Wo taucht die Krankheit eine Generation später wieder auf?</div>
+    <div class="stufe">Gibt es irgendwo einen betroffenen Vater mit betroffenem Sohn?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1c</h4><div class="zu">autosomal-rezessiv prüfen</div>
+    <div class="stufe">Was müsste bei einem autosomal-rezessiven Erbgang für beide Eltern eines betroffenen Sohnes gelten?</div>
+    <div class="stufe">Schau dir die Väter der betroffenen Söhne an. Welche von ihnen gehören gar nicht zu Victorias Familie?</div>
+    <div class="stufe">Unterscheide: Findest du eine Konstellation, die autosomal-rezessiv unmöglich macht? Oder ist er nur unwahrscheinlich? Bedenke, dass Hämophilie selten ist.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 2 · Genotypen und Überträgerinnen</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Alexejs Vorfahren</div>
+    <div class="stufe">Beginne mit den Männern: Ein Mann hat nur ein X. Bluter oder gesund legt den Genotyp fest.</div>
+    <div class="stufe">Gehe von Alexej (23) rückwärts: Von wem hat er sein X? Diese Frau ist gesund. Was folgt daraus?</div>
+    <div class="stufe">Woher hat diese Frau ihr Allel X<sup>h</sup>? Ihr Vater ist gesund. Gehe so weiter bis zu Victoria.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">sichere Überträgerinnen</div>
+    <div class="stufe">Eine Frau ist sicher Überträgerin, wenn sie gesund ist und einen betroffenen Sohn hat.</div>
+    <div class="stufe">Oder wenn sie gesund ist und ihr Vater Bluter ist. Warum?</div>
+    <div class="stufe">Prüfe jede Frau im Stammbaum mit diesen beiden Fragen. Bei Frauen ohne solchen Hinweis kannst du nichts sicher sagen.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c ★</h4><div class="zu">Woher hatte Victoria das Allel?</div>
+    <div class="stufe">Wenn kein Vorfahre betroffen war: Wie kann ein Allel neu entstehen?</div>
+    <div class="stufe">In welchen Zellen ihrer Eltern müsste diese Veränderung passiert sein, damit Victoria sie geerbt hat?</div>
+    <div class="stufe">Recherchiere: Wie alt war Victorias Vater bei ihrer Geburt? Was weiß man über das Alter von Vätern und Mutationen?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgaben 3 und 4 · Wahrscheinlichkeiten und Verwandtenehe</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Alexandra × Nikolaus II.</div>
+    <div class="stufe">Welche Keimzellen bildet Nikolaus, welche Alexandra?</div>
+    <div class="stufe">Trage sie an den Rand eines Schemas mit 2 × 2 Feldern ein und fülle es aus. Kontrolle mit V2 (Modus X-chromosomal, dort steht N/n statt H/h).</div>
+    <div class="stufe">Felder mit Y sind Söhne, ohne Y Töchter. Zähle für jede Frage nur in der passenden Gruppe.</div>
+    <div class="stufe">Achte bei den Töchtern auf den Unterschied zwischen „Bluterin“ und „Überträgerin“.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Können Frauen Bluterinnen sein?</div>
+    <div class="stufe">Welchen Genotyp müsste eine Bluterin haben?</div>
+    <div class="stufe">Von wem bekommt eine Tochter ihre beiden X-Chromosomen? Was muss also für ihren Vater gelten?</div>
+    <div class="stufe">Probiere ein Kreuzungsschema: betroffener Vater × Überträgerin. Schau dir nur die Töchter an.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 4</h4><div class="zu">Verwandtenehe beurteilen</div>
+    <div class="stufe">Welches Gonosom bekommen Waldemar (21) und Heinrich (22) von ihrem Vater (11)?</div>
+    <div class="stufe">Würde sich das Risiko für Irenes Söhne ändern, wenn sie einen nicht verwandten, gesunden Mann geheiratet hätte?</div>
+    <div class="stufe">Sind die Eltern der anderen Bluter (23, 24, 25) als verwandt eingezeichnet?</div>
+    <div class="stufe">Denke an AB 18: Warum haben bei autosomal-rezessiven Krankheiten verwandte Eltern öfter betroffene Kinder?</div>
+    <div class="stufe">Satzbausteine: „Auf den ersten Blick … . Allerdings … . Für die Hämophilie gilt …, für autosomal-rezessive Krankheiten dagegen … .“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2 id="ab21">Hilfen zu AB 21: G6PD-Mangel und Enzymaktivität</h2>
+<p class="hinweis">Schreibweise: X<sup>G</sup> funktionsfähige G6PD, X<sup>g</sup> G6PD-Mangel.</p>
+<h3 class="teil">Aufgaben 1 und 2 · Stammbaum</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 1a</h4><div class="zu">rezessiv begründen</div>
+    <div class="stufe">Suche ein Elternpaar, das nicht betroffen ist, aber ein betroffenes Kind hat.</div>
+    <div class="stufe">Satzbaustein: „Die Eltern … und … sind nicht betroffen, ihr Sohn … ist betroffen. Also …“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 1b</h4><div class="zu">Person 5 und ihre Mutter</div>
+    <div class="stufe">Welches Gonosom bekommt ein Sohn von seinem Vater?</div>
+    <div class="stufe">Trägt dieses Chromosom ein Gen für G6PD?</div>
+    <div class="stufe">Woher muss das X<sup>g</sup> von Person 5 dann stammen? Person 2 ist nicht betroffen: Welches zweite Allel hat sie?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2a</h4><div class="zu">Genotypen 1 bis 14</div>
+    <div class="stufe">Beginne mit den Männern: betroffen → X<sup>g</sup>Y, nicht betroffen → X<sup>G</sup>Y.</div>
+    <div class="stufe">Alle Frauen sind nicht betroffen, haben also mindestens ein X<sup>G</sup>.</div>
+    <div class="stufe">Frage bei jeder Frau: Ist ihr Vater betroffen? Hat sie einen betroffenen Sohn? Dann besitzt sie sicher ein X<sup>g</sup>.</div>
+    <div class="stufe">Gibt es keinen solchen Hinweis, schreibe beide möglichen Genotypen.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2b</h4><div class="zu">Kind von 13 und 14</div>
+    <div class="stufe">Welche Keimzellen bilden 13 und 14?</div>
+    <div class="stufe">Felder mit Y sind Söhne, ohne Y Töchter.</div>
+    <div class="stufe">Bei (3) ist das Geschlecht unbekannt: Dann zählen alle vier Felder. Kontrolle mit V2.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 2c ★</h4><div class="zu">Sohn von Person 12</div>
+    <div class="stufe">Ist sicher, dass Person 12 Überträgerin ist? Bestimme die Wahrscheinlichkeit mit dem Kreuzungsschema ihrer Eltern 6 und 7.</div>
+    <div class="stufe">Nur wenn 12 Überträgerin ist, kann ihr Sohn betroffen sein. Mit welcher Wahrscheinlichkeit dann?</div>
+    <div class="stufe">Zwei Bedingungen müssen beide erfüllt sein: Wahrscheinlichkeiten werden multipliziert.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h3 class="teil">Aufgabe 3 · Vom Gen zum Merkmal</h3>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe zu 3a</h4><div class="zu">Personen A, B, C</div>
+    <div class="stufe">Wie viele funktionsfähige Allele für G6PD haben: ein gesunder Mann, ein betroffener Mann, eine Überträgerin?</div>
+    <div class="stufe">Kein funktionsfähiges Allel → fast keine Aktivität. Eines von zwei → etwa …? Alle funktionsfähig → 100 %.</div>
+    <div class="stufe">Suche dann in Abb. 1 Personen mit dem passenden Genotyp. Es gibt jeweils mehrere.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3b</h4><div class="zu">Hypothese zu Person A</div>
+    <div class="stufe">Muss die Enzymaktivität 100 % betragen, damit die roten Blutkörperchen geschützt sind?</div>
+    <div class="stufe">Vergleich: Ein Auto mit halbvollem Tank fährt genauso gut wie mit vollem.</div>
+    <div class="stufe">Was bedeutet „rezessiv“, wenn das andere Allel genug funktionsfähiges Enzym liefert?</div>
+    <div class="stufe">Satzbaustein: „Ich vermute, dass … ausreicht, weil … . Das Allel X<sup>g</sup> ist rezessiv, weil … .“</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe zu 3c ★</h4><div class="zu">X-Inaktivierung</div>
+    <div class="stufe">Wird in jeder Zelle einer Überträgerin dasselbe X stillgelegt?</div>
+    <div class="stufe">Probiere V4 mehrmals aus: Ist der Anteil der Zellen mit G6PD immer genau 50 %?</div>
+    <div class="stufe">Was passiert in den roten Blutkörperchen, wenn zufällig viele Vorläuferzellen das X<sup>G</sup> stillgelegt haben?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2>Vertiefungen für Schnelle</h2>
+
+<section class="v-karte" id="v1">
+  <div class="v-kopf"><div class="v-nr">V1</div><h3>Erbgang-Detektiv</h3><span class="punkte" id="det-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Entscheide für jeden kleinen Stammbaum (autosomal), ob das Merkmal <b>dominant</b> oder <b>rezessiv</b> vererbt wird oder ob man es aus diesem Stammbaum <b>nicht entscheiden</b> kann. Ausgefüllt = betroffen.</p>
+    <div class="zwei">
+      <div class="pedi" id="det-bild"></div>
+      <div>
+        <div class="fall" id="det-fall"></div>
+        <div class="knoepfe">
+          <button class="knopf" data-a="dom">dominant</button>
+          <button class="knopf" data-a="rez">rezessiv</button>
+          <button class="knopf" data-a="offen">nicht entscheidbar</button>
+        </div>
+        <div class="rueck" id="det-rueck"></div>
+        <div class="knoepfe"><button class="knopf haupt" id="det-weiter">Nächster Stammbaum →</button></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v-karte" id="v2">
+  <div class="v-kopf"><div class="v-nr">V2</div><h3>Kreuzungsschema prüfen</h3></div>
+  <div class="v-inhalt">
+    <p>Wähle die Genotypen der Eltern. Das Schema zeigt alle gleich wahrscheinlichen Kombinationen. Nutze es, um <b>deine eigene Rechnung zu kontrollieren</b>; die Genotypen musst du selbst bestimmen.</p>
+    <div class="knoepfe" id="v2-modus">
+      <button class="knopf an" data-m="auto">autosomal</button>
+      <button class="knopf" data-m="x">X-chromosomal</button>
+    </div>
+    <div class="wahl">
+      <label>Mutter <select id="v2-mutter"></select></label>
+      <label>Vater <select id="v2-vater"></select></label>
+      <label id="v2-dom-wahl">Merkmal <select id="v2-dom"><option value="rez">rezessiv (betroffen = aa)</option><option value="dom">dominant (betroffen = A_)</option></select></label>
+    </div>
+    <div class="zwei">
+      <div id="v2-schema"></div>
+      <div id="v2-ausgabe"></div>
+    </div>
+  </div>
+</section>
+
+<section class="v-karte" id="v3">
+  <div class="v-kopf"><div class="v-nr">V3</div><h3>So sieht eine Farbtafel mit Rot-Grün-Sehschwäche aus</h3></div>
+  <div class="v-inhalt">
+    <div class="zwei">
+      <div><canvas id="tafel" width="420" height="420" aria-label="Farbtafel mit einer Zahl aus Punkten"></canvas></div>
+      <div>
+        <p>Farbtafeln bestehen aus Punkten, deren Farben sich vor allem im Rot-Grün-Anteil unterscheiden, kaum in der Helligkeit. Mit normalem Farbsehen erkennt man die Zahl sofort.</p>
+        <div class="knoepfe">
+          <button class="knopf haupt" id="sim-an">Mit Rot-Grün-Sehschwäche ansehen</button>
+          <button class="knopf" id="sim-neu">Neue Tafel</button>
+        </div>
+        <p class="klein" id="sim-info">Ansicht: normales Farbsehen.</p>
+        <p class="klein">Die Simulation ist eine Annäherung (Deuteranopie, Modell nach Machado u. a. 2009). Sie ersetzt keinen Sehtest beim Augenarzt.</p>
+        <p><b>Denkfrage:</b> In einer Klasse sitzen 14 Jungen und 14 Mädchen. Wie viele Betroffene erwartest du ungefähr? Begründe mit den Geschlechtschromosomen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="v-karte" id="v4">
+  <div class="v-kopf"><div class="v-nr">V4</div><h3>X-Inaktivierung simulieren</h3></div>
+  <div class="v-inhalt">
+    <p>Eine Überträgerin X<sup>G</sup>X<sup>g</sup>: Im frühen Embryo wird in jeder Zelle <b>zufällig</b> ein X stillgelegt. Alle Tochterzellen behalten diese Wahl. Klicke auf „Neuer Embryo“ und beobachte, wie viel G6PD-Aktivität am Ende herauskommt.</p>
+    <div class="zwei">
+      <div><svg id="v4-bild" viewBox="0 0 400 260" role="img" aria-label="Gewebe aus zwei Zellsorten"></svg>
+        <p class="klein"><span style="color:var(--blau)">■</span> aktives X<sup>G</sup>: bildet G6PD · <span style="color:var(--orange)">■</span> aktives X<sup>g</sup>: keine G6PD</p></div>
+      <div>
+        <div class="wahl"><label>Zellen im frühen Embryo <select id="v4-n"><option>4</option><option selected>8</option><option>16</option><option>64</option></select></label></div>
+        <div class="knoepfe"><button class="knopf haupt" id="v4-neu">Neuer Embryo</button><button class="knopf" id="v4-viele">100 Embryonen</button></div>
+        <div class="ausgabe" id="v4-ausgabe"></div>
+        <p><b>Denkfragen:</b> Warum liegt die Aktivität nicht immer bei 50 %? Was ändert sich, wenn bei der Stilllegung mehr Zellen beteiligt sind? Was bedeutet ein sehr niedriger Wert für eine Überträgerin, die Favabohnen isst?</p>
+        <p class="klein">Modell: Jede frühe Zelle bildet einen gleich großen Teil des Blutes. In Wirklichkeit ist die Zahl der Vorläuferzellen unbekannt und die Teile sind verschieden groß.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Biologie · Klasse 10 · Genetik · Hilfen zu den Arbeitsblättern AB 18 (autosomale Erbgänge), AB 19 (X-chromosomale Vererbung), AB 20 (Hämophilie im Königshaus) und AB 21 (G6PD-Mangel). Ohne Lösungen. Die Familie auf AB 19 und die Familie auf AB 21 sind erfunden; der Stammbaum auf AB 20 zeigt historische Personen.</div></footer>
+
+<script>
+// Gestufte Hilfekarten
+(function(){
+  document.querySelectorAll('.hk').forEach(function(k){
+    var st = k.querySelectorAll('.stufe'), btn = k.querySelector('button'), z = k.querySelector('.zaehler'), n = 0;
+    z.textContent = '0 / ' + st.length;
+    btn.addEventListener('click', function(){
+      if (n < st.length) { st[n].classList.add('offen'); n++; }
+      z.textContent = n + ' / ' + st.length;
+      if (n >= st.length) { btn.textContent = 'alle Stufen offen'; btn.disabled = true; } else btn.textContent = 'Stufe ' + (n + 1) + ' aufdecken';
+    });
+  });
+})();
+
+// Mini-Stammbäume als SVG: p = [[sex, betroffen], [sex, betroffen]], k = Kinder
+function stammbaum(p, k){
+  var W = 360, S = 34, gap = 70, y0 = 40, y1 = 170, cx = W / 2;
+  var xs = [cx - 60, cx + 60];
+  var kx = k.map(function(_, i){ return cx + (i - (k.length - 1) / 2) * gap; });
+  var col = function(b){ return b ? 'var(--betroffen)' : '#fff'; };
+  var sym = function(x, y, s, b){
+    return s === 'm' ? '<rect x="' + (x - S/2) + '" y="' + (y - S/2) + '" width="' + S + '" height="' + S + '" fill="' + col(b) + '" stroke="#2b2b2b" stroke-width="2"/>'
+                     : '<circle cx="' + x + '" cy="' + y + '" r="' + S/2 + '" fill="' + col(b) + '" stroke="#2b2b2b" stroke-width="2"/>';
+  };
+  var ym = (y0 + y1) / 2 + 8, g = '';
+  g += '<line x1="' + (xs[0] + S/2) + '" y1="' + y0 + '" x2="' + (xs[1] - S/2) + '" y2="' + y0 + '" stroke="#2b2b2b" stroke-width="2"/>';
+  g += '<line x1="' + cx + '" y1="' + y0 + '" x2="' + cx + '" y2="' + ym + '" stroke="#2b2b2b" stroke-width="2"/>';
+  g += '<line x1="' + Math.min(kx[0], cx) + '" y1="' + ym + '" x2="' + Math.max(kx[kx.length - 1], cx) + '" y2="' + ym + '" stroke="#2b2b2b" stroke-width="2"/>';
+  kx.forEach(function(x){ g += '<line x1="' + x + '" y1="' + ym + '" x2="' + x + '" y2="' + (y1 - S/2) + '" stroke="#2b2b2b" stroke-width="2"/>'; });
+  p.forEach(function(q, i){ g += sym(xs[i], y0, q[0], q[1]); });
+  k.forEach(function(q, i){ g += sym(kx[i], y1, q[0], q[1]); });
+  return '<svg viewBox="0 0 ' + W + ' 200" role="img" aria-label="Stammbaum">' + g + '</svg>';
+}
+
+// V1 Erbgang-Detektiv
+(function(){
+  var F = [
+    {p: [['m', 0], ['w', 0]], k: [['m', 1], ['w', 0], ['m', 0]], a: 'rez', e: 'Zwei nicht betroffene Eltern haben ein betroffenes Kind. Beide Eltern tragen das Allel, ohne es auszuprägen: rezessiv.'},
+    {p: [['m', 1], ['w', 1]], k: [['w', 0], ['m', 1]], a: 'dom', e: 'Zwei betroffene Eltern haben ein nicht betroffenes Kind. Die Eltern tragen beide ein „verstecktes“ Allel ohne das Merkmal: Das Merkmal ist dominant.'},
+    {p: [['m', 1], ['w', 0]], k: [['w', 1], ['m', 0]], a: 'offen', e: 'Ein betroffener und ein nicht betroffener Elternteil: Das passt zu Aa × aa (dominant) genauso wie zu aa × Aa (rezessiv). Keine Schlüsselkonstellation.'},
+    {p: [['m', 1], ['w', 1]], k: [['m', 1], ['w', 1], ['w', 1]], a: 'offen', e: 'Zwei Betroffene mit nur betroffenen Kindern: möglich bei rezessiv (aa × aa) und bei dominant. Ein Beweis wäre erst ein nicht betroffenes Kind.'},
+    {p: [['m', 0], ['w', 0]], k: [['w', 1], ['w', 0]], a: 'rez', e: 'Die Tochter ist betroffen, beide Eltern nicht. Das Merkmal war bei den Eltern „versteckt“: rezessiv.'},
+    {p: [['m', 0], ['w', 1]], k: [['m', 0], ['w', 0], ['m', 0]], a: 'offen', e: 'Eine betroffene Mutter, keine betroffenen Kinder: Bei rezessiv (aa × AA) und bei dominant (Aa × aa) möglich. Nicht entscheidbar.'},
+    {p: [['m', 1], ['w', 1]], k: [['m', 0], ['w', 1], ['m', 1]], a: 'dom', e: 'Der nicht betroffene Sohn zweier betroffener Eltern beweist: dominant.'}
+  ];
+  var reihe = F.map(function(_, i){ return i; }).sort(function(){ return Math.random() - .5; });
+  var i = 0, gut = 0, versuche = 0, beantwortet = false;
+  var $ = function(id){ return document.getElementById(id); };
+  function zeige(){
+    var f = F[reihe[i % F.length]];
+    $('det-bild').innerHTML = stammbaum(f.p, f.k);
+    $('det-fall').textContent = 'Stammbaum ' + ((i % F.length) + 1) + ' von ' + F.length;
+    $('det-rueck').className = 'rueck'; beantwortet = false;
+    document.querySelectorAll('#v1 [data-a]').forEach(function(b){ b.classList.remove('an'); });
+  }
+  document.querySelectorAll('#v1 [data-a]').forEach(function(b){
+    b.addEventListener('click', function(){
+      if (beantwortet) return;
+      var f = F[reihe[i % F.length]], r = $('det-rueck'); beantwortet = true; versuche++;
+      b.classList.add('an');
+      if (b.dataset.a === f.a) { gut++; r.className = 'rueck gut'; r.textContent = 'Richtig. ' + f.e; }
+      else { r.className = 'rueck nein'; r.textContent = 'Noch nicht. ' + f.e; }
+      $('det-punkte').textContent = gut + ' von ' + versuche + ' richtig';
+    });
+  });
+  $('det-weiter').onclick = function(){ i++; zeige(); };
+  zeige();
+})();
+
+// V2 Kreuzungsschema
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var modus = 'auto';
+  var G = {
+    auto: {m: ['AA', 'Aa', 'aa'], v: ['AA', 'Aa', 'aa']},
+    x: {m: ['XNXN', 'XNXn', 'XnXn'], v: ['XNY', 'XnY']}
+  };
+  function html(t){ return t.replace(/X([Nn])/g, 'X<sup>$1</sup>'); }
+  function fuellen(){
+    ['mutter', 'vater'].forEach(function(w){
+      var s = $('v2-' + w), liste = G[modus][w === 'mutter' ? 'm' : 'v'];
+      s.innerHTML = liste.map(function(g){ return '<option value="' + g + '">' + g.replace(/X([Nn])/g, 'X$1') + '</option>'; }).join('');
+      s.selectedIndex = 1 < liste.length ? 1 : 0;
+    });
+    $('v2-dom-wahl').style.display = modus === 'auto' ? '' : 'none';
+    rechne();
+  }
+  function keimzellen(g){ return modus === 'auto' ? [g[0], g[1]] : [g.slice(0, 2), g.slice(2)]; }
+  function sortiere(a, b){
+    if (modus === 'auto') return [a, b].sort(function(x, y){ return x === y ? 0 : (x === x.toUpperCase() ? -1 : 1); }).join('');
+    var xx = [a, b].filter(function(z){ return z !== 'Y'; }).sort(function(x, y){ return x[1] === 'N' ? -1 : 1; });
+    return xx.join('') + ([a, b].indexOf('Y') >= 0 ? 'Y' : '');
+  }
+  function betroffen(g){
+    if (modus === 'auto') return $('v2-dom').value === 'rez' ? g === 'aa' : g.indexOf('A') >= 0;
+    return g.indexOf('Y') >= 0 ? g.indexOf('Xn') >= 0 : g === 'XnXn';
+  }
+  function rechne(){
+    var m = keimzellen($('v2-mutter').value), v = keimzellen($('v2-vater').value);
+    var t = '<table class="ps"><tr><th class="ecke">♂ → <br>♀ ↓</th><th>' + html(v[0]) + '</th><th>' + html(v[1]) + '</th></tr>';
+    var felder = [];
+    m.forEach(function(a){
+      t += '<tr><th>' + html(a) + '</th>';
+      v.forEach(function(b){ var g = sortiere(a, b); felder.push(g); t += '<td class="' + (betroffen(g) ? 'betr' : '') + '">' + html(g) + '</td>'; });
+      t += '</tr>';
+    });
+    $('v2-schema').innerHTML = t + '</table><p class="klein">Orange = betroffen</p>';
+    var anteil = function(liste){ return liste.length ? liste.filter(betroffen).length / liste.length : null; };
+    var zeilen = [['alle Kinder', anteil(felder)]];
+    if (modus === 'x') {
+      zeilen.push(['Söhne', anteil(felder.filter(function(g){ return g.indexOf('Y') >= 0; }))]);
+      zeilen.push(['Töchter', anteil(felder.filter(function(g){ return g.indexOf('Y') < 0; }))]);
+      var ueb = felder.filter(function(g){ return g === 'XNXn'; }).length;
+      zeilen.push(['Überträgerinnen (unter Töchtern)', ueb / 2]);
+    }
+    $('v2-ausgabe').innerHTML = '<div class="ausgabe">' + zeilen.map(function(z){
+      var p = Math.round(z[1] * 100);
+      return '<div class="leiste"><span>' + z[0] + '</span><div class="spur"><div class="fuell" style="width:' + p + '%"></div></div><span>' + p + ' %</span></div>';
+    }).join('') + '</div><p class="klein">Jedes Feld ist gleich wahrscheinlich. Die Wahrscheinlichkeit gilt für jedes Kind neu.</p>';
+  }
+  document.querySelectorAll('#v2-modus [data-m]').forEach(function(b){
+    b.addEventListener('click', function(){
+      modus = b.dataset.m;
+      document.querySelectorAll('#v2-modus [data-m]').forEach(function(x){ x.classList.toggle('an', x === b); });
+      fuellen();
+    });
+  });
+  ['v2-mutter', 'v2-vater', 'v2-dom'].forEach(function(id){ $(id).addEventListener('change', rechne); });
+  fuellen();
+})();
+
+// V3 Farbtafel
+(function(){
+  var c = document.getElementById('tafel'), ctx = c.getContext('2d'), sim = false;
+  var rot = ['#d9783f', '#e08a4c', '#cf6a3a', '#e3955a', '#d47b48'];
+  var gruen = ['#8fa64a', '#9db35a', '#7f9a44', '#a7b863', '#93ab52'];
+  function zeichne(){
+    var zahl = String([3, 5, 6, 7, 8, 9, 12, 15, 16, 29, 42, 57, 74][Math.floor(Math.random() * 13)]);
+    var m = document.createElement('canvas'); m.width = c.width; m.height = c.height;
+    var mc = m.getContext('2d'); mc.fillStyle = '#000'; mc.font = 'bold 220px Helvetica, Arial, sans-serif'; mc.textAlign = 'center'; mc.textBaseline = 'middle';
+    mc.fillText(zahl, c.width / 2, c.height / 2 + 8);
+    var maske = mc.getImageData(0, 0, c.width, c.height).data;
+    ctx.clearRect(0, 0, c.width, c.height);
+    ctx.fillStyle = '#f4efe4'; ctx.beginPath(); ctx.arc(210, 210, 208, 0, 2 * Math.PI); ctx.fill();
+    var punkte = [], versuche = 0;
+    while (punkte.length < 1400 && versuche < 40000) {
+      versuche++;
+      var r = 3 + Math.random() * 7, w = Math.random() * 2 * Math.PI, d = Math.sqrt(Math.random()) * (200 - r);
+      var x = 210 + d * Math.cos(w), y = 210 + d * Math.sin(w), ok = true;
+      for (var j = 0; j < punkte.length; j++) { var p = punkte[j], dx = p[0] - x, dy = p[1] - y; if (dx * dx + dy * dy < (p[2] + r + 1.2) * (p[2] + r + 1.2)) { ok = false; break; } }
+      if (!ok) continue;
+      punkte.push([x, y, r]);
+      var innen = maske[(Math.round(y) * c.width + Math.round(x)) * 4 + 3] > 0;
+      var farben = innen ? rot : gruen;
+      ctx.fillStyle = farben[Math.floor(Math.random() * farben.length)];
+      ctx.beginPath(); ctx.arc(x, y, r, 0, 2 * Math.PI); ctx.fill();
+    }
+  }
+  document.getElementById('sim-an').onclick = function(){
+    sim = !sim; c.classList.toggle('sim', sim);
+    this.textContent = sim ? 'Mit normalem Farbsehen ansehen' : 'Mit Rot-Grün-Sehschwäche ansehen';
+    document.getElementById('sim-info').textContent = sim ? 'Ansicht: simulierte Rot-Grün-Sehschwäche.' : 'Ansicht: normales Farbsehen.';
+  };
+  document.getElementById('sim-neu').onclick = zeichne;
+  zeichne();
+})();
+// V4 X-Inaktivierung
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var SP = 16, ZE = 10;
+  function embryo(n){ var a = []; for (var i = 0; i < n; i++) a.push(Math.random() < .5 ? 'G' : 'g'); return a; }
+  function zeichne(){
+    var n = +$('v4-n').value, e = embryo(n), anteil = e.filter(function(x){ return x === 'G'; }).length / n;
+    var keime = e.map(function(a){ return [Math.random() * SP, Math.random() * ZE, a]; });
+    var g = '', w = 400 / SP, h = 260 / ZE;
+    for (var i = 0; i < ZE; i++) for (var j = 0; j < SP; j++) {
+      var best = null, bd = 1e9;
+      keime.forEach(function(k){ var d = (k[0] - j) * (k[0] - j) + (k[1] - i) * (k[1] - i); if (d < bd) { bd = d; best = k; } });
+      g += '<circle cx="' + (j * w + w / 2) + '" cy="' + (i * h + h / 2) + '" r="' + (Math.min(w, h) / 2 - 1.5) + '" fill="#f4f7fa" stroke="#b9c4cf"/>' +
+           '<rect x="' + (j * w + w / 2 - 6) + '" y="' + (i * h + h / 2 - 2.5) + '" width="12" height="5" rx="2" fill="' + (best[2] === 'G' ? 'var(--blau)' : 'var(--orange)') + '"/>';
+    }
+    $('v4-bild').innerHTML = g;
+    var p = Math.round(anteil * 100);
+    $('v4-ausgabe').innerHTML = '<div class="leiste"><span>G6PD-Aktivität</span><div class="spur"><div class="fuell" style="width:' + p + '%;background:var(--blau)"></div></div><span>' + p + ' %</span></div>' +
+      '<p class="klein">' + n + ' frühe Zellen, davon ' + Math.round(anteil * n) + ' mit aktivem X<sup>G</sup>.</p>';
+  }
+  $('v4-neu').onclick = zeichne;
+  $('v4-n').onchange = zeichne;
+  $('v4-viele').onclick = function(){
+    var n = +$('v4-n').value, klassen = [0, 0, 0, 0, 0];
+    for (var k = 0; k < 100; k++) {
+      var a = embryo(n).filter(function(x){ return x === 'G'; }).length / n;
+      klassen[Math.min(4, Math.floor(a * 5))]++;
+    }
+    var namen = ['0–19 %', '20–39 %', '40–59 %', '60–79 %', '80–100 %'];
+    $('v4-ausgabe').innerHTML = '<b>100 Überträgerinnen (' + n + ' frühe Zellen):</b>' + klassen.map(function(z, i){
+      return '<div class="leiste"><span>' + namen[i] + '</span><div class="spur"><div class="fuell" style="width:' + z + '%;background:var(--blau)"></div></div><span>' + z + '</span></div>';
+    }).join('') + '<p class="klein">Anzahl der Überträgerinnen pro Aktivitätsbereich</p>';
+  };
+  zeichne();
+})();
+</script>
+</body>
+</html>
