@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Einstieg und Chromosomen – Vertiefung und Hilfen</title>
+<!-- Biologie Klasse 10 · Genetik · AB 1, AB 2. Erzeugt von quellen/web/bauen.py. Ohne Lösungen (Repo öffentlich). URL steht in den QR-Codes: nicht umbenennen. -->
+<style>
+:root{
+  --gruen:#2e7d4f; --gruen-d:#1f5e3a; --gruen-hell:#e6f3eb; --blau:#2a7ab8; --tblau:#156e9d; --blau-hell:#e6f0f8;
+  --orange:#d9822b; --orange-hell:#fdf1e4; --violett:#6c2a8c; --violett-hell:#f1e8f6;
+  --grau:#6f7a85; --linie:#d5dde5; --bg:#f6f8fa; --karte:#fff; --text:#222; --betroffen:#0f4c6e;
+  --sans:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5}
+a{color:var(--tblau)}
+button,select{font:inherit;cursor:pointer}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#1f5e3a 0%,#2e7d4f 55%,#3f9a63 100%);color:#fff;padding:28px 0 22px}
+header .kurs{font-size:13px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+header h1{margin:4px 0 6px;font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.2}
+header p{margin:0;opacity:.92;max-width:680px}
+nav{position:sticky;top:0;z-index:10;background:rgba(246,248,250,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--linie)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav a{flex:none;text-decoration:none;color:var(--gruen-d);border:1px solid var(--linie);background:#fff;border-radius:16px;padding:3px 12px;font-size:14px;font-weight:600}
+nav a.v{color:var(--orange)}
+h2{font-size:21px;color:var(--gruen-d);margin:32px 0 4px;scroll-margin-top:56px}
+h3.teil{font-size:16px;color:var(--grau);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 8px}
+.hinweis{color:var(--grau);font-size:14px;margin:0 0 14px}
+.hilfen{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hk{background:var(--karte);border:1.5px dashed #b9c4cf;border-radius:10px;padding:14px 16px}
+.hk h4{margin:0 0 2px;font-size:16px;color:var(--gruen)}
+.hk .zu{font-size:13px;color:var(--grau);margin-bottom:8px}
+.stufe{display:none;margin:8px 0 0;padding:8px 10px;background:var(--gruen-hell);border-radius:6px;font-size:15px}
+.stufe.offen{display:block;animation:auf .25s ease}
+@keyframes auf{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.hk button{margin-top:10px;border:1px solid var(--gruen);background:#fff;color:var(--gruen);border-radius:6px;padding:4px 12px;font-size:14px}
+.hk button:hover{background:var(--gruen-hell)}
+.hk button[disabled]{opacity:.4;cursor:default}
+.hk .zaehler{font-size:12px;color:var(--grau);margin-left:8px}
+.v-karte{background:var(--karte);border:1px solid var(--linie);border-radius:12px;margin:14px 0;overflow:hidden;scroll-margin-top:56px}
+.v-kopf{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--linie);background:#fbfcfd}
+.v-nr{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center}
+.v-kopf h3{margin:0;font-size:18px}
+.v-inhalt{padding:14px 16px 16px}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media (max-width:720px){.zwei{grid-template-columns:1fr}}
+svg{max-width:100%;height:auto;display:block}
+.knopf{border:1px solid var(--linie);background:#fff;border-radius:6px;padding:4px 12px;font-size:14px}
+.knopf.haupt{border-color:var(--gruen);color:var(--gruen);font-weight:600}
+.knopf.an{background:var(--gruen);border-color:var(--gruen);color:#fff}
+.knoepfe{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.rueck{font-size:14px;border-radius:6px;padding:8px 10px;margin-top:8px;display:none}
+.rueck.gut{display:block;background:#e3f4ea;border-left:3px solid var(--gruen)}
+.rueck.nein{display:block;background:#fbe6e3;border-left:3px solid #d0574a}
+.fall{font-size:13px;color:var(--grau)}
+.punkte{font-size:14px;color:var(--grau);margin-left:auto}
+.pedi{background:#fff;border:1px solid var(--linie);border-radius:8px;padding:8px}
+.wahl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:15px;margin:6px 0 10px}
+.wahl select{border:1px solid var(--linie);border-radius:6px;padding:3px 8px;background:#fff}
+table.ps{border-collapse:collapse;margin:8px 0}
+table.ps td,table.ps th{border:1px solid var(--linie);width:76px;height:52px;text-align:center;font-size:18px}
+table.ps th{background:var(--blau-hell);color:var(--betroffen)}
+table.ps td.betr{background:var(--orange-hell);color:var(--orange);font-weight:700}
+table.ps .ecke{background:#f4f6f8;font-size:12px;color:var(--grau);font-weight:400}
+.ausgabe{font-variant-numeric:tabular-nums;font-size:15px;background:#f2f5f8;border-radius:6px;padding:8px 12px;margin-top:6px}
+.leiste{display:grid;grid-template-columns:120px 1fr 56px;gap:6px 10px;align-items:center;font-size:14px;margin-top:4px}
+.leiste .spur{background:#eef2f6;border-radius:4px;height:16px;overflow:hidden}
+.leiste .fuell{height:100%;background:var(--orange);width:0;transition:width .5s ease}
+canvas{max-width:100%;height:auto;border-radius:50%;display:block;margin:0 auto}
+.sim{filter:url(#deutan)}
+.klein{font-size:13px;color:var(--grau)}
+footer{margin:36px 0 0;border-top:1px solid var(--linie);padding:16px 0 28px;font-size:12.5px;color:var(--grau)}
+sup{font-size:.7em}
+.schritte{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+.schritte li{counter-increment:s;position:relative;padding:6px 0 6px 40px}
+.schritte li::before{content:counter(s);position:absolute;left:0;top:4px;width:28px;height:28px;border-radius:50%;background:var(--gruen);color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kurs">Biologie · Klasse 10 · Genetik · AB 1, AB 2</div>
+    <h1>Einstieg und Chromosomen: Vertiefung und Hilfen</h1>
+    <p>Hilfen zu allen Aufgaben mit Hilfekarten, nur bei Bedarf und stufenweise aufdecken. Für Schnelle: selbst Keimzellen „auslosen“ und Genotyp und Phänotyp sicher unterscheiden.</p>
+  </div>
+</header>
+<nav><div class="wrap"><a href="#ab01">Hilfen AB 1</a><a href="#ab02">Hilfen AB 2</a><a class="v" href="#v1">V1 Keimzell-Lotterie</a><a class="v" href="#v2">V2 Genotyp oder Phänotyp?</a></div></nav>
+<main class="wrap">
+<h2 id="ab01">Hilfen zu AB 1 Grundbegriffe der Vererbung</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten beiden Stufen entsprechen den Papierkarten am Pult.</p>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe H1</h4><div class="zu">Aufgabe 1b</div>
+    <div class="stufe">Stell dir eine Bibliothek vor: Gebäude, Regale, Bücher, Kapitel.<br>Welcher Begriff passt zu welchem Teil?</div>
+    <div class="stufe"><b>Gerüst:</b> Der Zellkern enthält … . Ein Chromosom besteht aus … . Ein Gen ist ein … der DNA.<br>Ein Allel ist eine … eines Gens, z. B. beim Gen für die Blutgruppe die Allele … .</div>
+    <div class="stufe">Prüfe deine Reihenfolge: Jeder Begriff muss im vorherigen enthalten sein. Was enthält was?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H2</h4><div class="zu">Aufgabe 2b</div>
+    <div class="stufe">Wie viele Chromosomen hätte die Zygote, wenn Eizelle und Spermium jeweils 46 Chromosomen hätten?<br>Rechne für die nächste Generation weiter.</div>
+    <div class="stufe"><b>Rechengerüst:</b> 46 + 46 = … (Kind). Das Kind bildet Keimzellen mit … Chromosomen. … + … = … (Enkel).<br>Was fällt dir auf? Was bleibt gleich, wenn Keimzellen nur 23 Chromosomen haben?</div>
+    <div class="stufe">Die Zahl der Chromosomen in Körperzellen soll in jeder Generation gleich bleiben. Welche Zahl müssen die Keimzellen dann haben, damit ihre Summe wieder 46 ergibt?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H3</h4><div class="zu">Aufgabe 3a</div>
+    <div class="stufe">Zwei Fragen: Woher bekommen alle Geschwister ihre Chromosomen? Und: Bekommt jedes Kind von jedem Elternteil dieselben Chromosomen?</div>
+    <div class="stufe"><b>Satzbausteine:</b> „Geschwister sind sich ähnlich, weil … . Sie sind trotzdem verschieden, weil jede Keimzelle von jedem Chromosomenpaar zufällig … . Außerdem ist zufällig, welche … und welches … verschmelzen.“</div>
+    <div class="stufe">Probiere V1 aus: Lose mehrere Keimzellen aus und vergleiche sie miteinander. Wie oft erhältst du zweimal dieselbe?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H4</h4><div class="zu">Aufgabe 3b</div>
+    <div class="stufe">Aus wie vielen Zygoten entstehen eineiige Zwillinge? Was passiert bei einer Zellteilung mit der Erbinformation?</div>
+    <div class="stufe">Genotyp gleich – Phänotyp verschieden: Was beeinflusst den Phänotyp außer dem Genotyp? Lies im Einführungstext unter „Genotyp und Phänotyp“ nach und nenne Beispiele aus M1.</div>
+    <div class="stufe">Unterscheide in deiner Antwort zwei Teile: Was ist bei eineiigen Zwillingen gleich und warum? Was kann sich unterscheiden und wodurch?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h2 id="ab02">Hilfen zu AB 2 Chromosomen</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten beiden Stufen entsprechen den Papierkarten am Pult.</p>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe H1</h4><div class="zu">Aufgabe 1a</div>
+    <div class="stufe">Denk an einen Umzug: Im Alltag liegen Kleidung und Bücher offen im Zimmer, beim Umzug werden sie in Kisten verpackt.<br>Was entspricht der Arbeitsform, was der Transportform?</div>
+    <div class="stufe"><b>Satzbausteine:</b> „In der Arbeitsform ist die DNA …, deshalb kann die Zelle … . In der Transportform ist die DNA …, damit sie bei der Teilung … . Die Zelle braucht beide Formen, weil …“</div>
+    <div class="stufe">Denke an zwei Aufgaben der DNA: Information liefern (Gene ablesen) und weitergegeben werden (Teilung). Welche Form passt zu welcher Aufgabe?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H2</h4><div class="zu">Aufgabe 2d</div>
+    <div class="stufe">Ein Zwei-Chromatid-Chromosom besteht aus zwei gleichen Hälften. Wie viele Tochterzellen gibt es? Wie viele Chromatiden?</div>
+    <div class="stufe">Skizziere das Chromosom aus Abb. 2 und zeichne eine Trennlinie: Wo müsste es durchtrennt werden, damit jede Tochterzelle dieselbe Information bekommt? Längs oder quer?</div>
+    <div class="stufe">Prüfe deine Hypothese: Hat danach jede Tochterzelle von jedem Gen noch eine vollständige Kopie? Wenn nein, verwirf sie.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H3</h4><div class="zu">Aufgabe 3b</div>
+    <div class="stufe">Vergleiche drei Merkmale: Wie groß sind die Chromosomen? Wo liegt das Centromer? Aus wie vielen Chromatiden besteht jedes?</div>
+    <div class="stufe">Lies in AB 1 nach: Woher stammen die beiden Chromosomen eines Paares? Wie heißen solche Paare?<br><b>Satzbaustein:</b> „Die Chromosomen liegen paarweise vor, weil …“</div>
+    <div class="stufe">Ordne deine Beschreibung: zuerst die Anzahl, dann die Größe, dann die Form (Lage des Centromers), zuletzt den Aufbau (Chromatiden).</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2>Vertiefungen für Schnelle</h2>
+
+<section class="v-karte" id="v1">
+  <div class="v-kopf"><div class="v-nr">V1</div><h3>Keimzell-Lotterie</h3><span class="punkte" id="v1-zahl"></span></div>
+  <div class="v-inhalt">
+    <p>Eine Keimzelle erhält von jedem Chromosomenpaar <b>zufällig</b> entweder das Chromosom, das ursprünglich von der Mutter stammt (dunkel, M), oder das vom Vater (hell, V). Lose Keimzellen aus und beobachte, wie viele verschiedene es gibt.</p>
+    <div class="wahl"><label>Anzahl der Chromosomenpaare <select id="v1-n"><option>2</option><option>3</option><option selected>4</option><option>8</option><option>23</option></select></label></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v1-los">Keimzelle auslosen</button><button class="knopf" id="v1-zehn">10 Keimzellen</button><button class="knopf" id="v1-neu">Zurücksetzen</button></div>
+    <div id="v1-liste"></div>
+    <div class="ausgabe" id="v1-ausgabe"></div>
+    <p class="klein">Denkfrage: Wie hängt die Zahl der möglichen Keimzellen mit der Zahl der Paare zusammen? Probiere 2, 3 und 4 Paare.</p>
+  </div>
+</section>
+
+<section class="v-karte" id="v2">
+  <div class="v-kopf"><div class="v-nr">V2</div><h3>Genotyp oder Phänotyp?</h3><span class="punkte" id="v2-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Entscheide für jede Aussage, ob sie den <b>Genotyp</b> oder den <b>Phänotyp</b> beschreibt.</p>
+    <p class="fall" id="v2-aussage" style="font-size:17px;color:var(--text)"></p>
+    <div class="knoepfe"><button class="knopf" data-a="g">Genotyp</button><button class="knopf" data-a="p">Phänotyp</button></div>
+    <div class="rueck" id="v2-rueck"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v2-weiter">Nächste Aussage →</button></div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Biologie · Klasse 10 · Genetik · Hilfen zu AB 1, AB 2. Ohne Lösungen.</div></footer>
+<script>
+// Gestufte Hilfekarten
+(function(){
+  document.querySelectorAll('.hk').forEach(function(k){
+    var st = k.querySelectorAll('.stufe'), btn = k.querySelector('button'), z = k.querySelector('.zaehler'), n = 0;
+    z.textContent = '0 / ' + st.length;
+    btn.addEventListener('click', function(){
+      if (n < st.length) { st[n].classList.add('offen'); n++; }
+      z.textContent = n + ' / ' + st.length;
+      if (n >= st.length) { btn.textContent = 'alle Stufen offen'; btn.disabled = true; } else btn.textContent = 'Stufe ' + (n + 1) + ' aufdecken';
+    });
+  });
+})();
+
+// V1 Keimzell-Lotterie
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var gesehen = {}, anzahl = 0;
+  function los(){
+    var n = +$('v1-n').value, k = '', h = '<div style="display:flex;flex-wrap:wrap;gap:3px;margin:6px 0">';
+    for (var i = 1; i <= n; i++) {
+      var m = Math.random() < .5; k += m ? 'M' : 'V';
+      h += '<span title="Paar ' + i + '" style="display:inline-grid;place-items:center;width:26px;height:30px;border:1px solid #2b2b2b;border-radius:5px;font-size:12px;font-weight:700;' +
+           (m ? 'background:var(--betroffen);color:#fff' : 'background:#f2c38f;color:#2b2b2b') + '">' + (m ? 'M' : 'V') + '</span>';
+    }
+    h += '</div>';
+    anzahl++; var neu = !gesehen[k]; gesehen[k] = 1;
+    $('v1-liste').insertAdjacentHTML('afterbegin', h);
+    var kinder = $('v1-liste').children; while (kinder.length > 10) $('v1-liste').removeChild(kinder[kinder.length - 1]);
+    var moeglich = Math.pow(2, n);
+    $('v1-ausgabe').innerHTML = anzahl + ' Keimzellen ausgelost, davon ' + Object.keys(gesehen).length + ' verschiedene. ' + (neu ? '' : '<b>Diese Kombination gab es schon.</b> ') +
+      '<br>Mögliche verschiedene Keimzellen bei ' + n + ' Paaren: <b>' + moeglich.toLocaleString('de-DE') + '</b>';
+    $('v1-zahl').textContent = n + ' Paare';
+  }
+  function neu(){ gesehen = {}; anzahl = 0; $('v1-liste').innerHTML = ''; $('v1-ausgabe').textContent = 'Noch keine Keimzelle ausgelost.'; }
+  $('v1-los').onclick = los;
+  $('v1-zehn').onclick = function(){ for (var i = 0; i < 10; i++) los(); };
+  $('v1-neu').onclick = neu;
+  $('v1-n').onchange = neu;
+  neu();
+})();
+
+// V2 Genotyp oder Phänotyp
+(function(){
+  var F = [
+    ['Mia hat Sommersprossen.', 'p', 'Sommersprossen sieht man: ein Merkmal, also Phänotyp. Die Sonne beeinflusst es zusätzlich.'],
+    ['Tom besitzt für ein Gen der Haarfarbe zwei gleiche Allele.', 'g', 'Allele sind Erbinformation: Genotyp.'],
+    ['Die Katze hat schwarzes Fell.', 'p', 'Die Fellfarbe ist ein sichtbares Merkmal: Phänotyp.'],
+    ['Herr K. hat die Blutgruppe 0.', 'p', 'Auch eine Blutgruppe ist ein Merkmal, das man messen kann: Phänotyp.'],
+    ['Eine Erbsenpflanze trägt die Allele A und a.', 'g', 'Die Allele beschreiben die Erbinformation: Genotyp.'],
+    ['Jonas hat durch Training kräftige Muskeln.', 'p', 'Ein messbares Merkmal, stark von der Umwelt (Training) beeinflusst: Phänotyp.'],
+    ['Auf Lenas Chromosom 9 liegt das Allel B.', 'g', 'Ein Allel auf einem Chromosom ist Erbinformation: Genotyp.'],
+    ['Ein Hund ist 60 cm groß.', 'p', 'Die Körpergröße ist ein messbares Merkmal: Phänotyp.']
+  ];
+  var $ = function(id){ return document.getElementById(id); };
+  var reihe = F.map(function(_, i){ return i; }).sort(function(){ return Math.random() - .5; });
+  var i = 0, gut = 0, versuche = 0, fertig = false;
+  function zeige(){ $('v2-aussage').textContent = F[reihe[i % F.length]][0]; $('v2-rueck').className = 'rueck'; fertig = false; }
+  document.querySelectorAll('#v2 [data-a]').forEach(function(b){
+    b.onclick = function(){
+      if (fertig) return; fertig = true; versuche++;
+      var f = F[reihe[i % F.length]], r = $('v2-rueck');
+      if (b.dataset.a === f[1]) { gut++; r.className = 'rueck gut'; r.textContent = 'Richtig. ' + f[2]; }
+      else { r.className = 'rueck nein'; r.textContent = 'Noch nicht. ' + f[2]; }
+      $('v2-punkte').textContent = gut + ' von ' + versuche + ' richtig';
+    };
+  });
+  $('v2-weiter').onclick = function(){ i++; zeige(); };
+  zeige();
+})();
+
+</script>
+</body>
+</html>

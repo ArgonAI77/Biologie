@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Intermediär, Kodominanz, Unabhängigkeitsregel – Vertiefung und Hilfen</title>
+<!-- Biologie Klasse 10 · Genetik · AB 8, AB 9. Erzeugt von quellen/web/bauen.py. Ohne Lösungen (Repo öffentlich). URL steht in den QR-Codes: nicht umbenennen. -->
+<style>
+:root{
+  --gruen:#2e7d4f; --gruen-d:#1f5e3a; --gruen-hell:#e6f3eb; --blau:#2a7ab8; --tblau:#156e9d; --blau-hell:#e6f0f8;
+  --orange:#d9822b; --orange-hell:#fdf1e4; --violett:#6c2a8c; --violett-hell:#f1e8f6;
+  --grau:#6f7a85; --linie:#d5dde5; --bg:#f6f8fa; --karte:#fff; --text:#222; --betroffen:#0f4c6e;
+  --sans:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5}
+a{color:var(--tblau)}
+button,select{font:inherit;cursor:pointer}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#1f5e3a 0%,#2e7d4f 55%,#3f9a63 100%);color:#fff;padding:28px 0 22px}
+header .kurs{font-size:13px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+header h1{margin:4px 0 6px;font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.2}
+header p{margin:0;opacity:.92;max-width:680px}
+nav{position:sticky;top:0;z-index:10;background:rgba(246,248,250,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--linie)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav a{flex:none;text-decoration:none;color:var(--gruen-d);border:1px solid var(--linie);background:#fff;border-radius:16px;padding:3px 12px;font-size:14px;font-weight:600}
+nav a.v{color:var(--orange)}
+h2{font-size:21px;color:var(--gruen-d);margin:32px 0 4px;scroll-margin-top:56px}
+h3.teil{font-size:16px;color:var(--grau);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 8px}
+.hinweis{color:var(--grau);font-size:14px;margin:0 0 14px}
+.hilfen{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hk{background:var(--karte);border:1.5px dashed #b9c4cf;border-radius:10px;padding:14px 16px}
+.hk h4{margin:0 0 2px;font-size:16px;color:var(--gruen)}
+.hk .zu{font-size:13px;color:var(--grau);margin-bottom:8px}
+.stufe{display:none;margin:8px 0 0;padding:8px 10px;background:var(--gruen-hell);border-radius:6px;font-size:15px}
+.stufe.offen{display:block;animation:auf .25s ease}
+@keyframes auf{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.hk button{margin-top:10px;border:1px solid var(--gruen);background:#fff;color:var(--gruen);border-radius:6px;padding:4px 12px;font-size:14px}
+.hk button:hover{background:var(--gruen-hell)}
+.hk button[disabled]{opacity:.4;cursor:default}
+.hk .zaehler{font-size:12px;color:var(--grau);margin-left:8px}
+.v-karte{background:var(--karte);border:1px solid var(--linie);border-radius:12px;margin:14px 0;overflow:hidden;scroll-margin-top:56px}
+.v-kopf{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--linie);background:#fbfcfd}
+.v-nr{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center}
+.v-kopf h3{margin:0;font-size:18px}
+.v-inhalt{padding:14px 16px 16px}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media (max-width:720px){.zwei{grid-template-columns:1fr}}
+svg{max-width:100%;height:auto;display:block}
+.knopf{border:1px solid var(--linie);background:#fff;border-radius:6px;padding:4px 12px;font-size:14px}
+.knopf.haupt{border-color:var(--gruen);color:var(--gruen);font-weight:600}
+.knopf.an{background:var(--gruen);border-color:var(--gruen);color:#fff}
+.knoepfe{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.rueck{font-size:14px;border-radius:6px;padding:8px 10px;margin-top:8px;display:none}
+.rueck.gut{display:block;background:#e3f4ea;border-left:3px solid var(--gruen)}
+.rueck.nein{display:block;background:#fbe6e3;border-left:3px solid #d0574a}
+.fall{font-size:13px;color:var(--grau)}
+.punkte{font-size:14px;color:var(--grau);margin-left:auto}
+.pedi{background:#fff;border:1px solid var(--linie);border-radius:8px;padding:8px}
+.wahl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:15px;margin:6px 0 10px}
+.wahl select{border:1px solid var(--linie);border-radius:6px;padding:3px 8px;background:#fff}
+table.ps{border-collapse:collapse;margin:8px 0}
+table.ps td,table.ps th{border:1px solid var(--linie);width:76px;height:52px;text-align:center;font-size:18px}
+table.ps th{background:var(--blau-hell);color:var(--betroffen)}
+table.ps td.betr{background:var(--orange-hell);color:var(--orange);font-weight:700}
+table.ps .ecke{background:#f4f6f8;font-size:12px;color:var(--grau);font-weight:400}
+.ausgabe{font-variant-numeric:tabular-nums;font-size:15px;background:#f2f5f8;border-radius:6px;padding:8px 12px;margin-top:6px}
+.leiste{display:grid;grid-template-columns:120px 1fr 56px;gap:6px 10px;align-items:center;font-size:14px;margin-top:4px}
+.leiste .spur{background:#eef2f6;border-radius:4px;height:16px;overflow:hidden}
+.leiste .fuell{height:100%;background:var(--orange);width:0;transition:width .5s ease}
+canvas{max-width:100%;height:auto;border-radius:50%;display:block;margin:0 auto}
+.sim{filter:url(#deutan)}
+.klein{font-size:13px;color:var(--grau)}
+footer{margin:36px 0 0;border-top:1px solid var(--linie);padding:16px 0 28px;font-size:12.5px;color:var(--grau)}
+sup{font-size:.7em}
+.schritte{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+.schritte li{counter-increment:s;position:relative;padding:6px 0 6px 40px}
+.schritte li::before{content:counter(s);position:absolute;left:0;top:4px;width:28px;height:28px;border-radius:50%;background:var(--gruen);color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kurs">Biologie · Klasse 10 · Genetik · AB 8, AB 9</div>
+    <h1>Intermediär, Kodominanz, Unabhängigkeitsregel: Vertiefung und Hilfen</h1>
+    <p>Hilfen zu allen Aufgaben mit Hilfekarten, nur bei Bedarf und stufenweise aufdecken. Für Schnelle: ein Blutgruppen-Quiz und ein Training zu Keimzellen und Phänotypen bei zwei Merkmalen (am Beispiel Meerschweinchen).</p>
+  </div>
+</header>
+<nav><div class="wrap"><a href="#ab08">Hilfen AB 8</a><a href="#ab09">Hilfen AB 9</a><a class="v" href="#v1">V1 Blutgruppen-Quiz</a><a class="v" href="#v2">V2 Zwei Merkmale</a></div></nav>
+<main class="wrap">
+<h2 id="ab08">Hilfen zu AB 8 Intermediär und Kodominanz</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten beiden Stufen entsprechen den Papierkarten am Pult.</p>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe H1</h4><div class="zu">Aufgabe 1a</div>
+    <div class="stufe">Gehe vor wie bei Mendels Erbsen (AB 6, AB 7). Einziger Unterschied: Keines der Allele ist dominant. Welchen Phänotyp hat also RW?</div>
+    <div class="stufe">F1: RR bildet nur Keimzellen mit R, WW nur mit W.<br>F2: RW × RW, jede Pflanze bildet R- und W-Keimzellen. Zähle danach RR, RW und WW und ordne die Farben zu.</div>
+    <div class="stufe">Rosa ist ein eigener Phänotyp. Zähle in der F2 deshalb drei Phänotypen getrennt und vergleiche das Verhältnis mit dem der Genotypen.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H2</h4><div class="zu">Aufgabe 2b</div>
+    <div class="stufe">Welche zwei Keimzellen bildet die Frau mit A0, welche der Mann mit B0? Trage sie an den Rand des Schemas ein.</div>
+    <div class="stufe">Felder: A + B = AB, A + 0 = A0 … Bestimme für jedes Feld die Blutgruppe mit der Tabelle aus 2a. Jedes Feld steht für 25 %.</div>
+    <div class="stufe">Übe mit dem Blutgruppen-Quiz (V1) an anderen Elternpaaren. Gehe genauso vor: Keimzellen, Felder, Blutgruppe je Feld.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H3</h4><div class="zu">Aufgabe 3a</div>
+    <div class="stufe">Was passiert, wenn Antikörper auf passende Merkmale treffen? Schau in Abb. 2: Welche Merkmale haben Blutkörperchen der Gruppe 0, welche Antikörper hat ein Mensch mit Gruppe 0?</div>
+    <div class="stufe"><b>Zwei Blickrichtungen:</b> Spenden: Tragen die gespendeten Blutkörperchen Merkmale, gegen die der Empfänger Antikörper hat? Empfangen: Hat der Empfänger mit Gruppe 0 Antikörper gegen A oder B?</div>
+    <div class="stufe">Zeichne zwei Blutkörperchen: außen die Merkmale, daneben die Antikörper des Empfängers. Passt ein Antikörper zu einem Merkmal, verklumpt das Blut.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h2 id="ab09">Hilfen zu AB 9 Unabhängigkeitsregel</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten beiden Stufen entsprechen den Papierkarten am Pult.</p>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe H1</h4><div class="zu">Aufgabe 1b</div>
+    <div class="stufe">Schau in Abb. 2: Welche Keimzellen entstehen bei Anordnung 1, welche bei Anordnung 2?<br>Wie viele verschiedene sind es zusammen?</div>
+    <div class="stufe"><b>Satzbausteine:</b> „Die Gene A und B liegen auf … . In der Meiose I werden die Chromosomenpaare … verteilt. Bei Anordnung 1 entstehen …, bei Anordnung 2 … . Weil beide Anordnungen …“</div>
+    <div class="stufe">Schreibe für jede Anordnung auf, welche Allele gemeinsam auf eine Seite der Äquatorialebene wandern. Jede Seite wird zu einer Keimzelle.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H2</h4><div class="zu">Aufgabe 2a</div>
+    <div class="stufe">Trage die vier Keimzellen AB, Ab, aB, ab oben und links ein. In jedes Feld kommt die Kombination: z. B. AB + ab = AaBb (Buchstaben eines Gens nebeneinander).</div>
+    <div class="stufe"><b>Phänotyp bestimmen:</b> Mindestens ein A → gelb, sonst grün. Mindestens ein B → rund, sonst runzelig.<br>Beispiel: Aabb = gelb-runzelig. Zähle jedes Zeichen.</div>
+    <div class="stufe">Übe mit V2 an Meerschweinchen: Bestimme zu einem Genotyp den Phänotyp. Gehe in deinem 16-Felder-Schema genauso Feld für Feld vor.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H3</h4><div class="zu">Aufgabe 3a</div>
+    <div class="stufe">9 : 3 : 3 : 1 heißt: von 16 Samen sind 9 gelb-rund. Welcher Anteil von 556 ist das?</div>
+    <div class="stufe"><b>Rechenweg:</b> 556 : 16 = 34,75 (das ist „ein Sechzehntel“). Multipliziere mit 9, 3, 3 und 1.</div>
+    <div class="stufe">Runde erst am Ende. Bilde dann für jeden Phänotyp die Differenz zwischen erwarteter und gezählter Zahl.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2>Vertiefungen für Schnelle</h2>
+
+<section class="v-karte" id="v1">
+  <div class="v-kopf"><div class="v-nr">V1</div><h3>Blutgruppen-Quiz</h3><span class="punkte" id="v1-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Welche Blutgruppen können die Kinder dieser Eltern haben? Kreuze <b>alle möglichen</b> an und prüfe. Tipp: Erstelle zuerst ein Kreuzungsschema.</p>
+    <p class="fall" id="v1-eltern" style="font-size:17px;color:var(--text)"></p>
+    <div class="wahl" id="v1-wahl">
+      <label><input type="checkbox" value="A"> A</label><label><input type="checkbox" value="B"> B</label>
+      <label><input type="checkbox" value="AB"> AB</label><label><input type="checkbox" value="0"> 0</label>
+    </div>
+    <div class="knoepfe"><button class="knopf haupt" id="v1-pruefen">Prüfen</button><button class="knopf" id="v1-weiter">Neue Eltern →</button></div>
+    <div class="rueck" id="v1-rueck"></div>
+  </div>
+</section>
+
+<section class="v-karte" id="v2">
+  <div class="v-kopf"><div class="v-nr">V2</div><h3>Zwei Merkmale bei Meerschweinchen</h3><span class="punkte" id="v2-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Bei Meerschweinchen ist schwarzes Fell (S) dominant über weißes (s) und kurzes Fell (K) dominant über langes (k). Die beiden Gene liegen auf verschiedenen Chromosomen.</p>
+    <div class="knoepfe" id="v2-modus"><button class="knopf an" data-m="p">Phänotyp bestimmen</button><button class="knopf" data-m="k">Keimzellen angeben</button></div>
+    <p class="fall" id="v2-frage" style="font-size:17px;color:var(--text)"></p>
+    <div id="v2-antwort"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v2-pruefen">Prüfen</button><button class="knopf" id="v2-weiter">Nächste Aufgabe →</button></div>
+    <div class="rueck" id="v2-rueck"></div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Biologie · Klasse 10 · Genetik · Hilfen zu AB 8, AB 9. Ohne Lösungen.</div></footer>
+<script>
+// Gestufte Hilfekarten
+(function(){
+  document.querySelectorAll('.hk').forEach(function(k){
+    var st = k.querySelectorAll('.stufe'), btn = k.querySelector('button'), z = k.querySelector('.zaehler'), n = 0;
+    z.textContent = '0 / ' + st.length;
+    btn.addEventListener('click', function(){
+      if (n < st.length) { st[n].classList.add('offen'); n++; }
+      z.textContent = n + ' / ' + st.length;
+      if (n >= st.length) { btn.textContent = 'alle Stufen offen'; btn.disabled = true; } else btn.textContent = 'Stufe ' + (n + 1) + ' aufdecken';
+    });
+  });
+})();
+
+// V1 Blutgruppen-Quiz
+(function(){
+  var G = ['AA', 'A0', 'BB', 'B0', 'AB', '00'];
+  var $ = function(id){ return document.getElementById(id); };
+  var gut = 0, versuche = 0, m, v;
+  function gruppe(x){ var a = x.indexOf('A') >= 0, b = x.indexOf('B') >= 0; return a && b ? 'AB' : a ? 'A' : b ? 'B' : '0'; }
+  function name(x){ return gruppe(x) + ' (Genotyp ' + x + ')'; }
+  function neu(){
+    m = G[Math.floor(Math.random() * G.length)]; v = G[Math.floor(Math.random() * G.length)];
+    $('v1-eltern').textContent = 'Mutter: Blutgruppe ' + name(m) + ' · Vater: Blutgruppe ' + name(v);
+    document.querySelectorAll('#v1-wahl input').forEach(function(c){ c.checked = false; });
+    $('v1-rueck').className = 'rueck';
+  }
+  $('v1-pruefen').onclick = function(){
+    var soll = {}; for (var i = 0; i < 2; i++) for (var j = 0; j < 2; j++) soll[gruppe(m[i] + v[j])] = 1;
+    var ok = true;
+    document.querySelectorAll('#v1-wahl input').forEach(function(c){ if (c.checked !== !!soll[c.value]) ok = false; });
+    versuche++; if (ok) gut++;
+    var r = $('v1-rueck');
+    r.className = ok ? 'rueck gut' : 'rueck nein';
+    r.textContent = ok ? 'Richtig. Wie groß ist die Wahrscheinlichkeit für jede Blutgruppe? Zähle die Felder.' :
+      'Noch nicht. Bestimme die beiden Keimzellen jedes Elternteils und kombiniere sie in einem Schema mit 4 Feldern.';
+    $('v1-punkte').textContent = gut + ' von ' + versuche + ' richtig';
+  };
+  $('v1-weiter').onclick = neu; neu();
+})();
+
+// V2 Zwei Merkmale
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var modus = 'p', geno = '', gut = 0, versuche = 0;
+  var S = ['SS', 'Ss', 'ss'], K = ['KK', 'Kk', 'kk'];
+  function zufall(){ return S[Math.floor(Math.random() * 3)] + K[Math.floor(Math.random() * 3)]; }
+  function phaeno(g){ return (g.indexOf('S') >= 0 ? 'schwarz' : 'weiß') + ', ' + (g.indexOf('K') >= 0 ? 'kurz' : 'lang'); }
+  function keimzellen(g){ var o = {}; [g[0], g[1]].forEach(function(a){ [g[2], g[3]].forEach(function(b){ o[a + b] = 1; }); }); return Object.keys(o).sort(); }
+  function neu(){
+    geno = zufall(); $('v2-rueck').className = 'rueck';
+    if (modus === 'p') {
+      $('v2-frage').textContent = 'Welchen Phänotyp hat ein Meerschweinchen mit dem Genotyp ' + geno + '?';
+      $('v2-antwort').innerHTML = '<div class="knoepfe">' + ['schwarz, kurz', 'schwarz, lang', 'weiß, kurz', 'weiß, lang'].map(function(p){
+        return '<label style="margin-right:12px"><input type="radio" name="v2p" value="' + p + '"> ' + p + '</label>'; }).join('') + '</div>';
+    } else {
+      $('v2-frage').textContent = 'Welche verschiedenen Keimzellen bildet ein Meerschweinchen mit dem Genotyp ' + geno + '? Trenne sie durch Kommas (z. B. SK, Sk).';
+      $('v2-antwort').innerHTML = '<input id="v2-ein" style="font-size:16px;padding:4px 8px;border:1px solid var(--linie);border-radius:6px;width:260px">';
+    }
+  }
+  $('v2-pruefen').onclick = function(){
+    var ok, r = $('v2-rueck');
+    if (modus === 'p') {
+      var w = document.querySelector('input[name="v2p"]:checked'); ok = w && w.value === phaeno(geno);
+      r.textContent = ok ? 'Richtig.' : 'Noch nicht. Prüfe jedes Gen einzeln: Ist mindestens ein Großbuchstabe vorhanden, zeigt sich das dominante Merkmal.';
+    } else {
+      var e = ($('v2-ein').value || '').split(/[,; ]+/).filter(Boolean).map(function(x){ return x.trim(); });
+      var uniq = {}; e.forEach(function(x){ if (x.length === 2) uniq[x[0].toUpperCase() === 'S' ? x : x[1] + x[0]] = 1; });
+      ok = Object.keys(uniq).sort().join() === keimzellen(geno).join();
+      r.textContent = ok ? 'Richtig. Jede Keimzelle enthält von jedem Gen genau ein Allel.' :
+        'Noch nicht. Jede Keimzelle erhält ein Allel des Fellfarben-Gens (S oder s) und ein Allel des Felllängen-Gens (K oder k). Kombiniere alle Möglichkeiten und lass doppelte weg.';
+    }
+    r.className = ok ? 'rueck gut' : 'rueck nein';
+    versuche++; if (ok) gut++; $('v2-punkte').textContent = gut + ' von ' + versuche + ' richtig';
+  };
+  document.querySelectorAll('#v2-modus [data-m]').forEach(function(b){
+    b.onclick = function(){ modus = b.dataset.m; document.querySelectorAll('#v2-modus [data-m]').forEach(function(x){ x.classList.toggle('an', x === b); }); neu(); };
+  });
+  $('v2-weiter').onclick = neu; neu();
+})();
+
+</script>
+</body>
+</html>

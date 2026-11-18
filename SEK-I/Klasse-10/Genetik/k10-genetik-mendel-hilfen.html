@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mendelsche Regeln – Vertiefung und Hilfen</title>
+<!-- Biologie Klasse 10 · Genetik · AB 6, AB 7. Erzeugt von quellen/web/bauen.py. Ohne Lösungen (Repo öffentlich). URL steht in den QR-Codes: nicht umbenennen. -->
+<style>
+:root{
+  --gruen:#2e7d4f; --gruen-d:#1f5e3a; --gruen-hell:#e6f3eb; --blau:#2a7ab8; --tblau:#156e9d; --blau-hell:#e6f0f8;
+  --orange:#d9822b; --orange-hell:#fdf1e4; --violett:#6c2a8c; --violett-hell:#f1e8f6;
+  --grau:#6f7a85; --linie:#d5dde5; --bg:#f6f8fa; --karte:#fff; --text:#222; --betroffen:#0f4c6e;
+  --sans:-apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5}
+a{color:var(--tblau)}
+button,select{font:inherit;cursor:pointer}
+.wrap{max-width:960px;margin:0 auto;padding:0 16px}
+header{background:linear-gradient(135deg,#1f5e3a 0%,#2e7d4f 55%,#3f9a63 100%);color:#fff;padding:28px 0 22px}
+header .kurs{font-size:13px;letter-spacing:.06em;text-transform:uppercase;opacity:.85}
+header h1{margin:4px 0 6px;font-size:clamp(24px,4.5vw,34px);font-weight:600;line-height:1.2}
+header p{margin:0;opacity:.92;max-width:680px}
+nav{position:sticky;top:0;z-index:10;background:rgba(246,248,250,.95);backdrop-filter:blur(6px);border-bottom:1px solid var(--linie)}
+nav .wrap{display:flex;gap:6px;overflow-x:auto;padding-top:8px;padding-bottom:8px}
+nav a{flex:none;text-decoration:none;color:var(--gruen-d);border:1px solid var(--linie);background:#fff;border-radius:16px;padding:3px 12px;font-size:14px;font-weight:600}
+nav a.v{color:var(--orange)}
+h2{font-size:21px;color:var(--gruen-d);margin:32px 0 4px;scroll-margin-top:56px}
+h3.teil{font-size:16px;color:var(--grau);text-transform:uppercase;letter-spacing:.05em;margin:22px 0 8px}
+.hinweis{color:var(--grau);font-size:14px;margin:0 0 14px}
+.hilfen{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.hk{background:var(--karte);border:1.5px dashed #b9c4cf;border-radius:10px;padding:14px 16px}
+.hk h4{margin:0 0 2px;font-size:16px;color:var(--gruen)}
+.hk .zu{font-size:13px;color:var(--grau);margin-bottom:8px}
+.stufe{display:none;margin:8px 0 0;padding:8px 10px;background:var(--gruen-hell);border-radius:6px;font-size:15px}
+.stufe.offen{display:block;animation:auf .25s ease}
+@keyframes auf{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.hk button{margin-top:10px;border:1px solid var(--gruen);background:#fff;color:var(--gruen);border-radius:6px;padding:4px 12px;font-size:14px}
+.hk button:hover{background:var(--gruen-hell)}
+.hk button[disabled]{opacity:.4;cursor:default}
+.hk .zaehler{font-size:12px;color:var(--grau);margin-left:8px}
+.v-karte{background:var(--karte);border:1px solid var(--linie);border-radius:12px;margin:14px 0;overflow:hidden;scroll-margin-top:56px}
+.v-kopf{display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--linie);background:#fbfcfd}
+.v-nr{flex:none;width:42px;height:42px;border-radius:50%;background:var(--orange);color:#fff;font-weight:700;display:grid;place-items:center}
+.v-kopf h3{margin:0;font-size:18px}
+.v-inhalt{padding:14px 16px 16px}
+.zwei{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+@media (max-width:720px){.zwei{grid-template-columns:1fr}}
+svg{max-width:100%;height:auto;display:block}
+.knopf{border:1px solid var(--linie);background:#fff;border-radius:6px;padding:4px 12px;font-size:14px}
+.knopf.haupt{border-color:var(--gruen);color:var(--gruen);font-weight:600}
+.knopf.an{background:var(--gruen);border-color:var(--gruen);color:#fff}
+.knoepfe{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+.rueck{font-size:14px;border-radius:6px;padding:8px 10px;margin-top:8px;display:none}
+.rueck.gut{display:block;background:#e3f4ea;border-left:3px solid var(--gruen)}
+.rueck.nein{display:block;background:#fbe6e3;border-left:3px solid #d0574a}
+.fall{font-size:13px;color:var(--grau)}
+.punkte{font-size:14px;color:var(--grau);margin-left:auto}
+.pedi{background:#fff;border:1px solid var(--linie);border-radius:8px;padding:8px}
+.wahl{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;font-size:15px;margin:6px 0 10px}
+.wahl select{border:1px solid var(--linie);border-radius:6px;padding:3px 8px;background:#fff}
+table.ps{border-collapse:collapse;margin:8px 0}
+table.ps td,table.ps th{border:1px solid var(--linie);width:76px;height:52px;text-align:center;font-size:18px}
+table.ps th{background:var(--blau-hell);color:var(--betroffen)}
+table.ps td.betr{background:var(--orange-hell);color:var(--orange);font-weight:700}
+table.ps .ecke{background:#f4f6f8;font-size:12px;color:var(--grau);font-weight:400}
+.ausgabe{font-variant-numeric:tabular-nums;font-size:15px;background:#f2f5f8;border-radius:6px;padding:8px 12px;margin-top:6px}
+.leiste{display:grid;grid-template-columns:120px 1fr 56px;gap:6px 10px;align-items:center;font-size:14px;margin-top:4px}
+.leiste .spur{background:#eef2f6;border-radius:4px;height:16px;overflow:hidden}
+.leiste .fuell{height:100%;background:var(--orange);width:0;transition:width .5s ease}
+canvas{max-width:100%;height:auto;border-radius:50%;display:block;margin:0 auto}
+.sim{filter:url(#deutan)}
+.klein{font-size:13px;color:var(--grau)}
+footer{margin:36px 0 0;border-top:1px solid var(--linie);padding:16px 0 28px;font-size:12.5px;color:var(--grau)}
+sup{font-size:.7em}
+.schritte{counter-reset:s;list-style:none;padding:0;margin:8px 0}
+.schritte li{counter-increment:s;position:relative;padding:6px 0 6px 40px}
+.schritte li::before{content:counter(s);position:absolute;left:0;top:4px;width:28px;height:28px;border-radius:50%;background:var(--gruen);color:#fff;font-weight:700;display:grid;place-items:center;font-size:14px}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="kurs">Biologie · Klasse 10 · Genetik · AB 6, AB 7</div>
+    <h1>Mendelsche Regeln: Vertiefung und Hilfen</h1>
+    <p>Hilfen zu allen Aufgaben mit Hilfekarten, nur bei Bedarf und stufenweise aufdecken. Für Schnelle: Erbsen „würfeln“ und sehen, wann sich 3 : 1 zeigt, und eigene Kreuzungsschemata überprüfen.</p>
+  </div>
+</header>
+<nav><div class="wrap"><a href="#ab06">Hilfen AB 6</a><a href="#ab07">Hilfen AB 7</a><a class="v" href="#v1">V1 Erbsen würfeln</a><a class="v" href="#v2">V2 Erbschema-Trainer</a></div></nav>
+<main class="wrap">
+<h2 id="ab06">Hilfen zu AB 6 Uniformitätsregel</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten beiden Stufen entsprechen den Papierkarten am Pult.</p>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe H1</h4><div class="zu">Aufgabe 2a</div>
+    <div class="stufe">Welches Merkmal ist nach M1 dominant: violett oder weiß? Wähle einen Buchstaben: Großbuchstabe für das dominante, Kleinbuchstabe für das rezessive Allel.</div>
+    <div class="stufe">Gehe Zeile für Zeile vor wie in Abb. 2: Genotyp der reinerbigen Eltern → Keimzellen (je ein Allel) → Felder im Kreuzungsschema → Genotypen und Phänotypen der F1 zählen.</div>
+    <div class="stufe">Kontrolliere dein Schema: Steht in jedem Feld genau ein Allel von jedem Elternteil? Stimmen Groß- und Kleinbuchstabe mit M1 überein?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H2</h4><div class="zu">Aufgabe 3a</div>
+    <div class="stufe">Welche Genotypen führen zu gelben Samen? Probiere alle drei Kombinationen AA, Aa und aa aus.</div>
+    <div class="stufe"><b>Satzbausteine:</b> „Nein, denn gelbe Samen können … oder … sein, weil A … ist. Nur beim … Phänotyp ist der Genotyp eindeutig: …“</div>
+    <div class="stufe">Probiere im Erbschema-Trainer (V2) die Kreuzung AA × Aa. Haben alle Nachkommen denselben Phänotyp? Auch denselben Genotyp?</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+<h2 id="ab07">Hilfen zu AB 7 Spaltungsregel und Rückkreuzung</h2>
+<p class="hinweis">Erst selbst probieren. Jede Karte deckt ihre Hilfe in Stufen auf: so wenig wie möglich, so viel wie nötig. Die ersten beiden Stufen entsprechen den Papierkarten am Pult.</p>
+<div class="hilfen">
+  <div class="hk"><h4>Hilfe H1</h4><div class="zu">Aufgabe 1a</div>
+    <div class="stufe">F1: Eltern DD und dd. Welche Keimzellen bildet jedes Tier? Trage sie oben und links ins Schema ein.<br>F2: Welchen Genotyp haben die F1-Tiere? Sie sind jetzt die Eltern.</div>
+    <div class="stufe"><b>Vorgemacht:</b> Bei Dd × Dd bildet jedes Tier Keimzellen mit D <b>und</b> mit d.<br>Felder: D + D = DD, D + d = Dd … Zähle danach: Wie viele DD, Dd, dd? Welche davon sind weiß?</div>
+    <div class="stufe">Prüfe deine F2 mit dem Erbschema-Trainer (V2): Gib dort deine Felder ein (die Buchstaben A/a stehen für D/d).</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H2</h4><div class="zu">Aufgabe 2b</div>
+    <div class="stufe">Wirf in Gedanken eine Münze 4-mal und 1000-mal. Wann erwartest du ein Ergebnis näher an 50 : 50?</div>
+    <div class="stufe">Addiere für jedes Merkmal dominante und rezessive Nachkommen. Bei welchem Merkmal ist die Summe am kleinsten?<br><b>Satzbaustein:</b> „Je weniger …, desto …“</div>
+    <div class="stufe">Probiere V1: Wie stark schwankt das Verhältnis bei 20 Samen, wie stark bei 1000? Übertrage das auf Mendels Zahlen.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+  <div class="hk"><h4>Hilfe H3</h4><div class="zu">Aufgabe 3a</div>
+    <div class="stufe">Bei einer Rückkreuzung ist der Partner immer reinerbig rezessiv: dd.<br>Das dunkle Tier kann DD oder Dd sein. Stelle für jeden Fall ein eigenes Schema auf.</div>
+    <div class="stufe">Fall 1: DD bildet nur D-Keimzellen. Fall 2: Dd bildet D- und d-Keimzellen.<br>Können in Fall 1 weiße Junge (dd) entstehen? Und in Fall 2?</div>
+    <div class="stufe">Achte bei Fall 2 darauf, dass das dunkle Tier zwei verschiedene Keimzellen bildet, der weiße Partner aber nur eine Sorte.</div>
+    <button type="button">Stufe 1 aufdecken</button><span class="zaehler"></span></div>
+</div>
+
+<h2>Vertiefungen für Schnelle</h2>
+
+<section class="v-karte" id="v1">
+  <div class="v-kopf"><div class="v-nr">V1</div><h3>Erbsen würfeln: Wann zeigt sich 3 : 1?</h3></div>
+  <div class="v-inhalt">
+    <p>Zwei mischerbige Pflanzen (Aa × Aa) bilden Nachkommen. Für jeden Samen wird zufällig ausgelost, welches Allel die Eizelle und welches der Pollen liefert (wie zwei Münzen). Wie nah kommt das Ergebnis an 3 : 1?</p>
+    <div class="knoepfe">
+      <button class="knopf" data-n="4">4 Samen</button><button class="knopf" data-n="20">20 Samen</button><button class="knopf" data-n="100">100 Samen</button>
+      <button class="knopf" data-n="1000">1000 Samen</button><button class="knopf haupt" data-n="8023">8023 Samen (wie Mendel)</button>
+    </div>
+    <div class="ausgabe" id="v1-ausgabe">Wähle eine Anzahl.</div>
+    <p class="klein">Mehrmals hintereinander klicken: Wie stark schwanken die Ergebnisse bei wenigen und bei vielen Samen?</p>
+  </div>
+</section>
+
+<section class="v-karte" id="v2">
+  <div class="v-kopf"><div class="v-nr">V2</div><h3>Erbschema-Trainer</h3><span class="punkte" id="v2-punkte"></span></div>
+  <div class="v-inhalt">
+    <p>Wähle die Genotypen der Eltern, trage die vier Felder selbst ein (z. B. Aa) und prüfe. Das Allel A (gelb) ist dominant über a (grün).</p>
+    <div class="wahl"><label>Elternteil 1 <select id="v2-m"><option>AA</option><option selected>Aa</option><option>aa</option></select></label>
+      <label>Elternteil 2 <select id="v2-v"><option>AA</option><option>Aa</option><option selected>aa</option></select></label></div>
+    <div id="v2-schema"></div>
+    <div class="knoepfe"><button class="knopf haupt" id="v2-pruefen">Prüfen</button></div>
+    <div class="rueck" id="v2-rueck"></div>
+  </div>
+</section>
+
+</main>
+<footer><div class="wrap">Biologie · Klasse 10 · Genetik · Hilfen zu AB 6, AB 7. Ohne Lösungen.</div></footer>
+<script>
+// Gestufte Hilfekarten
+(function(){
+  document.querySelectorAll('.hk').forEach(function(k){
+    var st = k.querySelectorAll('.stufe'), btn = k.querySelector('button'), z = k.querySelector('.zaehler'), n = 0;
+    z.textContent = '0 / ' + st.length;
+    btn.addEventListener('click', function(){
+      if (n < st.length) { st[n].classList.add('offen'); n++; }
+      z.textContent = n + ' / ' + st.length;
+      if (n >= st.length) { btn.textContent = 'alle Stufen offen'; btn.disabled = true; } else btn.textContent = 'Stufe ' + (n + 1) + ' aufdecken';
+    });
+  });
+})();
+
+// V1 Erbsen würfeln
+(function(){
+  function balken(name, n, gesamt, farbe){
+    var p = gesamt ? n / gesamt * 100 : 0;
+    return '<div class="leiste"><span>' + name + '</span><div class="spur"><div class="fuell" style="width:' + p.toFixed(1) + '%;background:' + farbe + '"></div></div><span>' + n + '</span></div>';
+  }
+  document.querySelectorAll('#v1 [data-n]').forEach(function(b){
+    b.onclick = function(){
+      var n = +b.dataset.n, g = 0, r = 0;
+      for (var i = 0; i < n; i++) { var a1 = Math.random() < .5, a2 = Math.random() < .5; if (a1 || a2) g++; else r++; }
+      var v = r ? (g / r).toFixed(2).replace('.', ',') : '–';
+      document.getElementById('v1-ausgabe').innerHTML = balken('gelb', g, n, '#e2c34a') + balken('grün', r, n, '#7fae6c') +
+        '<p style="margin:6px 0 0">Verhältnis gelb : grün = <b>' + v + ' : 1</b> bei ' + n.toLocaleString('de-DE') + ' Samen</p>';
+    };
+  });
+})();
+
+// V2 Erbschema-Trainer
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var gut = 0, versuche = 0;
+  function sortiere(x, y){ return [x, y].sort(function(p, q){ return p === p.toUpperCase() && q !== q.toUpperCase() ? -1 : (p === q ? 0 : 1); }).join(''); }
+  function zeichne(){
+    var m = $('v2-m').value, v = $('v2-v').value;
+    var t = '<table class="ps"><tr><th class="ecke">♂ →<br>♀ ↓</th><th>' + v[0] + '</th><th>' + v[1] + '</th></tr>';
+    for (var i = 0; i < 2; i++) {
+      t += '<tr><th>' + m[i] + '</th>';
+      for (var j = 0; j < 2; j++) t += '<td><input data-l="' + sortiere(m[i], v[j]) + '" maxlength="2" style="width:44px;font-size:17px;text-align:center;border:1px solid var(--linie);border-radius:4px"></td>';
+      t += '</tr>';
+    }
+    $('v2-schema').innerHTML = t + '</table>';
+    $('v2-rueck').className = 'rueck';
+  }
+  $('v2-pruefen').onclick = function(){
+    var felder = document.querySelectorAll('#v2-schema input'), alle = true;
+    felder.forEach(function(f){
+      var e = f.value.trim(), soll = f.dataset.l;
+      var ok = e.length === 2 && sortiere(e[0], e[1]) === soll;
+      f.style.background = ok ? '#e3f4ea' : '#fbe6e3'; if (!ok) alle = false;
+    });
+    versuche++; if (alle) gut++;
+    var r = $('v2-rueck');
+    if (alle) { r.className = 'rueck gut'; r.textContent = 'Alle vier Felder stimmen. Bestimme jetzt selbst das Verhältnis der Genotypen und der Phänotypen.'; }
+    else { r.className = 'rueck nein'; r.textContent = 'Rot markierte Felder stimmen noch nicht. Tipp: In jedes Feld kommt das Allel der Zeile und das Allel der Spalte.'; }
+    $('v2-punkte').textContent = gut + ' von ' + versuche + ' Schemata richtig';
+  };
+  $('v2-m').onchange = zeichne; $('v2-v').onchange = zeichne; zeichne();
+})();
+
+</script>
+</body>
+</html>
